@@ -1,0 +1,10 @@
+/dist
+/logs
+/npm-debug.log
+/node_modules
+/temp
+.DS_Store
+*.swp
+
+*service-account-key\.json
+src/config.js
