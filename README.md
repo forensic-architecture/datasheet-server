@@ -142,7 +142,17 @@ And run development server:
 ```sh
 yarn dev # npm run dev
 ```
-License
--------
 
-MIT
+## Contribute
+
+### [Code of Conduct](CODE_OF_CONDUCT.md)
+
+Please read our adopted [code of conduct](CODE_OF_CONDUCT.md) before contributing, so that you can understand what actions will and will not be tolerated.
+
+### [Contributing Guide](CONTRIBUTING.md)
+
+Read our [contributing guide](CONTRIBUTING.md) to learn about our development process, how to propose bugfixes and improvements.
+
+## License
+
+TimeMap is distributed under the MIT License.
