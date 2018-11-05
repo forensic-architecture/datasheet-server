@@ -88,7 +88,7 @@ Each Google Sheet being used as a as source requires a corresponding object in `
 | ------ | ----------- | ---- |
 | name | Used to refer to data served from this source | string |
 | id | The ID of the sheet in Google. (You can find it in the address bar when the Sheet is open in a browser. It is the string that follows 'spreadsheets/d/'). | string |
-| tabs | An object that maps each tab in the source to a Blueprinter. All of the Blueprinters in the [blueprinters folder](/lib/blueprinters) are available through a single import as at the top of [example.config.js](/src/example.config.js). <br> To correctly associate a Blueprinter, the object key needs to be _the tab name with all lowercase letters, and spaces replaced by a '-'_. For example, if the tab name in Google Sheets is 'Info About SHEEP', the object key should be 'info-about-sheep'. <br> The value should be the Blueprinter function that you want to use for the data in that tab. See the example of a configuration object below. <br>TODO: no Blueprinter is used by default. | object |
+| tabs | An object that maps each tab in the source to one or more Blueprinters. All of the Blueprinters in the [blueprinters folder](/lib/blueprinters) are available through a single import as at the top of [example.config.js](/src/example.config.js). <br> To correctly associate a Blueprinter, the object key needs to be _the tab name with all lowercase letters, and spaces replaced by a '-'_. For example, if the tab name in Google Sheets is 'Info About SHEEP', the object key should be 'info-about-sheep'. <br> More than one Blueprinter can be used per tab, if more than one representation is required for a single tab; in that case simply add a second Blueprinter in the array corresponding to the tab. <br> The value should be the Blueprinter function that you want to use for the data in that tab. See the example of a configuration object below. <br>TODO: no Blueprinter is used by default. | object |
 
 ###### Example Configuration Object
 ```js
@@ -104,7 +104,8 @@ export default {
         name: 'example',
         id: '1s-vfBR8Uy-B-TLO_C5Ozw4z-L0E3hdP8ohMV761ouRI',
         tabs: {
-          'objects': BP.byRow,
+          'objects': [BP.byRow],
+          'objectsB': [BP.byRow, BP.byID],
         }
       },
     ]
