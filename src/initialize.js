@@ -39,7 +39,7 @@ export default callback => {
       console.log(err);
       console.log(
         `ERROR: the server couldn't connect to all of the sheets you provided. Ensure you have granted access to ${
-          serviceAccount.email
+          email
         } on ALL listed sheets.`
       );
     });
