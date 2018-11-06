@@ -85,3 +85,9 @@ export function bp(full) {
   });
   return blueprint;
 }
+
+export function isFunction(functionToCheck) {
+  return (
+    functionToCheck && {}.toString.call(functionToCheck) === "[object Function]"
+  );
+}

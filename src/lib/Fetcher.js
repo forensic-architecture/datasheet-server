@@ -1,6 +1,12 @@
 // FetcherTwo class interfaces with Google Sheet, and saves to a specified db
 import {google} from "googleapis";
-import {fmtSourceTitle, fmtBlueprinterTitles, deriveFilename, bp} from "./util";
+import {
+  fmtSourceTitle,
+  fmtBlueprinterTitles,
+  deriveFilename,
+  bp,
+  isFunction
+} from "./util";
 import {byRow, byId} from "./blueprinters";
 import R from "ramda";
 
@@ -39,6 +45,23 @@ class Fetcher {
      */
     this.sheets = google.sheets("v4");
     this.auth = null;
+
+    /**
+     * saveBp is a curried function that takes in a title and
+     * a blueprinter. NB: it sits here in the constructor as
+     * I am not sure how to curry a class method with Ramda.
+     */
+    this._saveBp = R.curry((tab, title, data, blueprinter) => {
+      const saturatedBp = blueprinter(
+        tab,
+        this.sourceName,
+        this.sourceId,
+        data
+      );
+      const blueprint = bp(saturatedBp); // TODO: come up with better semantics.
+      this.blueprints[title] = blueprint;
+      return this.db.save(saturatedBp);
+    });
   }
 
   /** returns a Promise that resolves if access is granted to the account, and rejects otherwise. */
@@ -96,19 +119,13 @@ class Fetcher {
   save(tab, data) {
     const title = fmtSourceTitle(tab);
     if (Object.keys(this.blueprinters).indexOf(title) > -1) {
-      const blueprinters = this.blueprinters[title];
+      const bpConfig = this.blueprinters[title];
 
-      return blueprinters.map(blueprinter => {
-        const saturatedBp = blueprinter(
-          tab,
-          this.sourceName,
-          this.sourceId,
-          data
-        );
-        const blueprint = bp(saturatedBp); // TODO: come up with better semantics.
-        this.blueprints[title] = blueprint;
-        return this.db.save(saturatedBp);
-      });
+      if (isFunction(bpConfig)) {
+        return this._saveBp(tab, title, data, bpConfig);
+      } else {
+        return bpConfig.map(this._saveBp(tab, title, data));
+      }
     } else {
       // If it can't find a blueprinter for the tab title, default to byRow
       return this.db.save(byRow(tab, this.sourceName, this.sourceId, data));
