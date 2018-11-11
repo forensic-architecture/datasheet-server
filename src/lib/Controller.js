@@ -8,8 +8,7 @@ class Controller {
   }
 
   sourceExists(source) {
-    return true;
-    if (Object.keys(this.fetchers).indexOf(source) == -1) return false;
+    return (Object.keys(this.fetchers).indexOf(source) >= 0)
   }
 
   blueprints() {
