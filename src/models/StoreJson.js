@@ -41,7 +41,7 @@ class StoreJson {
           // Do a lookup if fragment is included to filter a relevant item
           // When the resource requested is 'ids'
           const id = parseInt(parts[3]);
-          if (id !== NaN && id >= 0 && id < data.length) {
+          if (!isNaN(id) && id >= 0 && id < data.length) {
             return data[id];
           } else {
             throw new Error(`Fragment index does not exist`);
@@ -49,7 +49,7 @@ class StoreJson {
         } else {
           // Do a lookup if fragment is included to filter a relevant item
           const index = parseInt(parts[3]);
-          if (index !== NaN && index >= 0 && index < data.length) {
+          if (!isNaN(index) && index >= 0 && index < data.length) {
             console.log(data, index);
             return data.filter((vl, idx) => idx === index)[0];
           } else {
