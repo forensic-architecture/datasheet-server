@@ -25,4 +25,7 @@ fs.readdirSync(normalizedPath).forEach(file => {
   allBps[bpName] = require(`${REL_PATH_TO_BPS}/${file}`).default;
 });
 
-module.exports = allBps;
+module.exports = Object.assign({
+  "defaultBlueprint": defaultBlueprint,
+  "defaultRoute": defaultRoute
+}, allBps);
