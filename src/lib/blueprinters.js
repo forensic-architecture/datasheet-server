@@ -1,9 +1,6 @@
 import path from "path";
 import fs from "fs";
 
-const REL_PATH_TO_BPS = "../blueprinters";
-const allBps = {};
-
 export const defaultBlueprint = {
   name: null,
   id: null,
@@ -19,13 +16,18 @@ export const defaultRoute = {
 };
 
 // import all default exports from 'blueprinters' folder
+const allBps = {};
+const REL_PATH_TO_BPS = "../blueprinters";
 const normalizedPath = path.join(__dirname, REL_PATH_TO_BPS);
 fs.readdirSync(normalizedPath).forEach(file => {
   const bpName = file.replace(".js", "");
   allBps[bpName] = require(`${REL_PATH_TO_BPS}/${file}`).default;
 });
 
-module.exports = Object.assign({
-  "defaultBlueprint": defaultBlueprint,
-  "defaultRoute": defaultRoute
-}, allBps);
+// NB: revert to ES5 'module.exports' required to make blueprinters from
+// each file in blueprinters folder available for granular import from here.
+module.exports = {
+  defaultBlueprint,
+  defaultRoute,
+  ...allBps
+}
