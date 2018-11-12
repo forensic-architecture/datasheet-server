@@ -1,6 +1,5 @@
-import R from "ramda";
-import {fmtObj, idxSearcher} from "../lib/util";
-import {defaultBlueprint, defaultRoute} from "../lib/blueprinters";
+import R from 'ramda'
+import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
 
 /**
  * byTree - generate a Blueprint from a data source grouped by a column called 'group'
@@ -13,55 +12,56 @@ import {defaultBlueprint, defaultRoute} from "../lib/blueprinters";
  * @param  {type} name=""      name of blueprint.
  * @return {type} Blueprint
  */
-export default function byTree(
+export default function byTree (
   tabName,
   sourceName,
   sourceId,
   data,
-  label = "tree"
+  label = 'tree'
 ) {
   // Define Blueprint
-  const bp = R.clone(defaultBlueprint);
+  const bp = R.clone(defaultBlueprint)
   bp.source = {
     name: sourceName,
     id: sourceId
-  };
-  bp.name = tabName;
+  }
+  bp.name = tabName
 
   // Column names define routes
-  bp.routes[label] = R.clone(defaultRoute);
-  bp.routes[label].data = {};
+  bp.routes[label] = R.clone(defaultRoute)
+  bp.routes[label].data = {}
 
   const tree = {
-    key: "tags",
+    key: 'tags',
     children: {}
-  };
+  }
 
   data.forEach(path => {
-    const root = path[0];
-    if (!tree.children[root])
+    const root = path[0]
+    if (!tree.children[root]) {
       tree.children[root] = {
         key: root,
         children: {}
-      };
+      }
+    }
 
-    let depth = 1;
-    let parentNode = tree.children[root];
+    let depth = 1
+    let parentNode = tree.children[root]
 
     while (depth < path.length) {
-      const node = path[depth];
+      const node = path[depth]
       if (!parentNode.children[node]) {
         parentNode.children[node] = {
           key: node,
           children: {}
-        };
+        }
       }
-      parentNode = parentNode.children[node];
+      parentNode = parentNode.children[node]
 
-      depth++;
+      depth++
     }
-  });
+  })
 
-  bp.routes[label].data = tree;
-  return bp;
+  bp.routes[label].data = tree
+  return bp
 }

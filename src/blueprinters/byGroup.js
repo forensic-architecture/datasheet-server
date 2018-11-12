@@ -1,6 +1,6 @@
-import R from "ramda";
-import {fmtObj, idxSearcher} from "../lib/util";
-import {defaultBlueprint, defaultRoute} from "../lib/blueprinters";
+import R from 'ramda'
+import { fmtObj } from '../lib/util'
+import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
 
 /**
  * byGroup - generate a Blueprint from a data source grouped by a column called 'group'
@@ -13,44 +13,44 @@ import {defaultBlueprint, defaultRoute} from "../lib/blueprinters";
  * @param  {type} name=""      name of blueprint.
  * @return {type} Blueprint
  */
-export default function byGroup(
+export default function byGroup (
   tabName,
   sourceName,
   sourceId,
   data,
-  label = "groups"
+  label = 'groups'
 ) {
   // Define Blueprint
-  const bp = R.clone(defaultBlueprint);
+  const bp = R.clone(defaultBlueprint)
   bp.source = {
     name: sourceName,
     id: sourceId
-  };
-  bp.name = tabName;
+  }
+  bp.name = tabName
 
   // Column names define routes
-  const itemLabels = data[0];
-  const fmt = fmtObj(itemLabels);
-  bp.routes[label] = R.clone(defaultRoute);
-  bp.routes[label].data = [];
+  const itemLabels = data[0]
+  const fmt = fmtObj(itemLabels)
+  bp.routes[label] = R.clone(defaultRoute)
+  bp.routes[label].data = []
 
-  const dataGroups = {};
+  const dataGroups = {}
 
   data.forEach((row, idx) => {
-    if (idx == 0) return;
-    const group = fmt(row).group;
+    if (idx === 0) return
+    const group = fmt(row).group
     if (!dataGroups[group]) {
-      dataGroups[group] = [fmt(row)];
+      dataGroups[group] = [fmt(row)]
     } else {
-      dataGroups[group].push(fmt(row));
+      dataGroups[group].push(fmt(row))
     }
-  });
+  })
   Object.keys(dataGroups).forEach(groupKey => {
     bp.routes[label].data.push({
       group: groupKey,
       group_label: dataGroups[groupKey][0].group_label,
       data: dataGroups[groupKey]
-    });
-  });
-  return bp;
+    })
+  })
+  return bp
 }

@@ -1,6 +1,6 @@
-import R from "ramda";
-import {fmtObj, idxSearcher} from "../lib/util";
-import {defaultBlueprint, defaultRoute} from "../lib/blueprinters";
+import R from 'ramda'
+import { fmtObj } from '../lib/util'
+import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
 
 /**
  * byRow - generate a Blueprint from a data source by row. The resource name
@@ -12,30 +12,30 @@ import {defaultBlueprint, defaultRoute} from "../lib/blueprinters";
  * @param  {type} name=""      name of blueprint.
  * @return {type} Blueprint
  */
-export default function byRow(
+export default function byRow (
   tabName,
   sourceName,
   sourceId,
   data,
-  label = "rows"
+  label = 'rows'
 ) {
   // Define Blueprint
-  const bp = R.clone(defaultBlueprint);
+  const bp = R.clone(defaultBlueprint)
   bp.source = {
     name: sourceName,
     id: sourceId
-  };
-  bp.name = tabName;
+  }
+  bp.name = tabName
 
   // Column names define routes
-  const itemLabels = data[0];
-  const fmt = fmtObj(itemLabels);
-  bp.routes[label] = R.clone(defaultRoute);
-  bp.routes[label].data = [];
+  const itemLabels = data[0]
+  const fmt = fmtObj(itemLabels)
+  bp.routes[label] = R.clone(defaultRoute)
+  bp.routes[label].data = []
 
   data.forEach((row, idx) => {
-    if (idx == 0) return;
-    bp.routes[label].data.push(fmt(row));
-  });
-  return bp;
+    if (idx === 0) return
+    bp.routes[label].data.push(fmt(row))
+  })
+  return bp
 }
