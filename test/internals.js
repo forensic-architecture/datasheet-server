@@ -17,19 +17,19 @@ test('defaultBlueprint exports', t => {
   const expected = {
     name: null,
     id: null,
-    dialects: ["rest"],
+    dialects: ['rest'],
     routes: {}
   }
   t.deepEqual(expected, defaultBlueprint)
 })
 
 test('byColumn blueprinter generates expected output', t => {
-  const actual = byColumn("eg ColumnBlueprint", "egSourceName", "egSourceId", egInput1)
+  const actual = byColumn('eg ColumnBlueprint', 'egSourceName', 'egSourceId', egInput1)
   const expected = R.clone(defaultBlueprint)
-  expected.name = "eg ColumnBlueprint"
+  expected.name = 'eg ColumnBlueprint'
   expected.source = {
-    id: "egSourceId",
-    name: "egSourceName"
+    id: 'egSourceId',
+    name: 'egSourceName'
   }
   expected.routes['h1'] = R.clone(defaultRoute)
   expected.routes['h1'].data = [1, 4]
@@ -41,24 +41,23 @@ test('byColumn blueprinter generates expected output', t => {
 })
 
 test('byRow blueprinter generates expected output', t => {
-  const actual = byRow("egRowBlueprint", "egSourceName", "egSourceId", egInput1, "items", )
+  const actual = byRow('egRowBlueprint', 'egSourceName', 'egSourceId', egInput1, 'items')
   const expected = R.clone(defaultBlueprint)
-  expected.name = "egRowBlueprint"
+  expected.name = 'egRowBlueprint'
   expected.source = {
-    id: "egSourceId",
-    name: "egSourceName"
+    id: 'egSourceId',
+    name: 'egSourceName'
   }
   expected.routes['items'] = R.clone(defaultRoute)
   expected.routes['items'].data = [{
-      h1: 1,
-      h2: 2,
-      h3: 3
-    },
-    {
-      h1: 4,
-      h2: 5,
-      h3: 6
-    },
-  ]
+    h1: 1,
+    h2: 2,
+    h3: 3
+  },
+  {
+    h1: 4,
+    h2: 5,
+    h3: 6
+  }]
   t.deepEqual(expected, actual)
 })

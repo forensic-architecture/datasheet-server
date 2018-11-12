@@ -7,7 +7,7 @@
     "dev": "nodemon -w src --exec \"babel-node src\"",
     "build": "npx babel src -d dist",
     "start": "node dist",
-    "lint": "standard \"src/**/*.js\"",
+    "lint": "standard \"src/**/*.js\" \"test/**/*/js\"",
     "test-watch": "ava --watch",
     "test": "ava --verbose"
   },
