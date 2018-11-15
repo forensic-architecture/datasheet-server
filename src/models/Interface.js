@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Model is a class whose sole responsibility is to save and load blueprints.
  * It allows for different storage mechanisms for different kinds of blueprints.
@@ -9,7 +10,7 @@ class Model {
    * @param  {type} blueprint the Blueprint to be saved.
    * @return {type} Promise   which returns True.
    */
-  save(blueprint) {}
+  save (blueprint) {}
 
   /**
    * load - load a resource from a data model, using a Blueprint object as
@@ -19,5 +20,5 @@ class Model {
    * @param  {type} blueprint Blueprint object (desaturated?).
    * @return {type}           Object containing the resource data.
    */
-  load(url, blueprint) {}
+  load (url, blueprint) {}
 }
