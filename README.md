@@ -5,23 +5,14 @@
 <p align="center">
   <strong>Turn spreadsheet data into a structured, dynamic API. </strong><br>
 </p>
-<!-- <p align="center">
-  <a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Gatsby is released under the MIT license." />
+<p align="center">
+  <a href="https://github.com/forensic-architecture/datasheet-server/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Datasheet Server is released under the MIT license." />
   </a>
-  <a href="#configru">
-    <img src="https://circleci.com/gh/gatsbyjs/gatsby.svg?style=shield" alt="Current CircleCI build status." />
+  <a href="https://travis-ci.com/forensic-architecture/datasheet-server">
+    <img src="https://travis-ci.com/forensic-architecture/datasheet-server.svg?branch=develop" alt="Build Status"/>
   </a>
-  <a href="https://www.npmjs.org/package/gatsby">
-    <img src="https://img.shields.io/npm/v/gatsby.svg" alt="Current npm package version." />
-  </a>
-  <a href="https://npmcharts.com/compare/gatsby?minimal=true">
-    <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
-  </a>
-  <a href="https://gatsbyjs.org/docs/how-to-submit-a-pr/">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
-  </a>
-</p> -->
+</p>
 
 <h3 align="center">
   <a href="#overview">Overview</a>
