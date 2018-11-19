@@ -20,9 +20,8 @@ export default ({ config, controller }) => {
       .retrieveFrag(source, tab, resource, frag)
       .then(data => res.json(data))
       .catch(err =>
-        res.json({
-          error: err.message
-        })
+        res.status(err.status || 501)
+          .send()
       )
   })
 
@@ -31,9 +30,8 @@ export default ({ config, controller }) => {
       .retrieve(req.params.source, req.params.tab, req.params.resource)
       .then(data => res.json(data))
       .catch(err =>
-        res.json({
-          error: err.message
-        })
+        res.status(err.status || 501)
+          .send()
       )
   })
 
