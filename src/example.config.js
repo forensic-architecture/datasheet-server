@@ -3,14 +3,17 @@ import BP from './lib/blueprinters'
 export default {
   port: 4040,
   googleSheets: {
-    email: 'project-name@reliable-baptist-23338.iam.gserviceaccount.com',
-    privateKey: 'SOME_PRIVATE_KEY',
+    email: 'SOME_SERVICE_ACCOUNT_EMAIL',
+    privateKey: 'SOME_SERVICE_ACCOUNT_PRIVATE_KEY',
     sheets: [
       {
         name: 'example',
-        id: '1s-vfBR8Uy-B-TLO_C5Ozw4z-L0E3hdP8ohMV761ouRI',
+        id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
         tabs: {
-          objects: [BP.byRow]
+          export_events: [BP.byId, BP.byRow],
+          export_categories: [BP.byGroup, BP.byRow],
+          export_sites: BP.byRow,
+          export_tags: BP.byTree
         }
       }
     ]
