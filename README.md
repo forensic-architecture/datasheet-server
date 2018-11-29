@@ -32,7 +32,9 @@ Datasheet server makes resources from a spreadsheet available as a structured AP
 ## [Overview](#overview)
 Datasheet server is a Node server developed at [Forensic Architecture](https://forensic-architecture.org) to make data that is being dynamically modified by researchers concurrently consumable for programmatic applications as an API. We use spreadsheets extensively to keep track of information during [our investigations](http://forensic-architecture.org/cases), and we often want to make this data available via structured queries to make it available in a frontend web application, a game engine, or another use case.
 
-Querying data directly from spreadsheets is brittle, as it relies on the maintenance of a rigid structure in the sheets at all times. By putting Datasheet Server as a proxy that sits in between source sheets and their consumers, it is possible to dynamically modify sheets without breaking applications. A data admin can then use Datasheet Server to ensure that applications always receive eligible data, without foregoing the spreadsheets as sources of truth.  
+Querying data directly from spreadsheets is brittle, as it relies on the maintenance of a rigid structure in the sheets at all times. By putting Datasheet Server as a proxy that sits in between source sheets and their consumers, it is possible to dynamically modify sheets without breaking applications. A data admin can then use Datasheet Server to ensure that applications always receive eligible data, without foregoing the spreadsheets as sources of truth.
+
+To see how to get a local instance of datasheet server running in practice, see [this wiki](https://github.com/forensic-architecture/timemap/wiki/Setting-up-a-local-instance-of-Timemap) explaining how to use it to feed data from a Google Sheet to a local instance of [Timemap](https://github.com/forensic-architecture/timemap).
 
 ### Design Concepts
 The codebase currently only supports Google Sheets as a source, and a REST-like format as a query language. It is designed, however, with extensibility in mind.

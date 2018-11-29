@@ -8,6 +8,13 @@ import config from './config'
 let app = express()
 app.server = http.createServer(app)
 
+// enable cross origin requests explicitly in development
+if (process.env.NODE_ENV === 'development') {
+  const cors = require('cors')
+  console.log('Enabling CORS in development...')
+  app.use(cors())
+}
+
 initialize(controller => {
   app.use(
     middleware({

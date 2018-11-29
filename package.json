@@ -4,8 +4,8 @@
   "description": "Starter project for an ES6 RESTful Express API",
   "main": "dist",
   "scripts": {
-    "dev": "nodemon -w src --exec \"babel-node src\"",
-    "build": "npx babel src -d dist",
+    "dev": "NODE_ENV=development nodemon -w src --exec \"babel-node src\"",
+    "build": "NODE_ENV=production npx babel src -d dist",
     "start": "node dist",
     "lint": "standard \"src/**/*.js\" \"test/**/*/js\"",
     "test-watch": "ava --watch",
@@ -20,7 +20,7 @@
   "dependencies": {
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
-    "cors": "^2.7.1",
+    "cors": "^2.8.5",
     "express": "^4.13.3",
     "express-graphql": "^0.6.12",
     "googleapis": "^32.0.0",
