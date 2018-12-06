@@ -1,5 +1,6 @@
 import { version } from '../../package.json'
 import { Router } from 'express'
+import copy from '../copy/en'
 
 export default ({ config, controller }) => {
   let api = Router()
@@ -30,9 +31,19 @@ export default ({ config, controller }) => {
       .retrieve(req.params.source, req.params.tab, req.params.resource)
       .then(data => res.json(data))
       .catch(err =>
-        res.status(err.status || 501)
-          .send()
+        res.status(err.status || 404)
+          .send({ error: err })
       )
+  })
+
+  api.get('/:source', (req, res) => {
+    res.status(404)
+      .send({ error: copy.errors.onlySource })
+  })
+
+  api.get('/:source/:tab', (req, res) => {
+    res.status(404)
+      .send({ error: copy.errors.onlyTab })
   })
 
   api.get('/update', (req, res) => {
