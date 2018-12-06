@@ -3,7 +3,7 @@ import { fmtObj } from '../lib/util'
 import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
 
 /**
- * byId - generate a Blueprint from a data source by id, which is an integer.
+ * byId - generate a Blueprint from a data sheet by id, which is an integer.
  * The resource name defaults to 'ids', or a custom resource name can be passed.
  * Each resource item is an object with values labelled according to column
  * names. Items are inserted in the data list at idx = id.
@@ -15,16 +15,16 @@ import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
  */
 export default function byId (
   tabName,
-  sourceName,
-  sourceId,
+  sheetName,
+  sheetId,
   data,
   label = 'ids'
 ) {
   // Define Blueprint
   const bp = R.clone(defaultBlueprint)
-  bp.source = {
-    name: sourceName,
-    id: sourceId
+  bp.sheet = {
+    name: sheetName,
+    id: sheetId
   }
   bp.name = tabName
 

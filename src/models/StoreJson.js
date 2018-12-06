@@ -1,5 +1,5 @@
 import fs from 'mz/fs'
-import { fmtSourceTitle } from '../lib/util'
+import { fmtSheetTitle } from '../lib/util'
 import copy from '../copy/en'
 
 const STORAGE_DIRNAME = 'temp'
@@ -9,9 +9,9 @@ class StoreJson {
     return Promise.all(
       Object.keys(bp.routes).map(route =>
         fs.writeFile(
-          `${STORAGE_DIRNAME}/${fmtSourceTitle(
-            bp.source.name
-          )}__${fmtSourceTitle(bp.name)}__${route}.json`,
+          `${STORAGE_DIRNAME}/${fmtSheetTitle(
+            bp.sheet.name
+          )}__${fmtSheetTitle(bp.name)}__${route}.json`,
           JSON.stringify(bp.routes[route].data)
         )
       )
@@ -43,7 +43,6 @@ class StoreJson {
             // Do a lookup if fragment is included to filter a relevant item
             const index = parseInt(parts[3])
             if (!isNaN(index) && index >= 0 && index < data.length) {
-              console.log(data, index)
               return data.filter((vl, idx) => idx === index)[0]
             } else {
               throw new Error(copy.errors.noFragment(parts))
@@ -55,7 +54,7 @@ class StoreJson {
     }
   }
 
-  // TODO: add method to build blueprint from data source
+  // TODO: add method to build blueprint from data sheet
 }
 
 export default StoreJson
