@@ -1,5 +1,6 @@
 import { version } from '../../package.json'
 import { Router } from 'express'
+import copy from '../copy/en'
 
 export default ({ config, controller }) => {
   let api = Router()
@@ -20,8 +21,8 @@ export default ({ config, controller }) => {
       .retrieveFrag(source, tab, resource, frag)
       .then(data => res.json(data))
       .catch(err =>
-        res.status(err.status || 501)
-          .send()
+        res.status(err.status || 404)
+          .send({ error: err.message })
       )
   })
 
@@ -30,8 +31,8 @@ export default ({ config, controller }) => {
       .retrieve(req.params.source, req.params.tab, req.params.resource)
       .then(data => res.json(data))
       .catch(err =>
-        res.status(err.status || 501)
-          .send()
+        res.status(err.status || 404)
+          .send({ error: err.message })
       )
   })
 
@@ -44,10 +45,22 @@ export default ({ config, controller }) => {
         })
       )
       .catch(err =>
-        res.json({
-          error: err.message
-        })
+        res.status(404)
+          .send({ error: err.message })
       )
+  })
+
+  // ERROR routes. Note that it is important that these come AFTER routes
+  // like /update, so that the regex does not greedily match these routes.
+
+  api.get('/:source', (req, res) => {
+    res.status(404)
+      .send({ error: copy.errors.onlySource })
+  })
+
+  api.get('/:source/:tab', (req, res) => {
+    res.status(404)
+      .send({ error: copy.errors.onlyTab })
   })
 
   return api
