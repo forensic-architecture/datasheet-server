@@ -1,7 +1,7 @@
 // FetcherTwo class interfaces with Google Sheet, and saves to a specified db
 import { google } from 'googleapis'
 import {
-  fmtSourceTitle,
+  fmtSheetTitle,
   fmtBlueprinterTitles,
   bp,
   isFunction
@@ -10,7 +10,7 @@ import { byRow } from './blueprinters'
 import R from 'ramda'
 
 class Fetcher {
-  constructor (db, sourceName, sourceId, blueprinters) {
+  constructor (db, sheetName, sheetId, blueprinters) {
     /*
      * The database that the fetcher should use. This should be an instance of a model-compliant class.
      * See models/Interface.js for the specifications for a model-compliant class.
@@ -18,15 +18,15 @@ class Fetcher {
     this.db = db
 
     /*
-     * ID of the Google Sheet where the data is sourced. Note that the privateKey.clientEmail
+     * ID of the Google Sheet where the data is sheetd. Note that the privateKey.clientEmail
      * loaded here must be added to the sheet as an editor.
      */
-    this.sourceId = sourceId
+    this.sheetId = sheetId
 
     /*
-     * The name of the source. This will prefix tabs saved in the database.
+     * The name of the sheet. This will prefix tabs saved in the database.
      */
-    this.sourceName = sourceName
+    this.sheetName = sheetName
 
     /*
      * These are the available tabs for storing and retrieving data.
@@ -53,8 +53,8 @@ class Fetcher {
     this._saveBp = R.curry((tab, title, data, blueprinter) => {
       const saturatedBp = blueprinter(
         tab,
-        this.sourceName,
-        this.sourceId,
+        this.sheetName,
+        this.sheetId,
         data
       )
       const blueprint = bp(saturatedBp) // TODO: come up with better semantics.
@@ -69,14 +69,14 @@ class Fetcher {
       'https://www.googleapis.com/auth/spreadsheets'
     ])
     this.auth = googleAuth
-    const { sourceId } = this
+    const { sheetId } = this
 
     return new Promise((resolve, reject) => {
       googleAuth.authorize(function (err) {
         if (err) {
           reject(err)
         } else {
-          resolve(`Connected to ${sourceId}.`)
+          resolve(`Connected to ${sheetId}.`)
         }
       })
     })
@@ -88,13 +88,13 @@ class Fetcher {
     return this.sheets.spreadsheets
       .get({
         auth: this.auth,
-        spreadsheetId: this.sourceId
+        spreadsheetId: this.sheetId
       })
       .then(response => {
         tabTitles = response.data.sheets.map(sheet => sheet.properties.title)
         return this.sheets.spreadsheets.values.batchGet({
           auth: this.auth,
-          spreadsheetId: this.sourceId,
+          spreadsheetId: this.sheetId,
           ranges: tabTitles
         })
       })
@@ -116,7 +116,7 @@ class Fetcher {
   }
 
   save (tab, data) {
-    const title = fmtSourceTitle(tab)
+    const title = fmtSheetTitle(tab)
     if (Object.keys(this.blueprinters).indexOf(title) > -1) {
       const bpConfig = this.blueprinters[title]
 
@@ -127,20 +127,20 @@ class Fetcher {
       }
     } else {
       // If it can't find a blueprinter for the tab title, default to byRow
-      return this.db.save(byRow(tab, this.sourceName, this.sourceId, data))
+      return this.db.save(byRow(tab, this.sheetName, this.sheetId, data))
     }
   }
 
   // NB: could combine these functions by checking kwargs length
   retrieve (tab, resource) {
-    const title = fmtSourceTitle(tab)
-    const url = `${this.sourceName}/${tab}/${resource}`
+    const title = fmtSheetTitle(tab)
+    const url = `${this.sheetName}/${tab}/${resource}`
     return this.db.load(url, this.blueprints[title])
   }
 
   retrieveFrag (tab, resource, frag) {
-    const title = fmtSourceTitle(tab)
-    const url = `${this.sourceName}/${tab}/${resource}/${frag}`
+    const title = fmtSheetTitle(tab)
+    const url = `${this.sheetName}/${tab}/${resource}/${frag}`
     return this.db.load(url, this.blueprints[title])
   }
 }

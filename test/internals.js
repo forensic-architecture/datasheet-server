@@ -24,12 +24,12 @@ test('defaultBlueprint exports', t => {
 })
 
 test('byColumn blueprinter generates expected output', t => {
-  const actual = byColumn('eg ColumnBlueprint', 'egSourceName', 'egSourceId', egInput1)
+  const actual = byColumn('eg ColumnBlueprint', 'egSheetName', 'egSheetId', egInput1)
   const expected = R.clone(defaultBlueprint)
   expected.name = 'eg ColumnBlueprint'
-  expected.source = {
-    id: 'egSourceId',
-    name: 'egSourceName'
+  expected.sheet = {
+    id: 'egSheetId',
+    name: 'egSheetName'
   }
   expected.routes['h1'] = R.clone(defaultRoute)
   expected.routes['h1'].data = [1, 4]
@@ -41,12 +41,12 @@ test('byColumn blueprinter generates expected output', t => {
 })
 
 test('byRow blueprinter generates expected output', t => {
-  const actual = byRow('egRowBlueprint', 'egSourceName', 'egSourceId', egInput1, 'items')
+  const actual = byRow('egRowBlueprint', 'egSheetName', 'egSheetId', egInput1, 'items')
   const expected = R.clone(defaultBlueprint)
   expected.name = 'egRowBlueprint'
-  expected.source = {
-    id: 'egSourceId',
-    name: 'egSourceName'
+  expected.sheet = {
+    id: 'egSheetId',
+    name: 'egSheetName'
   }
   expected.routes['items'] = R.clone(defaultRoute)
   expected.routes['items'].data = [{

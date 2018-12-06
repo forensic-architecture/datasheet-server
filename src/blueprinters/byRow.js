@@ -3,7 +3,7 @@ import { fmtObj } from '../lib/util'
 import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
 
 /**
- * byRow - generate a Blueprint from a data source by row. The resource name
+ * byRow - generate a Blueprint from a data sheet by row. The resource name
  * defaults to 'rows', or a custom resource name can be passed. Each resource
  * item is an object with values labelled according to column names.
  *
@@ -14,16 +14,16 @@ import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
  */
 export default function byRow (
   tabName,
-  sourceName,
-  sourceId,
+  sheetName,
+  sheetId,
   data,
   label = 'rows'
 ) {
   // Define Blueprint
   const bp = R.clone(defaultBlueprint)
-  bp.source = {
-    name: sourceName,
-    id: sourceId
+  bp.sheet = {
+    name: sheetName,
+    id: sheetId
   }
   bp.name = tabName
 

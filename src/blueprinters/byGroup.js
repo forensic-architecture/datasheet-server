@@ -3,7 +3,7 @@ import { fmtObj } from '../lib/util'
 import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
 
 /**
- * byGroup - generate a Blueprint from a data source grouped by a column called 'group'
+ * byGroup - generate a Blueprint from a data sheet grouped by a column called 'group'
  * The resource name defaults to 'groups', or a custom resource name can be passed.
  * Each resource item is an object with values labelled according to column
  * names. Items are inserted in the data list at idx = id.
@@ -15,16 +15,16 @@ import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
  */
 export default function byGroup (
   tabName,
-  sourceName,
-  sourceId,
+  sheetName,
+  sheetId,
   data,
   label = 'groups'
 ) {
   // Define Blueprint
   const bp = R.clone(defaultBlueprint)
-  bp.source = {
-    name: sourceName,
-    id: sourceId
+  bp.sheet = {
+    name: sheetName,
+    id: sheetId
   }
   bp.name = tabName
 

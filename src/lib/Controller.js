@@ -9,20 +9,20 @@ class Controller {
     this.fetchers = fetchers
   }
 
-  sourceExists (source) {
-    return (Object.keys(this.fetchers).indexOf(source) >= 0)
+  sheetExists (sheet) {
+    return (Object.keys(this.fetchers).indexOf(sheet) >= 0)
   }
 
   blueprints () {
     return Object.keys(this.fetchers).map(
-      source => this.fetchers[source].blueprints
+      sheet => this.fetchers[sheet].blueprints
     )
   }
 
   update () {
     return Promise.all(
-      Object.keys(this.fetchers).map(source => {
-        return this.fetchers[source].update()
+      Object.keys(this.fetchers).map(sheet => {
+        return this.fetchers[sheet].update()
       })
     ).then(results => {
       if (results.every(r => r)) {
@@ -33,21 +33,21 @@ class Controller {
     })
   }
 
-  retrieve (source, tab, resource) {
-    if (this.sourceExists(source)) {
-      const fetcher = this.fetchers[source]
+  retrieve (sheet, tab, resource) {
+    if (this.sheetExists(sheet)) {
+      const fetcher = this.fetchers[sheet]
       return fetcher.retrieve(tab, resource)
     } else {
-      return Promise.reject(new Error(copy.errors.noResource(source)))
+      return Promise.reject(new Error(copy.errors.noResource(sheet)))
     }
   }
 
-  retrieveFrag (source, tab, resource, frag) {
-    if (this.sourceExists(source)) {
-      const fetcher = this.fetchers[source]
+  retrieveFrag (sheet, tab, resource, frag) {
+    if (this.sheetExists(sheet)) {
+      const fetcher = this.fetchers[sheet]
       return fetcher.retrieveFrag(tab, resource, frag)
     } else {
-      return Promise.reject(new Error(copy.errors.noResource(source)))
+      return Promise.reject(new Error(copy.errors.noResource(sheet)))
     }
   }
 }
