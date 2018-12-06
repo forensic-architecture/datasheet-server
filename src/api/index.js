@@ -21,8 +21,8 @@ export default ({ config, controller }) => {
       .retrieveFrag(source, tab, resource, frag)
       .then(data => res.json(data))
       .catch(err =>
-        res.status(err.status || 501)
-          .send()
+        res.status(err.status || 404)
+          .send({ error: err.message })
       )
   })
 
@@ -32,18 +32,8 @@ export default ({ config, controller }) => {
       .then(data => res.json(data))
       .catch(err =>
         res.status(err.status || 404)
-          .send({ error: err })
+          .send({ error: err.message })
       )
-  })
-
-  api.get('/:source', (req, res) => {
-    res.status(404)
-      .send({ error: copy.errors.onlySource })
-  })
-
-  api.get('/:source/:tab', (req, res) => {
-    res.status(404)
-      .send({ error: copy.errors.onlyTab })
   })
 
   api.get('/update', (req, res) => {
@@ -55,10 +45,22 @@ export default ({ config, controller }) => {
         })
       )
       .catch(err =>
-        res.json({
-          error: err.message
-        })
+        res.status(404)
+          .send({ error: err.message })
       )
+  })
+
+  // ERROR routes. Note that it is important that these come AFTER routes
+  // like /update, so that the regex does not greedily match these routes.
+
+  api.get('/:source', (req, res) => {
+    res.status(404)
+      .send({ error: copy.errors.onlySource })
+  })
+
+  api.get('/:source/:tab', (req, res) => {
+    res.status(404)
+      .send({ error: copy.errors.onlyTab })
   })
 
   return api

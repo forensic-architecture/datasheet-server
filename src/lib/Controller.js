@@ -1,3 +1,5 @@
+import copy from '../copy/en'
+
 /**
  * Controller
  *
@@ -23,7 +25,11 @@ class Controller {
         return this.fetchers[source].update()
       })
     ).then(results => {
-      return 'All sources updated'
+      if (results.every(r => r)) {
+        return copy.success.update
+      } else {
+        throw new Error(copy.errors.update)
+      }
     })
   }
 
@@ -32,9 +38,7 @@ class Controller {
       const fetcher = this.fetchers[source]
       return fetcher.retrieve(tab, resource)
     } else {
-      return Promise.resolve().then(() => {
-        throw new Error(`Source ${source} not available.`)
-      })
+      return Promise.reject(new Error(copy.errors.noResource(source)))
     }
   }
 
@@ -43,9 +47,7 @@ class Controller {
       const fetcher = this.fetchers[source]
       return fetcher.retrieveFrag(tab, resource, frag)
     } else {
-      return Promise.resolve().then(() => {
-        throw new Error(`Source ${source} not available.`)
-      })
+      return Promise.reject(new Error(copy.errors.noResource(source)))
     }
   }
 }

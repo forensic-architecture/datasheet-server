@@ -111,7 +111,8 @@ class Fetcher {
           })
         )
       })
-      .then(() => 'All tabs updated')
+      .then(() => true)
+      .catch(() => false)
   }
 
   save (tab, data) {
