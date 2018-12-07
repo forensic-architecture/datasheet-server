@@ -1,8 +1,8 @@
 import R from 'ramda'
-import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
+import { defaultBlueprint, defaultResource } from '../lib/blueprinters'
 
 /**
- * byTree - generate a Blueprint from a data sheet grouped by a column called 'group'
+ * tree - generate a Blueprint from a data sheet grouped by a column called 'group'
  * The resource name defaults to 'groups', or a custom resource name can be passed.
  * Each resource item is an object with values labelled according to column
  * names. Items are inserted in the data list at idx = id.
@@ -12,7 +12,7 @@ import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
  * @param  {type} name=""      name of blueprint.
  * @return {type} Blueprint
  */
-export default function byTree (
+export default function tree (
   tabName,
   sheetName,
   sheetId,
@@ -27,9 +27,9 @@ export default function byTree (
   }
   bp.name = tabName
 
-  // Column names define routes
-  bp.routes[label] = R.clone(defaultRoute)
-  bp.routes[label].data = {}
+  // Column names define resources
+  bp.resources[label] = R.clone(defaultResource)
+  bp.resources[label].data = {}
 
   const tree = {
     key: 'tags',
@@ -62,6 +62,6 @@ export default function byTree (
     }
   })
 
-  bp.routes[label].data = tree
+  bp.resources[label].data = tree
   return bp
 }

@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
+import { defaultBlueprint, defaultResource } from '../lib/blueprinters'
 
 /**
  * byColumn - generate a Blueprint from a data sheet by column. Each column
@@ -9,7 +9,7 @@ import { defaultBlueprint, defaultRoute } from '../lib/blueprinters'
  * @return {type} Blueprint
  * generated.
  */
-export default function byColumn (tabName, sheetName, sheetId, data) {
+function columns (tabName, sheetName, sheetId, data) {
   // Define Blueprint props
   const bp = R.clone(defaultBlueprint)
   bp.sheet = {
@@ -18,18 +18,20 @@ export default function byColumn (tabName, sheetName, sheetId, data) {
   }
   bp.name = tabName
 
-  // column names define routes
+  // column names define resources
   const labels = data[0]
   labels.forEach(label => {
-    bp.routes[label] = R.clone(defaultRoute)
+    bp.resources[label] = R.clone(defaultResource)
   })
 
   // remaining rows as data
   data.forEach((row, idx) => {
     if (idx === 0) return
     labels.forEach((label, idx) => {
-      bp.routes[label].data.push(row[idx])
+      bp.resources[label].data.push(row[idx])
     })
   })
   return bp
 }
+
+export default columns
