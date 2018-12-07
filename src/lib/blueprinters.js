@@ -4,23 +4,23 @@ import R from 'ramda'
 
 export const defaultBlueprint = {
   name: null,
-  id: null,
-  dialects: ['rest'], // supported dialects, can (eventually) be multiple
+  sheet: {
+    name: null,
+    id: null
+  },
   resources: {}
 }
 
 export const defaultResource = {
-  options: {
-    fragment: true
-  },
   data: []
 }
 
 export function buildDesaturated (sheetId, sheetName, tab, resource) {
   const bp = R.clone(defaultBlueprint)
-  bp.name = sheetName
-  bp.id = sheetId
-  bp.resources[tab] = resource
+  bp.sheet.name = sheetName
+  bp.sheet.id = sheetId
+  bp.name = tab
+  bp.resources[resource] = null
   return bp
 }
 

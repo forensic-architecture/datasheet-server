@@ -68,8 +68,11 @@ class Fetcher {
             const parts = url.split('/')
             acc.push([ parts[1], parts[2] ])
             return acc
+          } else {
+            return acc
           }
         }, [])
+
         return allParts
           .map(parts => buildDesaturated(
             this.sheetId,

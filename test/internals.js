@@ -15,9 +15,11 @@ const egInput1 = [
 
 test('defaultBlueprint exports', t => {
   const expected = {
+    sheet: {
+      name: null,
+      id: null
+    },
     name: null,
-    id: null,
-    dialects: ['rest'],
     resources: {}
   }
   t.deepEqual(expected, defaultBlueprint)
