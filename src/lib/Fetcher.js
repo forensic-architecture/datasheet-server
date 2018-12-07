@@ -48,7 +48,14 @@ class Fetcher {
      */
     this.blueprints = this._indexDbForBlueprints()
       .then(allUrls => {
-        const supportedUrls = allUrls.filter(url => url.startsWith(this.id))
+        const allParts = allUrls.reduce((acc, url) => {
+          if (url.startsWith(this.id)) {
+            const parts = url.split('/')
+            acc.push([ parts[1], parts[2] ])
+            return acc
+          }
+        }, [])
+        console.log(allParts)
         return {}
       })
 
