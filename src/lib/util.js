@@ -55,24 +55,24 @@ export const idxSearcher = R.curry((attrName, searchValue, myArray) => {
 
 /* more site specific functions. TODO: maybe move to another folder? */
 
-export function fmtSheetTitle (name) {
+export function fmtName (name) {
   return name.replaceAll(' ', '-').toLowerCase()
 }
 
 export function fmtBlueprinterTitles (tabs) {
   const obj = {}
   Object.keys(tabs).forEach(tab => {
-    const name = fmtSheetTitle(tab)
+    const name = fmtName(tab)
     obj[name] = tabs[tab]
   })
   return obj
 }
 
 export function deriveFilename (sheet, tab) {
-  return `${fmtSheetTitle(sheet)}-${fmtSheetTitle(tab)}.json`
+  return `${fmtName(sheet)}-${fmtName(tab)}.json`
 }
 
-export function bp (full) {
+export function desaturate (full) {
   const blueprint = {
     name: R.clone(full.name),
     sheet: R.clone(full.sheet),

@@ -1,20 +1,19 @@
 import fs from 'mz/fs'
-import { fmtSheetTitle } from '../lib/util'
 import copy from '../copy/en'
 
 const STORAGE_DIRNAME = 'temp'
 
 class StoreJson {
-  save (bp) {
-    return Promise.all(
-      Object.keys(bp.routes).map(route =>
-        fs.writeFile(
-          `${STORAGE_DIRNAME}/${fmtSheetTitle(
-            bp.sheet.name
-          )}__${fmtSheetTitle(bp.name)}__${route}.json`,
-          JSON.stringify(bp.routes[route].data)
-        )
-      )
+  index () {
+    return Promise.resolve({})
+  }
+
+  save (url, data) {
+    const parts = url.split('/')
+
+    return fs.writeFile(
+      `${STORAGE_DIRNAME}/${parts[0]}__${parts[1]}__${parts[2]}.json`,
+      JSON.stringify(data)
     )
   }
 

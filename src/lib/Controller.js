@@ -9,7 +9,7 @@ class Controller {
     this.fetchers = fetchers
   }
 
-  sheetExists (sheet) {
+  _sheetExists (sheet) {
     return (Object.keys(this.fetchers).indexOf(sheet) >= 0)
   }
 
@@ -25,6 +25,7 @@ class Controller {
         return this.fetchers[sheet].update()
       })
     ).then(results => {
+      console.log(results)
       if (results.every(r => r)) {
         return copy.success.update
       } else {
@@ -34,7 +35,7 @@ class Controller {
   }
 
   retrieve (sheet, tab, resource) {
-    if (this.sheetExists(sheet)) {
+    if (this._sheetExists(sheet)) {
       const fetcher = this.fetchers[sheet]
       return fetcher.retrieve(tab, resource)
     } else {
@@ -43,7 +44,7 @@ class Controller {
   }
 
   retrieveFrag (sheet, tab, resource, frag) {
-    if (this.sheetExists(sheet)) {
+    if (this._sheetExists(sheet)) {
       const fetcher = this.fetchers[sheet]
       return fetcher.retrieveFrag(tab, resource, frag)
     } else {
