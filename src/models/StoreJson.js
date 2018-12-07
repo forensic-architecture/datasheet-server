@@ -1,5 +1,5 @@
 import fs from 'mz/fs'
-import copy from '../copy/en'
+import errors from '../lib/errors'
 
 const STORAGE_DIRNAME = 'temp'
 
@@ -45,7 +45,7 @@ class StoreJson {
             if (!isNaN(id) && id >= 0 && id < data.length) {
               return data[id]
             } else {
-              throw new Error(copy.errors.noFragment(parts))
+              throw errors.noFragment(parts)
             }
           } else {
             // Do a lookup if fragment is included to filter a relevant item
@@ -53,12 +53,12 @@ class StoreJson {
             if (!isNaN(index) && index >= 0 && index < data.length) {
               return data.filter((vl, idx) => idx === index)[0]
             } else {
-              throw new Error(copy.errors.noFragment(parts))
+              throw errors.noFragment(parts)
             }
           }
         })
     } else {
-      return Promise.reject(new Error(copy.errors.noResource(parts)))
+      return Promise.reject(errors.noResource(parts))
     }
   }
 
