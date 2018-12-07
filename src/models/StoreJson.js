@@ -3,9 +3,18 @@ import copy from '../copy/en'
 
 const STORAGE_DIRNAME = 'temp'
 
+function partsFromFilename (fname) {
+  const body = fname.slice(0, -5)
+  return body.split('__')
+}
+
 class StoreJson {
   index () {
-    return Promise.resolve({})
+    return Promise.resolve()
+      .then(() => fs.readdir(STORAGE_DIRNAME))
+      .then(files => files.filter(f => f.match(/.*\.json$/)))
+      .then(jsons => jsons.map(partsFromFilename))
+      .then(parts => parts.map(p => `${p[0]}/${p[1]}/${p[2]}`))
   }
 
   save (url, data) {
