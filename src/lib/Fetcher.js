@@ -1,5 +1,6 @@
 // FetcherTwo class interfaces with Google Sheet, and saves to a specified db
 import { google } from 'googleapis'
+import { buildDesaturated } from './blueprinters'
 import {
   fmtName,
   fmtBlueprinterTitles,
@@ -46,18 +47,8 @@ class Fetcher {
      * data structure updates as well. It is the model layer that determines the
      * performance of indexing the blueprints.
      */
-    this.blueprints = this._indexDbForBlueprints()
-      .then(allUrls => {
-        const allParts = allUrls.reduce((acc, url) => {
-          if (url.startsWith(this.id)) {
-            const parts = url.split('/')
-            acc.push([ parts[1], parts[2] ])
-            return acc
-          }
-        }, [])
-        console.log(allParts)
-        return {}
-      })
+    this.blueprints = null
+    this._buildBlueprintsAsync() // NB: modifies this.blueprints on completion
 
     /*
      * Google API setup
@@ -67,6 +58,29 @@ class Fetcher {
 
     /** curry to allow convenient syntax with map */
     this._saveViaBlueprinter = R.curry(this._saveViaBlueprinter)
+  }
+
+  _buildBlueprintsAsync () {
+    return this.db.index()
+      .then(allUrls => {
+        const allParts = allUrls.reduce((acc, url) => {
+          if (url.startsWith(this.id)) {
+            const parts = url.split('/')
+            acc.push([ parts[1], parts[2] ])
+            return acc
+          }
+        }, [])
+        return allParts
+          .map(parts => buildDesaturated(
+            this.sheetId,
+            this.sheetName,
+            parts[0],
+            parts[1]
+          ))
+      })
+      .then(res => {
+        this.blueprints = res
+      })
   }
 
   /** save data under a given tab name via its blueprinter, which generates
@@ -85,14 +99,6 @@ class Fetcher {
         this.db.save(`${this.id}/${tab}/${route}`, saturatedBp.resources[route].data)
       )
     )
-  }
-
-  /** index the db and produce appropriate blueprints structure **/
-  _indexDbForBlueprints () {
-    return this.db.index()
-      .then(res => {
-        return res
-      })
   }
 
   /** returns a Promise that resolves if access is granted to the account, and rejects otherwise. */
@@ -155,6 +161,7 @@ class Fetcher {
 
     if (Object.keys(this.blueprinters).indexOf(tab) > -1) {
       const bpConfig = this.blueprinters[tab]
+
       if (isFunction(bpConfig)) {
         // if bpConfig specifies a single blueprinter
         return this._saveViaBlueprinter(tab, data, bpConfig)
