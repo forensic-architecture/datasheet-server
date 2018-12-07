@@ -18,7 +18,7 @@ test('defaultBlueprint exports', t => {
     name: null,
     id: null,
     dialects: ['rest'],
-    routes: {}
+    resources: {}
   }
   t.deepEqual(expected, defaultBlueprint)
 })
@@ -31,12 +31,12 @@ test('byColumn blueprinter generates expected output', t => {
     id: 'egSheetId',
     name: 'egSheetName'
   }
-  expected.routes['h1'] = R.clone(defaultRoute)
-  expected.routes['h1'].data = [1, 4]
-  expected.routes['h2'] = R.clone(defaultRoute)
-  expected.routes['h2'].data = [2, 5]
-  expected.routes['h3'] = R.clone(defaultRoute)
-  expected.routes['h3'].data = [3, 6]
+  expected.resources['h1'] = R.clone(defaultRoute)
+  expected.resources['h1'].data = [1, 4]
+  expected.resources['h2'] = R.clone(defaultRoute)
+  expected.resources['h2'].data = [2, 5]
+  expected.resources['h3'] = R.clone(defaultRoute)
+  expected.resources['h3'].data = [3, 6]
   t.deepEqual(expected, actual)
 })
 
@@ -48,8 +48,8 @@ test('byRow blueprinter generates expected output', t => {
     id: 'egSheetId',
     name: 'egSheetName'
   }
-  expected.routes['items'] = R.clone(defaultRoute)
-  expected.routes['items'].data = [{
+  expected.resources['items'] = R.clone(defaultRoute)
+  expected.resources['items'].data = [{
     h1: 1,
     h2: 2,
     h3: 3

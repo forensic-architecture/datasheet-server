@@ -77,11 +77,11 @@ export function desaturate (full) {
     name: R.clone(full.name),
     sheet: R.clone(full.sheet),
     dialects: R.clone(full.dialects),
-    routes: {}
+    resources: {}
   }
-  Object.keys(full.routes).forEach(route => {
-    blueprint.routes[route] = {
-      options: R.clone(full.routes[route].options)
+  Object.keys(full.resources).forEach(route => {
+    blueprint.resources[route] = {
+      options: R.clone(full.resources[route].options)
     }
   })
   return blueprint

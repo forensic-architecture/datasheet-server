@@ -5,7 +5,7 @@ export const defaultBlueprint = {
   name: null,
   id: null,
   dialects: ['rest'], // supported dialects, can (eventually) be multiple
-  routes: {}
+  resources: {}
 }
 
 export const defaultRoute = {

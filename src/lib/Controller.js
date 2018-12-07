@@ -25,7 +25,6 @@ class Controller {
         return this.fetchers[sheet].update()
       })
     ).then(results => {
-      console.log(results)
       if (results.every(r => r)) {
         return copy.success.update
       } else {

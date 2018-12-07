@@ -47,7 +47,10 @@ class Fetcher {
      * performance of indexing the blueprints.
      */
     this.blueprints = this._indexDbForBlueprints()
-      .then(res => res)
+      .then(allUrls => {
+        const supportedUrls = allUrls.filter(url => url.startsWith(this.id))
+        return {}
+      })
 
     /*
      * Google API setup
@@ -71,8 +74,8 @@ class Fetcher {
     )
 
     return Promise.all(
-      Object.keys(saturatedBp.routes).map(route =>
-        this.db.save(`${this.id}/${tab}/${route}`, saturatedBp.routes[route].data)
+      Object.keys(saturatedBp.resources).map(route =>
+        this.db.save(`${this.id}/${tab}/${route}`, saturatedBp.resources[route].data)
       )
     )
   }
@@ -106,7 +109,7 @@ class Fetcher {
 
   update () {
     let tabTitles
-    /* Retrieve all available routes on a given sheet, and store formatted copies of it where a formatter is available */
+    /* Retrieve all available resources on a given sheet, and store formatted copies of it where a formatter is available */
     return this.API.spreadsheets
       .get({
         auth: this.auth,

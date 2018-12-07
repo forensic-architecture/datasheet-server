@@ -27,9 +27,9 @@ export default function byTree (
   }
   bp.name = tabName
 
-  // Column names define routes
-  bp.routes[label] = R.clone(defaultRoute)
-  bp.routes[label].data = {}
+  // Column names define resources
+  bp.resources[label] = R.clone(defaultRoute)
+  bp.resources[label].data = {}
 
   const tree = {
     key: 'tags',
@@ -62,6 +62,6 @@ export default function byTree (
     }
   })
 
-  bp.routes[label].data = tree
+  bp.resources[label].data = tree
   return bp
 }

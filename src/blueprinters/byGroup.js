@@ -28,11 +28,11 @@ export default function byGroup (
   }
   bp.name = tabName
 
-  // Column names define routes
+  // Column names define resources
   const itemLabels = data[0]
   const fmt = fmtObj(itemLabels)
-  bp.routes[label] = R.clone(defaultRoute)
-  bp.routes[label].data = []
+  bp.resources[label] = R.clone(defaultRoute)
+  bp.resources[label].data = []
 
   const dataGroups = {}
 
@@ -46,7 +46,7 @@ export default function byGroup (
     }
   })
   Object.keys(dataGroups).forEach(groupKey => {
-    bp.routes[label].data.push({
+    bp.resources[label].data.push({
       group: groupKey,
       group_label: dataGroups[groupKey][0].group_label,
       data: dataGroups[groupKey]

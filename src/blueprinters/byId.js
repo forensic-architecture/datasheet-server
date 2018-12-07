@@ -28,15 +28,15 @@ export default function byId (
   }
   bp.name = tabName
 
-  // Column names define routes
+  // Column names define resources
   const itemLabels = data[0]
   const fmt = fmtObj(itemLabels)
-  bp.routes[label] = R.clone(defaultRoute)
-  bp.routes[label].data = []
+  bp.resources[label] = R.clone(defaultRoute)
+  bp.resources[label].data = []
 
   data.forEach((row, idx) => {
     if (idx === 0) return
-    bp.routes[label].data[fmt(row).id] = fmt(row)
+    bp.resources[label].data[fmt(row).id] = fmt(row)
   })
   return bp
 }
