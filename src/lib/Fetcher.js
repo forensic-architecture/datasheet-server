@@ -155,6 +155,7 @@ class Fetcher {
           })
         )
       })
+      .then(this._buildBlueprintsAsync())
       .then(() => true)
       .catch(() => false)
   }
