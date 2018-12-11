@@ -1,7 +1,7 @@
 import StoreJson from './models/StoreJson'
 import Fetcher from './lib/Fetcher'
 import Controller from './lib/Controller'
-import config from './config'
+import config from './sheets_config'
 
 const { googleSheets } = config
 const { sheets } = googleSheets

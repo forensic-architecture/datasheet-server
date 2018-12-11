@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { mapboxAccessToken } from '../config'
 import morgan from 'morgan'
 import mapbox from './mapbox'
 
@@ -10,8 +9,8 @@ export default ({ config, db }) => {
   /* logging middleware */
   routes.use(morgan('dev'))
 
-  if (mapboxAccessToken) {
-    routes.get('/mapbox/:z/:y/:x', mapbox(mapboxAccessToken))
+  if (process.env.MAPBOX_TOKEN) {
+    routes.get('/mapbox/:z/:y/:x', mapbox(process.env.MAPBOX_TOKEN))
   }
 
   return routes

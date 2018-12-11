@@ -3,7 +3,7 @@ import express from 'express'
 import initialize from './initialize'
 import middleware from './middleware'
 import api from './api'
-import config from './config'
+import config from './sheets_config'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -33,7 +33,7 @@ initialize(controller => {
     })
   )
 
-  app.server.listen(process.env.PORT || config.port, () => {
+  app.server.listen(process.env.PORT || 4040, () => {
     console.log(`Started on port ${app.server.address().port}`)
   })
 })
