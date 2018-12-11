@@ -11,3 +11,9 @@ export function noFragment (parts) {
 export function noResource (parts) {
   return new Error(copy.errors.noResource(parts))
 }
+
+export default {
+  modelLayerGeneric,
+  noFragment,
+  noResource
+}
