@@ -32,9 +32,21 @@ test('should launch', t => {
 });
 
 var urls = [
+  // Express API registered routes: 
+  // /
   '/',
+  // /blueprints
+  '/blueprints',
+  // /update
   '/update',
-  '/example/events/rows'
+  // /:sheet
+  '/example',
+  // /:sheet/:tab
+  '/example/events',
+  // /:sheet/:tab/:resource
+  '/example/events/rows',
+  // /:sheet/:tab/:resource/:frag
+  '/example/events/rows/1'
 ];
 
 urls.forEach(function(url) {
