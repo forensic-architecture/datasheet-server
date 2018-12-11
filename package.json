@@ -11,6 +11,11 @@
     "test-watch": "ava --watch",
     "test": "ava --verbose"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test && yarn lint && travis encrypt-file .env --add --force && git add ."
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/developit/express-es6-rest-api.git"
@@ -21,6 +26,7 @@
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
     "cors": "^2.8.5",
+    "dotenv": "^6.1.0",
     "express": "^4.13.3",
     "express-graphql": "^0.6.12",
     "googleapis": "^32.0.0",
@@ -39,6 +45,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "ava": "1.0.0-beta.8",
+    "husky": "^1.2.0",
     "nodemon": "1.18.7",
     "standard": "^12.0.1"
   },

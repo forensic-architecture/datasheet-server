@@ -4,6 +4,9 @@ import initialize from './initialize'
 import middleware from './middleware'
 import api from './api'
 import config from './config'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 let app = express()
 app.server = http.createServer(app)
