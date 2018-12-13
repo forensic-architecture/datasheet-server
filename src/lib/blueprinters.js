@@ -25,7 +25,6 @@ export function buildDesaturated (sheetId, sheetName, tab, resource) {
 }
 
 const buildBlueprinter = R.curry((datafierName, datafier, sheetId, sheetName, tabName, data) => {
-  console.log(`blueprinter ${datafierName} called: ${tabName}`)
   const bp = R.clone(defaultBlueprint)
   bp.sheet = {
     name: sheetName,

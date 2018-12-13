@@ -30,8 +30,6 @@ class Controller {
       } else {
         throw new Error(copy.errors.update)
       }
-    }).catch(err => {
-      console.log(err)
     })
   }
 
