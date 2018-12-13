@@ -1,4 +1,3 @@
-import R from 'ramda'
 import { fmtObj } from '../lib/util'
 
 /**

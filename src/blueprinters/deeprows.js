@@ -1,4 +1,3 @@
-import R from 'ramda'
 import { fmtObj } from '../lib/util'
 
 /**
@@ -46,7 +45,7 @@ export default (data) => {
     // generate deep row labels using structure
     Object.keys(structure)
       .forEach(newLabel => {
-        if (newLabel != '__flat') {
+        if (newLabel !== '__flat') {
           const oldLabels = structure[newLabel]
           // only add new value if not ''
           const labelValues = []

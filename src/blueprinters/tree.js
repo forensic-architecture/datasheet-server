@@ -1,6 +1,3 @@
-import R from 'ramda'
-import { fmtObj } from '../lib/util'
-
 /**
  * Each resource item is inserted into a tree. TODO: describe layout.
  *
