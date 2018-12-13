@@ -32,11 +32,12 @@ export default function ids (
   const itemLabels = data[0]
   const fmt = fmtObj(itemLabels)
   bp.resources[label] = R.clone(defaultResource)
-  bp.resources[label].data = []
+  bp.resources[label].data = {}
 
   data.forEach((row, idx) => {
     if (idx === 0) return
     bp.resources[label].data[fmt(row).id] = fmt(row)
   })
+
   return bp
 }
