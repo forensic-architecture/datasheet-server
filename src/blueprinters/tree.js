@@ -1,36 +1,13 @@
 import R from 'ramda'
-import { defaultBlueprint, defaultResource } from '../lib/blueprinters'
+import { fmtObj } from '../lib/util'
 
 /**
- * tree - generate a Blueprint from a data sheet grouped by a column called 'group'
- * The resource name defaults to 'groups', or a custom resource name can be passed.
- * Each resource item is an object with values labelled according to column
- * names. Items are inserted in the data list at idx = id.
+ * Each resource item is inserted into a tree. TODO: describe layout.
  *
- * @param  {type} data         list of lists representing sheet data.
- * @param  {type} label="groups"  name of resource in blueprint.
- * @param  {type} name=""      name of blueprint.
- * @return {type} Blueprint
+ * @param  {type} data        list of lists representing sheet data.
+ * @return {type} Array       the structured data.
  */
-export default function tree (
-  tabName,
-  sheetName,
-  sheetId,
-  data,
-  label = 'tree'
-) {
-  // Define Blueprint
-  const bp = R.clone(defaultBlueprint)
-  bp.sheet = {
-    name: sheetName,
-    id: sheetId
-  }
-  bp.name = tabName
-
-  // Column names define resources
-  bp.resources[label] = R.clone(defaultResource)
-  bp.resources[label].data = {}
-
+export default (data) => {
   const tree = {
     key: 'tags',
     children: {}
@@ -62,6 +39,5 @@ export default function tree (
     }
   })
 
-  bp.resources[label].data = tree
-  return bp
+  return tree
 }
