@@ -37,7 +37,7 @@ export const fmtObj = R.curry(
       }
     }
     columnNames.forEach((columnName, idx) => {
-      const value = row[idx] ? row[idx] : ""
+      const value = row[idx] ? row[idx] : ''
       obj[fmtColName(columnName)] = value
     })
     return obj
