@@ -189,7 +189,7 @@ class Fetcher {
 
   retrieveFrag (tab, resource, frag) {
     const title = fmtName(tab)
-    const url = `${this.sheetName}/${tab}/${resource}/${frag || ''}`
+    const url = `${this.id}/${tab}/${resource}/${frag || ''}`
     return this.db.load(url, this.blueprints[title])
   }
 }
