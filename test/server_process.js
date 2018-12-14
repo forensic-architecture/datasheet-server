@@ -1,51 +1,71 @@
-var assert = require('assert');
-var child_process = require('child_process')
-var http = require('http');
 import test from 'ava'
+import fetch from 'node-fetch'
+import child_process from 'child_process'
 
-const SERVER_LAUNCH_WAIT_TIME = 10 * 1000;
+const SERVER_LAUNCH_WAIT_TIME = 10 * 1000
+const SERVER_ROOT = 'http://localhost:4040'
+let server_proc = null
+let server_exited = false
+function checkStatus(res) {
+	if (res.ok) {
+		return res
+	} else {
+		throw new Error('Route is not present')
+	}
+}
 
-var server_proc = null;
-var server_exited = false;
-
+/* SETUP: launch a development server with a wait time */
 test.before.cb(t => {
   console.log("launching server...")
   server_proc = child_process.spawn('yarn', ['dev'], {
     cwd: '.',
     stdio: 'ignore'
-  });
+  })
 
   server_proc.on('exit', function(code, signal) {
-    server_exited = true;
-  });
+    server_exited = true
+  })
 
-  setTimeout(t.end, SERVER_LAUNCH_WAIT_TIME);
-});
+  setTimeout(t.end, SERVER_LAUNCH_WAIT_TIME)
+})
 
+/* CLEANUP: kill the server */
 test.after(function() {
   console.log("killing server...")
-  server_proc.kill('SIGKILL');
-});
+  server_proc.kill('SIGKILL')
+})
 
 test('should launch', t => {
-  t.false(server_exited);
-});
+  t.false(server_exited)
+})
 
-var passUrls = [
-  // Express API registered routes: 
+
+test('should update', t => {
+	const expected = {
+		success: "All sheets updated"
+	}
+
+	return fetch(`${SERVER_ROOT}/api/update`)
+		.then(checkStatus)
+		.then(res => res.json())
+		.then(json => {
+			t.deepEqual(json, expected)
+		})
+})
+
+
+const passUrls = [
   // /
   '/api/',
   // /blueprints
   '/api/blueprints',
-  // /update
-  '/api/update',
   // /:sheet/:tab/:resource
   '/api/example/export_events/rows',
   // /:sheet/:tab/:resource/:frag
   '/api/example/export_events/rows/1'
-];
+]
 
-var failUrls = [
+const failUrls = [
   // /:sheet
   '/api/example',
   // /:sheet/:tab
@@ -53,51 +73,25 @@ var failUrls = [
 ]
 
 passUrls.forEach(function(url) {
-  test.cb('should respond successfully to request for "' + url + '"', t => {
-    http.get({
-      hostname: 'localhost',
-      port: 4040,
-      path: url,
-      agent: false
-    }, function(res) {
-      var result_data = '';
-
-      if(res.statusCode != 200) {
-        t.fail('Server response was not 200.');
-      } else {
-        res.on('data', function(data) { result_data += data });
-
-        res.on('end', function() {
-          if (result_data.length > 0) {
-            t.pass();
-          } else {
-            t.fail("Server returned no data.");
-          }
-        });
-      }
-
-      t.end();
-    })
-  });
-});
+	test(`should respond successfully to request for ${url}`, t => {
+		return fetch(`${SERVER_ROOT}${url}`)
+			.then(checkStatus)
+			.then(res => res.json())
+			.then(json => {
+				t.pass()
+			})
+  })
+})
 
 failUrls.forEach(function(url) {
-  test.cb('should fail to respond to request for "' + url + '"', t => {
-    http.get({
-      hostname: 'localhost',
-      port: 4040,
-      path: url,
-      agent: false
-    }, function(res) {
-      var result_data = '';
-
-      if(res.statusCode < 400) {
-        t.fail('Server response was not erroneous.');
-      } else {
-        t.pass();
-      }
-
-      t.end();
-    })
-  });
-});
+  test(`should respond with 404 for ${url}`, t => {
+		return fetch(`${SERVER_ROOT}${url}`)
+			.then(res => {
+				if (!res.ok) {
+					t.pass()
+				} else {
+					t.fail()
+				}
+			})
+  })
+})
