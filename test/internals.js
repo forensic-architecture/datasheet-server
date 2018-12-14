@@ -1,8 +1,6 @@
 import test from 'ava'
-import R from 'ramda'
 import {
-  defaultBlueprint,
-  defaultResource,
+  defaultBlueprint
 } from '../src/lib/blueprinters'
 
 import rows from '../src/blueprinters/rows'
@@ -29,7 +27,7 @@ test('defaultBlueprint exports', t => {
 test('rows blueprinter', t => {
   const expected = [
     { h1: 1, h2: 2, h3: 3 },
-    { h1: 4, h2: 5, h3: 6 },
+    { h1: 4, h2: 5, h3: 6 }
   ]
   const actual = rows(egInput1)
   t.deepEqual(expected, actual)
@@ -37,8 +35,8 @@ test('rows blueprinter', t => {
 
 test('deeprows blueprinter', t => {
   const expected = [
-    { 'hs': [1,2,3] },
-    { 'hs': [4,5,6] }
+    { 'hs': [1, 2, 3] },
+    { 'hs': [4, 5, 6] }
   ]
   const actual = deeprows(egInput1)
   t.deepEqual(expected, actual)
