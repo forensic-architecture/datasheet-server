@@ -3,7 +3,7 @@ import express from 'express'
 import initialize from './initialize'
 import middleware from './middleware'
 import api from './api'
-import config from './sheets_config'
+// import config from './sheets_config'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -17,6 +17,8 @@ if (process.env.NODE_ENV === 'development') {
   console.log('Enabling CORS in development...')
   app.use(cors())
 }
+
+const config = process.env;
 
 initialize(controller => {
   app.use(

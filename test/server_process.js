@@ -34,19 +34,19 @@ test('should launch', t => {
 var urls = [
   // Express API registered routes: 
   // /
-  '/',
+  '/api/',
   // /blueprints
-  '/blueprints',
+  '/api/blueprints',
   // /update
-  '/update',
+  '/api/update',
   // /:sheet
-  '/example',
+  '/api/example',
   // /:sheet/:tab
-  '/example/events',
+  '/api/example/events',
   // /:sheet/:tab/:resource
-  '/example/events/rows',
+  '/api/example/events/rows',
   // /:sheet/:tab/:resource/:frag
-  '/example/events/rows/1'
+  '/api/example/events/rows/1'
 ];
 
 urls.forEach(function(url) {
@@ -54,7 +54,7 @@ urls.forEach(function(url) {
     http.get({
       hostname: 'localhost',
       port: 4040,
-      path: '/api',
+      path: url,
       agent: false
     }, function(res) {
       var result_data = '';
