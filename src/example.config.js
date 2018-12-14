@@ -10,10 +10,11 @@ export default {
         name: 'example',
         id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
         tabs: {
-          export_events: [BP.byId, BP.byRow],
-          export_categories: [BP.byGroup, BP.byRow],
-          export_sites: BP.byRow,
-          export_tags: BP.byTree
+          export_events: [BP.deeprows, BP.rows],
+          export_categories: [BP.groups, BP.rows],
+          export_sources: BP.ids,
+          export_sites: BP.rows,
+          export_tags: BP.tree
         }
       }
     ]
