@@ -3,7 +3,10 @@ import express from 'express'
 import initialize from './initialize'
 import middleware from './middleware'
 import api from './api'
-import config from './config'
+// import config from './sheets_config'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 let app = express()
 app.server = http.createServer(app)
@@ -14,6 +17,8 @@ if (process.env.NODE_ENV === 'development') {
   console.log('Enabling CORS in development...')
   app.use(cors())
 }
+
+const config = process.env
 
 initialize(controller => {
   app.use(
@@ -30,7 +35,7 @@ initialize(controller => {
     })
   )
 
-  app.server.listen(process.env.PORT || config.port, () => {
+  app.server.listen(process.env.PORT || 4040, () => {
     console.log(`Started on port ${app.server.address().port}`)
   })
 })

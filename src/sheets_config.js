@@ -1,12 +1,11 @@
 import BP from './lib/blueprinters'
 
 export default {
-  port: 4040,
   googleSheets: {
     sheets: [
       {
         name: 'example',
-        id: '15gb_aYJw7WSVZmtS0FZvcpGx1-kwKX3VHH8YV6La4hY',
+        id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
         tabs: {
           export_events: [BP.deeprows, BP.rows],
           export_categories: [BP.groups, BP.rows],
