@@ -1,41 +1,21 @@
-import R from 'ramda'
 import { fmtObj } from '../lib/util'
-import { defaultBlueprint, defaultResource } from '../lib/blueprinters'
 
 /**
- * rows - generate a Blueprint from a data sheet by row. The resource name
- * defaults to 'rows', or a custom resource name can be passed. Each resource
- * item is an object with values labelled according to column names.
+ * Each resource item is an object with values labelled according
+ * to column names specified in the sheet's first row.
  *
- * @param  {type} data         list of lists representing sheet data.
- * @param  {type} label="rows" name of resource in blueprint.
- * @param  {type} name=""      name of blueprint.
- * @return {type} Blueprint
+ * @param  {type} data        list of lists representing sheet data.
+ * @return {type} Array       the structured data.
  */
-export default function rows (
-  tabName,
-  sheetName,
-  sheetId,
-  data,
-  label = 'rows'
-) {
-  // Define Blueprint
-  const bp = R.clone(defaultBlueprint)
-  bp.sheet = {
-    name: sheetName,
-    id: sheetId
-  }
-  bp.name = tabName
-
-  // Column names define resources
+export default (data) => {
   const itemLabels = data[0]
   const fmt = fmtObj(itemLabels)
-  bp.resources[label] = R.clone(defaultResource)
-  bp.resources[label].data = []
+  const output = []
 
   data.forEach((row, idx) => {
     if (idx === 0) return
-    bp.resources[label].data.push(fmt(row))
+    output.push(fmt(row))
   })
-  return bp
+
+  return output
 }

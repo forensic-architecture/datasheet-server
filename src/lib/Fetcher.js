@@ -91,9 +91,9 @@ class Fetcher {
    */
   _saveViaBlueprinter (tab, data, blueprinter) {
     const saturatedBp = blueprinter(
-      tab,
-      this.sheetName,
       this.sheetId,
+      this.sheetName,
+      tab,
       data
     )
 

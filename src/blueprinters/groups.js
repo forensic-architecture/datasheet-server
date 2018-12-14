@@ -1,39 +1,16 @@
-import R from 'ramda'
 import { fmtObj } from '../lib/util'
-import { defaultBlueprint, defaultResource } from '../lib/blueprinters'
 
 /**
- * groups - generate a Blueprint from a data sheet grouped by a column called 'group'
- * The resource name defaults to 'groups', or a custom resource name can be passed.
  * Each resource item is an object with values labelled according to column
- * names. Items are inserted in the data list at idx = id.
+ * names. Items are inserted into the data list at idx = id.
  *
- * @param  {type} data         list of lists representing sheet data.
- * @param  {type} label="groups"  name of resource in blueprint.
- * @param  {type} name=""      name of blueprint.
- * @return {type} Blueprint
+ * @param  {type} data        list of lists representing sheet data.
+ * @return {type} Array       the structured data.
  */
-export default function groups (
-  tabName,
-  sheetName,
-  sheetId,
-  data,
-  label = 'groups'
-) {
-  // Define Blueprint
-  const bp = R.clone(defaultBlueprint)
-  bp.sheet = {
-    name: sheetName,
-    id: sheetId
-  }
-  bp.name = tabName
-
-  // Column names define resources
+export default (data) => {
   const itemLabels = data[0]
   const fmt = fmtObj(itemLabels)
-  bp.resources[label] = R.clone(defaultResource)
-  bp.resources[label].data = []
-
+  const output = []
   const dataGroups = {}
 
   data.forEach((row, idx) => {
@@ -45,12 +22,14 @@ export default function groups (
       dataGroups[group].push(fmt(row))
     }
   })
-  Object.keys(dataGroups).forEach(groupKey => {
-    bp.resources[label].data.push({
-      group: groupKey,
-      group_label: dataGroups[groupKey][0].group_label,
-      data: dataGroups[groupKey]
+  Object.keys(dataGroups)
+    .forEach(groupKey => {
+      output.push({
+        group: groupKey,
+        group_label: dataGroups[groupKey][0].group_label,
+        data: dataGroups[groupKey]
+      })
     })
-  })
-  return bp
+
+  return output
 }
