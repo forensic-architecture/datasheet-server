@@ -40,9 +40,9 @@ var passUrls = [
   // /update
   '/api/update',
   // /:sheet/:tab/:resource
-  '/api/example/events/rows',
+  '/api/example/export_events/rows',
   // /:sheet/:tab/:resource/:frag
-  '/api/example/events/rows/1'
+  '/api/example/export_events/rows/1'
 ];
 
 var failUrls = [

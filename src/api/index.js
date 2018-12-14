@@ -32,7 +32,7 @@ export default ({ config, controller }) => {
   api.get('/:sheet/:tab/:resource/:frag', (req, res) => {
     const { sheet, tab, resource, frag } = req.params
     controller
-      .retrieve(sheet, tab, resource, frag)
+      .retrieveFrag(sheet, tab, resource, frag)
       .then(data => res.json(data))
       .catch(err =>
         res.status(err.status || 404)
