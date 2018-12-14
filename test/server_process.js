@@ -31,7 +31,7 @@ test('should launch', t => {
   t.false(server_exited);
 });
 
-var urls = [
+var passUrls = [
   // Express API registered routes: 
   // /
   '/api/',
@@ -39,18 +39,21 @@ var urls = [
   '/api/blueprints',
   // /update
   '/api/update',
-  // /:sheet
-  '/api/example',
-  // /:sheet/:tab
-  '/api/example/events',
   // /:sheet/:tab/:resource
   '/api/example/events/rows',
   // /:sheet/:tab/:resource/:frag
   '/api/example/events/rows/1'
 ];
 
-urls.forEach(function(url) {
-  test.cb('should respond to request for "' + url + '"', t => {
+var failUrls = [
+  // /:sheet
+  '/api/example',
+  // /:sheet/:tab
+  '/api/example/events'
+]
+
+passUrls.forEach(function(url) {
+  test.cb('should respond successfully to request for "' + url + '"', t => {
     http.get({
       hostname: 'localhost',
       port: 4040,
@@ -75,7 +78,26 @@ urls.forEach(function(url) {
 
       t.end();
     })
-
   });
+});
 
+failUrls.forEach(function(url) {
+  test.cb('should fail to respond to request for "' + url + '"', t => {
+    http.get({
+      hostname: 'localhost',
+      port: 4040,
+      path: url,
+      agent: false
+    }, function(res) {
+      var result_data = '';
+
+      if(res.statusCode < 400) {
+        t.fail('Server response was not erroneous.');
+      } else {
+        t.pass();
+      }
+
+      t.end();
+    })
+  });
 });

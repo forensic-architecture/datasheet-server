@@ -36,20 +36,21 @@ class Controller {
   retrieve (sheet, tab, resource) {
     if (this._sheetExists(sheet)) {
       const fetcher = this.fetchers[sheet]
+      // console.log(fetcher);
       return fetcher.retrieve(tab, resource)
     } else {
       return Promise.reject(new Error(copy.errors.noResource(sheet)))
     }
   }
 
-  retrieveFrag (sheet, tab, resource, frag) {
-    if (this._sheetExists(sheet)) {
-      const fetcher = this.fetchers[sheet]
-      return fetcher.retrieveFrag(tab, resource, frag)
-    } else {
-      return Promise.reject(new Error(copy.errors.noResource(sheet)))
-    }
-  }
+  // retrieveFrag (sheet, tab, resource, frag) {
+  //   if (this._sheetExists(sheet)) {
+  //     const fetcher = this.fetchers[sheet]
+  //     return fetcher.retrieveFrag(tab, resource, frag)
+  //   } else {
+  //     return Promise.reject(new Error(copy.errors.noResource(sheet)))
+  //   }
+  // }
 }
 
 export default Controller

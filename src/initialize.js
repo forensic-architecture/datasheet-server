@@ -1,9 +1,9 @@
 import StoreJson from './models/StoreJson'
 import Fetcher from './lib/Fetcher'
 import Controller from './lib/Controller'
-import config from './sheets_config'
+import sheetsConfig from './sheets_config'
 
-const { googleSheets } = config
+const { googleSheets } = sheetsConfig
 const { sheets } = googleSheets
 
 function authenticate (_fetcher) {

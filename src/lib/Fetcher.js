@@ -181,15 +181,15 @@ class Fetcher {
   }
 
   // NB: could combine these functions by checking kwargs length
-  retrieve (tab, resource) {
-    const title = fmtName(tab)
-    const url = `${this.id}/${tab}/${resource}`
-    return this.db.load(url, this.blueprints[title])
-  }
+  // retrieve (tab, resource) {
+  //   const title = fmtName(tab)
+  //   const url = `${this.id}/${tab}/${resource}`
+  //   return this.db.load(url, this.blueprints[title])
+  // }
 
-  retrieveFrag (tab, resource, frag) {
+  retrieve (tab, resource, frag) {
     const title = fmtName(tab)
-    const url = `${this.sheetName}/${tab}/${resource}/${frag}`
+    const url = `${this.sheetName}/${tab}/${resource}/${frag || ''}`
     return this.db.load(url, this.blueprints[title])
   }
 }

@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(cors())
 }
 
-const config = process.env;
+const config = process.env
 
 initialize(controller => {
   app.use(
