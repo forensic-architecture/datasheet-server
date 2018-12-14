@@ -1,4 +1,4 @@
 #!/bin/bash
-travis encrypt-file .env --add --force
+travis encrypt-file .env --force
 git add .env.enc
-git commit -m "add encrypted private key for travis testing"
+git commit -m "TRAVIS: add encrypted key"
