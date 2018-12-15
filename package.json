@@ -13,7 +13,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "sh ./scripts/encrypt.sh"
+      "pre-commit": "sh ./scripts/encrypt.sh",
+      "pre-push": "yarn lint && yarn test"
     }
   },
   "repository": {
