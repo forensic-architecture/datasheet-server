@@ -7,7 +7,7 @@ if hash travis 2>/dev/null; then
 		echo "============================================================================================"
 		exit 3
 	else
-		travis encrypt-file .env --add --force --pro
+		travis encrypt-file .env --add --force --org
 		git add .env.enc
 		git add .travis.yml
 		echo ".env.enc created and added to commit"
