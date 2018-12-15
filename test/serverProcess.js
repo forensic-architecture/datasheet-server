@@ -16,7 +16,7 @@ function checkStatus (res) {
 
 /* SETUP: launch a development server with a wait time */
 test.before.cb(t => {
-  console.log('launching server...')
+  console.log('SETUP: launching server and updating...')
   serverProc = childProcess.spawn('yarn', ['dev'], {
     cwd: '.',
     stdio: 'ignore'
@@ -26,7 +26,21 @@ test.before.cb(t => {
     serverExited = true
   })
 
-  setTimeout(t.end, SERVER_LAUNCH_WAIT_TIME)
+  function pingUpdate () {
+    const expected = {
+      success: 'All sheets updated'
+    }
+
+    return fetch(`${SERVER_ROOT}/api/update`)
+      .then(checkStatus)
+      .then(res => res.json())
+      .then(json => {
+        t.deepEqual(json, expected)
+        t.end()
+      })
+  }
+
+  setTimeout(pingUpdate, SERVER_LAUNCH_WAIT_TIME)
 })
 
 /* CLEANUP: kill the server */
@@ -37,19 +51,6 @@ test.after(function () {
 
 test('should launch', t => {
   t.false(serverExited)
-})
-
-test('should update', t => {
-  const expected = {
-    success: 'All sheets updated'
-  }
-
-  return fetch(`${SERVER_ROOT}/api/update`)
-    .then(checkStatus)
-    .then(res => res.json())
-    .then(json => {
-      t.deepEqual(json, expected)
-    })
 })
 
 const passUrls = [
