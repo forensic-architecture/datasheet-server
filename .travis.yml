@@ -13,5 +13,7 @@ script:
 - yarn lint
 - yarn test
 before_install:
+- openssl aes-256-cbc -K $encrypted_eeb74e8d35d1_key -iv $encrypted_eeb74e8d35d1_iv
+  -in .env.enc -out .env -d
 - openssl aes-256-cbc -K $encrypted_fb307c69bf51_key -iv $encrypted_fb307c69bf51_iv
   -in .env.enc -out .env -d

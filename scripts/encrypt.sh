@@ -1,18 +1,14 @@
 #!/bin/bash
 echo "Encrypting .env file for Travis..."
-if hash travis 2>/dev/null; then
-	if [ ! -f .env ]; then
-		echo "============================================================================================"
-		echo "ERROR: You must create a .env file and add your credentials. See .env.example for an example"
-		echo "============================================================================================"
-		exit 3
-	else
-		travis encrypt-file .env --add --force --org
-		git add .env.enc
-		git add .travis.yml
-		echo ".env.enc created and added to commit"
-	fi
-else
+
+# confirm that user has access to forensic architecture datasheet
+# if [ ! -z "$(travis repos | grep "forensic-architecture/datasheet-server")" ]
+# 	echo "No travis encrypt possible, skipping this step."
+# 	exit 0
+# fi
+
+# confirm travis is installed
+if [ ! hash travis 2>/dev/null ]; then
 	echo "============================================================================================"
 	echo "ERROR: Travis CLI is not installed on your local. Please install from:"
 	echo "\thttps://github.com/travis-ci/travis.rb"
@@ -21,3 +17,16 @@ else
 	echo "============================================================================================"
 	exit 3
 fi
+
+# confirm there is a .env file to encrypt
+if [ ! -f .env ]; then
+	echo "============================================================================================"
+	echo "ERROR: You must create a .env file and add your credentials. See .env.example for an example"
+	echo "============================================================================================"
+	exit 3
+fi
+
+travis encrypt-file .env --add --force --org
+git add .env.enc
+git add .travis.yml
+echo ".env.enc created and added to commit"
