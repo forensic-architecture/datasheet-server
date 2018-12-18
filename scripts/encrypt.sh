@@ -26,6 +26,12 @@ if [ ! -f .env ]; then
 	exit 3
 fi
 
+# regex to match and delete 'before_install' and everything after it
+# necessary to delete these lines to get Travis to build for multiple accounts
+echo "creating new .travis.yml configuration"
+sed -i.old '/^before_install.*/,$ d' .travis.yml
+echo "old config file saved as .travis.yml.old"
+
 travis encrypt-file .env --add --force --org
 git add .env.enc
 git add .travis.yml
