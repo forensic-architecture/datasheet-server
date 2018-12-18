@@ -9,12 +9,12 @@
     "start": "node dist",
     "lint": "standard \"src/**/*.js\" \"test/**/*.js\"",
     "test-watch": "ava --watch",
-    "test": "ava --verbose"
+    "test": "ava --verbose",
+    "travis-encrypt": "./scripts/encrypt.sh"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "sh ./scripts/encrypt.sh",
-      "pre-push": "yarn lint && yarn test"
+      "pre-push": "./scripts/check-branch.sh && yarn lint && yarn test"
     }
   },
   "repository": {
