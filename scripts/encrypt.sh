@@ -1,11 +1,11 @@
 #!/bin/bash
 echo "Encrypting .env file for Travis..."
 
-# confirm that user has access to forensic architecture datasheet
-# if [ ! -z "$(travis repos | grep "forensic-architecture/datasheet-server")" ]
-# 	echo "No travis encrypt possible, skipping this step."
-# 	exit 0
-# fi
+# confirm that the user has the core repo as origin, and is therefore a maintainer
+if [ -z `git config --get remote.origin.url | grep "forensic-architecture/datasheet-server"` ]; then
+	echo "Travis encryption not required for satellite contributors, continuing.."
+	exit 0
+fi
 
 # confirm travis is installed
 if [ ! hash travis 2>/dev/null ]; then
