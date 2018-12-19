@@ -15,6 +15,20 @@ export default ({ config, controller }) => {
     res.json(controller.blueprints())
   })
 
+  api.get('/update', (req, res) => {
+    controller
+      .update()
+      .then(msg =>
+        res.json({
+          success: msg
+        })
+      )
+      .catch(err =>
+        res.status(404)
+          .send({ error: err.message, err })
+      )
+  })
+
   api.get('/:sheet/:tab/:resource/:frag', (req, res) => {
     const { sheet, tab, resource, frag } = req.params
     controller
@@ -27,25 +41,12 @@ export default ({ config, controller }) => {
   })
 
   api.get('/:sheet/:tab/:resource', (req, res) => {
+    const { sheet, tab, resource } = req.params
     controller
-      .retrieve(req.params.sheet, req.params.tab, req.params.resource)
+      .retrieve(sheet, tab, resource)
       .then(data => res.json(data))
       .catch(err =>
         res.status(err.status || 404)
-          .send({ error: err.message })
-      )
-  })
-
-  api.get('/update', (req, res) => {
-    controller
-      .update()
-      .then(msg =>
-        res.json({
-          success: msg
-        })
-      )
-      .catch(err =>
-        res.status(404)
           .send({ error: err.message })
       )
   })
@@ -54,12 +55,12 @@ export default ({ config, controller }) => {
   // like /update, so that the regex does not greedily match these routes.
 
   api.get('/:sheet', (req, res) => {
-    res.status(404)
+    res.status(400)
       .send({ error: copy.errors.onlysheet })
   })
 
   api.get('/:sheet/:tab', (req, res) => {
-    res.status(404)
+    res.status(400)
       .send({ error: copy.errors.onlyTab })
   })
 

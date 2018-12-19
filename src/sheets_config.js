@@ -1,10 +1,7 @@
 import BP from './lib/blueprinters'
 
 export default {
-  port: 4040,
   googleSheets: {
-    email: 'SOME_SERVICE_ACCOUNT_EMAIL',
-    privateKey: 'SOME_SERVICE_ACCOUNT_PRIVATE_KEY',
     sheets: [
       {
         name: 'example',
