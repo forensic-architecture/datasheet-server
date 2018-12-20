@@ -45,11 +45,32 @@ WIP
 
 ### Before making changes
 
-WIP. Here we'll describe what the expected process and workflow is when making code changes, with regards to branching, forking and so on.
+1. If you are a contributor, you will need to create a fork of this repository
+   on your own GitHub handle, as you will not have commit access to the
+   forensic architecture repo.
+2. Create a new branch from _develop_ (not master or staging). The branch
+   should be prefixed with 'topic/' if you are intending to submit a feature
+   ('enhancement' tag in the issue), or with 'fix/' if you are fixing a bug
+   ('bug' tag in the issue).
+
+All of your commits go in this branch. When the feature/fix is complete, follow
+the instructions below to submit a PR for the branch.
 
 ### Submitting changes as Pull Requests
 
-WIP
+In order to submit a branch as a PR, you'll need to install the [Travis CLI](https://github.com/travis-ci/travis.rb). The documentation for this is a little shifty: if you're developing on a Mac, you can easily install it with `brew install travis`. The Travis CLI is necessary so that you can encrypt your service account credentials and use them while testing in Travis CI.
+
+To do this, you need to run one extra command before you push commits
+to a remote branch:
+```
+npm run travis-encrypt
+```
+This command encrypts your private key and service account email in .env in
+such a way that they can still be used while running tests on Travis' server.
+This command will add a commit to your branch that modifies the binary file
+.env.enc, and updates your Travis config accordingly. After running this
+command, you should be able to pass the pre-push check and run tests in the
+Travis server.
 
 ## Additional resources
 

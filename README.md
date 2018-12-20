@@ -58,21 +58,27 @@ A desaturated Blueprint can be saturated by retrieving its data from the server'
 A JSON catalogue of the available blueprints (desaturated) in a server is available at `/api/blueprints`.
 
 ## [Configuration](#configuration)
-Copy the [example.config.js](/src/example.config.js) in the [src](/src) directory into a file named 'config.js'. Modify the options in this file accordingly:
+Copy the example environment file:
+```
+cp .env.example .env
+```
+Inside this file, you will need to modify at least the `SERVICE_ACCOUNT_EMAIL` and `SERVICE_ACCOUNT_PRIVATE_KEY` fields. These fields refer to the credentials of a [Google service account](https://cloud.google.com/iam/docs/understanding-service-accounts). Google requires that developers create these when attempting to access their services programmatically, so that they can attribute requests to users. Service accounts also contain identity information, which means that asset owners can allow certain service accounts access to certain sheets, just as one might differentially grant certain users access to certain cloud assets. 
 
-| Option  | Description | Type |
-| ------- | ----------- | ---- |
-| port | The port at which the server will make data available.  | integer |
-| googleSheets  | The configuration object for [Google Sheet](https://www.google.co.uk/sheets/about/) data sources. See the [Sources](#source-google-sheets) section below. | object |
+Once you have [created a service account](https://support.google.com/a/answer/7378726?hl=en), create and download an [API key for that account](https://cloud.google.com/iam/docs/creating-managing-service-account-keys). The JSON file for the API key that you download when you create it contains both a service account private key, and an email associated with the service account: add these respectively in the strings in .env for `SERVICE_ACCOUNT_PRIVATE_KEY` and `SERVICE_ACCOUNT_EMAIL`.
+
+The last thing to do is to grant the service account access to the sheet that
+datasheet-server is pulling from. You can add a service account to a sheet as
+you would any other Google user: just enter the email address associated. (Note
+that this step is not necessary if you are accessing a publicly available
+sheet.)
+
+Other configuration options, such as the port at which the server will expose
+resources, are also modifiable from the .env file.
 
 #### [Sources](#sources)
-###### [Google Sheets](#source-google-sheets)
-In order to make the data from a Sheet accessible to the server, you need to [create a service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts). Once created, give the service account email access to each Sheet from which you want to serve data. ('View Only' access is sufficient, as the server never modifies data.)
+Sources are specified in [src/sheets_config.js](https://github.com/forensic-architecture/datasheet-server/blob/develop/src/sheets_config.js). Datasheet server currently only supports Google Sheets as a source.
 
-| Option | Description | Type |
-| ------ | ----------- | ---- |
-| email | The email address of the service account. This is available in the downloadable service account JSON in the `client_email` field. | string |
-| privateKey | The private key associated with the service account. This is available in the downloadable service account JSON in the `private_key` field. | string |
+###### [Google Sheets](#source-google-sheets)
 | sheets | A list of objects, one for each sheet that is being used as a source. Each sheet object has a `name` (String), an `id` (String), and a `tabs` (object) field, which are explained below. | object |
 
 Each Google Sheet being used as a as source requires a corresponding object in `sheets`. The object should be structured as follows:
@@ -88,7 +94,6 @@ Each Google Sheet being used as a as source requires a corresponding object in `
 import BP from './lib/blueprinters'
 
 export default {
-  port: 4040,
   googleSheets: {
     email: 'project-name@reliable-baptist-23338.iam.gserviceaccount.com',
     privateKey: 'SOME_PRIVATE_KEY',
@@ -97,8 +102,8 @@ export default {
         name: 'example',
         id: '1s-vfBR8Uy-B-TLO_C5Ozw4z-L0E3hdP8ohMV761ouRI',
         tabs: {
-          'objects': BP.byRow,
-          'fruit': [BP.byRow, BP.byID],
+          'objects': BP.rows,
+          'fruit': [BP.columns, BP.ids],
         }
       },
     ]
@@ -113,8 +118,12 @@ Clone the repository to your local:
 ```
 git clone https://www.github.com/forensic-architecture/datasheet-server
 ```
+
+Follow the steps in the [configuration](#configuration) section of this
+document.
+
 ### Run with Docker
-To create a new instance of the server with [Docker](https://www.docker.com/) installed, clone the repository, create a `config.js`, and build the image:
+To create a new instance of the server with [Docker](https://www.docker.com/) installed, ensure that you have followed the steps in the quickstart guide above, then and build an image locally. (Note that Docker must be installed):
 ```sh
 docker build -t datasheet-server .
 ```
@@ -152,4 +161,4 @@ If you have any questions or just want to chat, please join our team [fa_open_so
 
 ## License
 
-TimeMap is distributed under the MIT License.
+Datasheet Server is distributed under the [MIT License](https://github.com/forensic-architecture/datasheet-server/blob/develop/LICENSE).
