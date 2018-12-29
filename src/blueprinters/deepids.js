@@ -1,4 +1,3 @@
-import { fmtObj } from '../lib/util'
 import deeprows from './deeprows'
 
 /**
@@ -21,4 +20,3 @@ export default (data) => {
 
   return output
 }
-
