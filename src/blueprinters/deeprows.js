@@ -17,7 +17,7 @@ export default (data) => {
   const output = []
 
   // create a structure to indicate which columns needs to be aggregated
-  const endsWithNumber = new RegExp('(.*)[0-9]+$')
+  const endsWithNumber = new RegExp('(.*?)[0-9]+$')
   const structure = {
     __flat: []
   }
