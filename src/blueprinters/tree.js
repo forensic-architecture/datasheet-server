@@ -6,7 +6,7 @@
  */
 export default (data) => {
   const tree = {
-    key: 'tags',
+    key: '_root',
     children: {}
   }
 
