@@ -34,7 +34,7 @@ Datasheet server is a Node server developed at [Forensic Architecture](https://f
 
 Querying data directly from spreadsheets is brittle, as it relies on the maintenance of a rigid structure in the sheets at all times. By putting Datasheet Server as a proxy that sits in between source sheets and their consumers, it is possible to dynamically modify sheets without breaking applications. A data admin can then use Datasheet Server to ensure that applications always receive eligible data, without foregoing the spreadsheets as sources of truth.
 
-To see how to get a local instance of datasheet server running in practice, see [this wiki](https://github.com/forensic-architecture/timemap/wiki/Setting-up-a-local-instance-of-Timemap) explaining how to use it to feed data from a Google Sheet to a local instance of [Timemap](https://github.com/forensic-architecture/timemap).
+To see how to get a local instance of datasheet server running in practice, see [this wiki](https://github.com/forensic-architecture/timemap/wiki/running-timemap-and-datasheet-server-locally) explaining how to use it to feed data from a Google Sheet to a local instance of [Timemap](https://github.com/forensic-architecture/timemap).
 
 ### Design Concepts
 The codebase currently only supports Google Sheets as a source, and a REST-like format as a query language. It is designed, however, with extensibility in mind.
