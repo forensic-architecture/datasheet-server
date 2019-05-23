@@ -15,12 +15,15 @@ export const defaultResource = {
   data: []
 }
 
-export function buildDesaturated (sheetId, sheetName, tab, resource) {
+export function buildDesaturated (sheetId, sheetName, tab, resources) {
   const bp = R.clone(defaultBlueprint)
   bp.sheet.name = sheetName
   bp.sheet.id = sheetId
   bp.name = tab
-  bp.resources[resource] = null
+  bp.resources = resources.reduce((acc, r) => {
+    acc[r] = null
+    return acc
+  }, {})
   return bp
 }
 
