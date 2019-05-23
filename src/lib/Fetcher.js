@@ -66,11 +66,20 @@ class Fetcher {
         const allParts = allUrls.reduce((acc, url) => {
           if (url.startsWith(this.id)) {
             const parts = url.split('/')
-            acc.push([ parts[1], parts[2] ])
-            return acc
-          } else {
-            return acc
+            let duplicateTab = acc.reduce((tabFound, p) => {
+              return tabFound || p[0] === parts[1]
+            }, false)
+            if (duplicateTab) {
+              acc.forEach(p => {
+                if (p[0] === parts[1]) {
+                  p[1].push(parts[2])
+                }
+              })
+            } else {
+              acc.push([ parts[1], [ parts[2] ] ])
+            }
           }
+          return acc
         }, [])
 
         return allParts
