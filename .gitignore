@@ -7,7 +7,6 @@
 
 .env
 *service-account-key\.json
-src/config.js
 /yarn-error.log
 *.pem
 .travis.yml.old
