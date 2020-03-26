@@ -11,3 +11,6 @@ src/config.js
 /yarn-error.log
 *.pem
 .travis.yml.old
+tags
+tags.lock
+tags.temp
