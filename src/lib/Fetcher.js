@@ -236,7 +236,12 @@ class XlsxFetcher extends Fetcher {
   update () {
     const data = xlsx.parse(fs.readFileSync(this.path))
     data.forEach(tab => {
-      this.save(tab.name, tab.data)
+      const stringyData = tab.data.map(row =>
+        row.map(d =>
+          typeof (d) === 'number' ? d.toString() : d
+        )
+      )
+      this.save(tab.name, stringyData)
     })
     return Promise.resolve(true)
   }
