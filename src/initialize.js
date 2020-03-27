@@ -1,37 +1,32 @@
 import StoreJson from './models/StoreJson'
-import Fetcher from './lib/Fetcher'
+import fetchers from './lib/Fetcher'
 import Controller from './lib/Controller'
-import sheetsConfig from './sheets_config'
+import config from './sheets_config'
+import R from 'ramda'
 
-const { googleSheets } = sheetsConfig
-const { sheets } = googleSheets
-
-function authenticate (_fetcher) {
-  return _fetcher.fetcher.authenticate(process.env.SERVICE_ACCOUNT_EMAIL, process.env.SERVICE_ACCOUNT_PRIVATE_KEY).then(msg => {
-    console.log(msg)
-    return true
-  })
-}
+const isntNull = n => n !== null
+const filterNull = ls => R.filter(isntNull, ls)
+const flattenfilterNull = ls => filterNull(R.flatten(ls))
+let themFetchers
 
 export default callback => {
-  const fetchers = sheets.map(sheet => {
-    return {
-      name: sheet.name,
-      fetcher: new Fetcher(new StoreJson(), sheet.name, sheet.id, sheet.tabs)
-    }
+  return Promise.resolve().then(() => {
+    return Object.keys(config).map(fType => {
+      // skip config attrs that don't have corresponding fetchers
+      if (!(fType in fetchers)) return null
+      const FFetcher = fetchers[fType]
+      return config[fType].map(sheet => ({
+        name: sheet.name,
+        fetcher: new FFetcher(new StoreJson(), ...Object.values(sheet))
+      }))
+    })
   })
-
-  Promise.all(fetchers.map(authenticate))
-    .then(() => {
-      console.log(`===================`)
-      console.log(`grant access to: ${process.env.SERVICE_ACCOUNT_EMAIL}`)
-      console.log(`===================`)
-
-      // NB: reformat fetchers as config for controller
-      const config = {}
-      fetchers.forEach(fetcher => {
-        config[fetcher.name] = fetcher.fetcher
-      })
+    .then(res => {
+      themFetchers = flattenfilterNull(res)
+    })
+    .then(() => Promise.all(themFetchers.map(f => f.fetcher.authenticate(process.env))))
+    .then(fetchers => {
+      const config = R.zipObj(themFetchers.map(f => f.name), fetchers)
       const controller = new Controller(config)
       callback(controller)
     })
