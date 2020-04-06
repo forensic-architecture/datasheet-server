@@ -12,7 +12,12 @@ export default ({ config, controller }) => {
   })
 
   api.get('/blueprints', (req, res) => {
-    res.json(controller.blueprints())
+    const bps = controller.blueprints()
+    res.json(bps.map(bp => ({
+      source: bp.sheet.name,
+      tab: bp.name,
+      urls: bp.urls
+    })))
   })
 
   api.get('/update', (req, res) => {

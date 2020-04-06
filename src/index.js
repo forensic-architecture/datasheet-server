@@ -36,7 +36,8 @@ initialize(controller => {
   )
 
   app.server.listen(process.env.PORT || 4040, () => {
-    console.log(`Started on port ${app.server.address().port}`)
+    console.log('===========================================')
+    console.log(`Server running on port ${app.server.address().port}`)
   })
 })
 

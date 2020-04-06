@@ -8,38 +8,31 @@ import {
 } from './util'
 import { createHash } from 'crypto'
 import R from 'ramda'
+import xlsx from 'node-xlsx'
+import fs from 'fs'
 
 class Fetcher {
-  constructor (db, sheetName, sheetId, blueprinters) {
+  constructor (db, name, bps) {
     /*
      * The database that the fetcher should use. This should be an instance of a model-compliant class.
      * See models/Interface.js for the specifications for a model-compliant class.
      */
     this.db = db
-
-    /*
-     * ID of the Google Sheet where the data is sheetd. Note that the privateKey.clientEmail
-     * loaded here must be added to the sheet as an editor.
-     */
-    this.sheetId = sheetId
-
     /*
      * The name of the sheet. This will prefix tabs saved in the database.
      */
-    this.sheetName = sheetName
-
+    this.sheetName = name
     /*
      * A unique ID for the Fetcher to identify its elements in the model layer
      */
-    this.id = createHash('md5').update(sheetName).update(sheetId).digest('hex')
-
+    const bpsstring = Object.keys(bps).join(';')
+    this.id = createHash('md5').update(name).update(bpsstring).digest('hex')
     /*
      * These are the available tabs for storing and retrieving data.
      * Each blueprinter is a function that returns a Blueprint from a
      * list of lists (which will be retrieved from gsheets).
      */
-    this.blueprinters = fmtBlueprinterTitles(blueprinters)
-
+    this.blueprinters = fmtBlueprinterTitles(bps)
     /*
      * This object is the canonical represenation for the data that a Fetcher
      * proxies. When the fetcher is initialized, its model layer (db) is indexed,
@@ -49,13 +42,6 @@ class Fetcher {
      */
     this.blueprints = null
     this._buildBlueprintsAsync() // NB: modifies this.blueprints on completion
-
-    /*
-     * Google API setup
-     */
-    this.API = google.sheets('v4')
-    this.auth = null
-
     /** curry to allow convenient syntax with map */
     this._saveViaBlueprinter = R.curry(this._saveViaBlueprinter.bind(this))
   }
@@ -83,12 +69,16 @@ class Fetcher {
         }, [])
 
         return allParts
-          .map(parts => buildDesaturated(
-            this.sheetId,
-            this.sheetName,
-            parts[0],
-            parts[1]
-          ))
+          .map(parts => {
+            const bp = buildDesaturated(
+              this.sheetId,
+              this.sheetName,
+              parts[0],
+              parts[1]
+            )
+            bp.urls = Object.keys(bp.resources).map(r => `/api/${bp.sheet.name}/${bp.name}/${r}`)
+            return bp
+          })
       })
       .then(res => {
         this.blueprints = res
@@ -113,20 +103,81 @@ class Fetcher {
     )
   }
 
+  save (_tab, data) {
+    const tab = fmtName(_tab)
+
+    if (Object.keys(this.blueprinters).indexOf(tab) > -1) {
+      const bpConfig = this.blueprinters[tab]
+
+      if (isFunction(bpConfig)) {
+        // if bpConfig specifies a single blueprinter
+        return this._saveViaBlueprinter(tab, data, bpConfig)
+      } else {
+        // if bpConfig specifies an array of blueprinters
+        return bpConfig.map(this._saveViaBlueprinter(tab, data))
+      }
+    } else {
+      // NB: if a blueprinter is not specified for a tab,
+      // just skip it.
+      return true
+    }
+  }
+
+  // NB: could combine these functions by checking kwargs length
+  retrieve (tab, resource) {
+    const title = fmtName(tab)
+    const url = `${this.id}/${tab}/${resource}`
+    return this.db.load(url, this.blueprints[title])
+  }
+
+  retrieveFrag (tab, resource, frag) {
+    const title = fmtName(tab)
+    const url = `${this.id}/${tab}/${resource}/${frag || ''}`
+    return this.db.load(url, this.blueprints[title])
+  }
+
+  /** Run on startup. Should be overridden if explicit auth is required **/
+  authenticate (env) {
+    console.log(`Connected to ${this.sheetName}. No explicit authentication required for ${this.type}s.`)
+    return Promise.resolve(this)
+  }
+}
+
+class GsheetFetcher extends Fetcher {
+  constructor (db, name, bps, sheetId) {
+    super(db, name, bps)
+    this.type = 'Google Sheet'
+    if (arguments.length < 4) throw Error('You must provide the sheet ID')
+
+    /*
+     * ID of the Google Sheet where the data is sheetd. Note that the privateKey.clientEmail
+     * loaded here must be added to the sheet as an editor.
+     */
+    this.sheetId = sheetId
+    /*
+     * Google API setup
+     */
+    this.API = google.sheets('v4')
+    this.auth = null
+  }
+
   /** returns a Promise that resolves if access is granted to the account, and rejects otherwise. */
-  authenticate (clientEmail, privateKey) {
-    const googleAuth = new google.auth.JWT(clientEmail, null, privateKey, [
+  authenticate (env) {
+    const googleAuth = new google.auth.JWT(env.SERVICE_ACCOUNT_EMAIL, null, env.SERVICE_ACCOUNT_PRIVATE_KEY, [
       'https://www.googleapis.com/auth/spreadsheets'
     ])
     this.auth = googleAuth
     const { sheetId } = this
+    const me = this
 
     return new Promise((resolve, reject) => {
       googleAuth.authorize(function (err) {
         if (err) {
           reject(err)
         } else {
-          resolve(`Connected to ${sheetId}.`)
+          console.log(`Connected to ${me.sheetName}. (${me.type} with ID ${sheetId}).`)
+          console.log(`    grant access to: ${process.env.SERVICE_ACCOUNT_EMAIL}`)
+          resolve(me)
         }
       })
     })
@@ -168,39 +219,35 @@ class Fetcher {
       .then(() => true)
       .catch(() => false)
   }
+}
 
-  save (_tab, data) {
-    const tab = fmtName(_tab)
+class XlsxFetcher extends Fetcher {
+  constructor (db, name, bps, path) {
+    super(db, name, bps)
+    this.type = 'XLSX File'
+    this.path = path
+    this.isRemote = false
 
-    if (Object.keys(this.blueprinters).indexOf(tab) > -1) {
-      const bpConfig = this.blueprinters[tab]
-
-      if (isFunction(bpConfig)) {
-        // if bpConfig specifies a single blueprinter
-        return this._saveViaBlueprinter(tab, data, bpConfig)
-      } else {
-        // if bpConfig specifies an array of blueprinters
-        return bpConfig.map(this._saveViaBlueprinter(tab, data))
-      }
-    } else {
-      // NB: if a blueprinter is not specified for a tab,
-      // just skip it.
-      return true
+    if (this.path.startsWith('https')) {
+      this.isRemote = true
     }
   }
 
-  // NB: could combine these functions by checking kwargs length
-  retrieve (tab, resource) {
-    const title = fmtName(tab)
-    const url = `${this.id}/${tab}/${resource}`
-    return this.db.load(url, this.blueprints[title])
-  }
-
-  retrieveFrag (tab, resource, frag) {
-    const title = fmtName(tab)
-    const url = `${this.id}/${tab}/${resource}/${frag || ''}`
-    return this.db.load(url, this.blueprints[title])
+  update () {
+    const data = xlsx.parse(fs.readFileSync(this.path))
+    data.forEach(tab => {
+      const stringyData = tab.data.map(row =>
+        row.map(d =>
+          typeof (d) === 'number' ? d.toString() : d
+        )
+      )
+      this.save(tab.name, stringyData)
+    })
+    return Promise.resolve(true)
   }
 }
 
-export default Fetcher
+export default {
+  'gsheets': GsheetFetcher,
+  'xlsx': XlsxFetcher
+}
