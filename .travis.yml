@@ -12,9 +12,3 @@ script:
 - yarn build
 - yarn lint
 - yarn test
-<<<<<<< HEAD
-before_install:
-- openssl aes-256-cbc -K $encrypted_98eb5aa6bfa6_key -iv $encrypted_98eb5aa6bfa6_iv
-  -in .env.enc -out .env -d
-=======
->>>>>>> upstream/develop
