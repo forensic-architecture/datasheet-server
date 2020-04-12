@@ -10,11 +10,9 @@ const timemapStructure = {
 }
 
 export default {
-  googleSheets: {
-    sheets: [{
-      name: 'teuruwera',
-      id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
-      tabs: timemapStructure
-    }]
-  }
+  gsheets: [{
+    name: 'teuruwera',
+    id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
+    tabs: timemapStructure
+  }]
 }
