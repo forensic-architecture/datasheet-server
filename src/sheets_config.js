@@ -11,7 +11,7 @@ const timemapStructure = {
 
 export default {
   gsheets: [{
-    name: 'teuruwera',
+    name: 'example',
     id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
     tabs: timemapStructure
   }]
