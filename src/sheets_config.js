@@ -1,19 +1,19 @@
 import BP from './lib/blueprinters'
 
 const timemapStructure = {
-  teuruwera_export_events: BP.deeprows,
-  teuruwera_export_categories: [BP.groups, BP.rows],
-  export_narratives: BP.rows,
-  teuruwera_export_sources: BP.deepids,
-  export_sites: BP.rows,
-  export_tags: BP.tree
+  welfare_export_events: BP.deeprows,
+  welfare_export_categories: [BP.groups, BP.rows],
+  welfare_export_narratives: BP.rows,
+  welfare_export_sources: BP.deepids,
+  welfare_export_sites: BP.rows,
+  welfare_export_tags: BP.tree
 }
 
 export default {
   googleSheets: {
     sheets: [{
-      name: 'teuruwera',
-      id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
+      name: 'welfare',
+      id: '1ej3kEtANGYsEBUCTfWsIR0UhTSJIuXFHLYspti2sgHo',
       tabs: timemapStructure
     }]
   }
