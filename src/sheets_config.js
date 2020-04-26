@@ -1,18 +1,24 @@
 import BP from './lib/blueprinters'
 
 const timemapStructure = {
-  teuruwera_export_events: BP.deeprows,
-  teuruwera_export_categories: [BP.groups, BP.rows],
+  export_events: BP.deeprows,
+  export_categories: [BP.groups, BP.rows],
   export_narratives: BP.rows,
-  teuruwera_export_sources: BP.deepids,
+  export_sources: BP.deepids,
   export_sites: BP.rows,
   export_tags: BP.tree
 }
 
 export default {
   gsheets: [{
-    name: 'example',
-    id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
-    tabs: timemapStructure
+    name: 'nzacts',
+    tabs: timemapStructure,
+    id: '1ej3kEtANGYsEBUCTfWsIR0UhTSJIuXFHLYspti2sgHo'
+  }],
+
+  xlsx: [{
+    name: 'morocco_pushbacks',
+    tabs: timemapStructure,
+    path: 'temp/morocco_pushbacks.xlsx'
   }]
 }
