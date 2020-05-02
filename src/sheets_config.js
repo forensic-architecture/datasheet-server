@@ -11,14 +11,17 @@ const timemapStructure = {
 
 export default {
   gsheets: [{
-    name: 'nzacts',
+    name: 'example',
+    id: '1UC7DkCFeUXHfpUxUGruExwFbP4pqVBdJLOKfo6wDDGk',
     tabs: timemapStructure,
-    id: '1ej3kEtANGYsEBUCTfWsIR0UhTSJIuXFHLYspti2sgHo'
   }],
 
-  xlsx: [{
-    name: 'morocco_pushbacks',
-    tabs: timemapStructure,
-    path: 'temp/morocco_pushbacks.xlsx'
-  }]
+  
+  xlsx: [
+    /** {
+      name: 'my_local_sheet',
+      tabs: timemapStructure,
+      path: 'temp/my_local_sheet.xlsx'
+    } **/
+  ]
 }
