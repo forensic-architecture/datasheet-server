@@ -9,6 +9,25 @@ const timemapStructure = {
   export_tags: BP.tree
 }
 
+const treatyStructure = {
+  treaty_export_events: BP.deeprows,
+  treaty_export_categories: [BP.groups, BP.rows],
+  export_narratives: BP.rows,
+  treaty_export_sources: BP.deepids,
+  export_sites: BP.rows,
+  export_tags: BP.tree
+}
+
+const moraldriftStructure = {
+  moraldrift_export_events: BP.deeprows,
+  moraldrift_export_categories: [BP.groups, BP.rows],
+  moraldrift_export_narratives: BP.rows,
+  moraldrift_export_sources: BP.deepids,
+  moraldrift_export_sites: BP.rows,
+  moraldrift_export_tags: BP.tree
+
+}
+
 export default {
   gsheets: [{
     name: 'example',

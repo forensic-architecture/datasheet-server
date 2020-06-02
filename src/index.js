@@ -5,11 +5,17 @@ import middleware from './middleware'
 import api from './api'
 // import config from './sheets_config'
 import dotenv from 'dotenv'
+const hbs = require('express-handlebars')
 
 dotenv.config()
 
 let app = express()
 app.server = http.createServer(app)
+app.engine('.hbs', hbs({
+  extname: '.hbs',
+  defaultLayout: 'default'
+}))
+app.set('view engine', '.hbs')
 
 // enable cross origin requests explicitly in development
 if (process.env.NODE_ENV === 'development') {
