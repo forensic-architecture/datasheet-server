@@ -22,7 +22,6 @@ class Controller {
   update () {
     return Promise.all(
       Object.keys(this.fetchers).map(sheet => {
-        console.log(sheet)
         return this.fetchers[sheet].update()
       })
     ).then(results => {

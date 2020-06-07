@@ -10,11 +10,19 @@ const timemapStructure = {
 }
 
 export default {
-  googleSheets: {
-    sheets: [{
+  gsheets: [{
+    name: 'example',
       name: 'welfare',
       id: '1ej3kEtANGYsEBUCTfWsIR0UhTSJIuXFHLYspti2sgHo',
-      tabs: timemapStructure
-    }]
-  }
+    tabs: timemapStructure,
+  }],
+
+  
+  xlsx: [
+    /** {
+      name: 'my_local_sheet',
+      tabs: timemapStructure,
+      path: 'temp/my_local_sheet.xlsx'
+    } **/
+  ]
 }
