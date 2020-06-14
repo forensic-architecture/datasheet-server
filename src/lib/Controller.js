@@ -19,13 +19,19 @@ class Controller {
     ).reduce((acc, curr) => acc.concat(curr))
   }
 
+  rebuildBlueprintsAsync () {
+    Object.values(this.fetchers).forEach(t => t._buildBlueprintsAsync())
+  }
+
   update () {
+    const me = this
     return Promise.all(
       Object.keys(this.fetchers).map(sheet => {
         return this.fetchers[sheet].update()
       })
     ).then(results => {
       if (results.every(r => r)) {
+        me.rebuildBlueprintsAsync()
         return copy.success.update
       } else {
         throw new Error(copy.errors.update)

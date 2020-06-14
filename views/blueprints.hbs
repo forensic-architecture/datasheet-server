@@ -1,8 +1,50 @@
-<h1>Blueprints</h1>
+<h1>Available Endpoints</h1>
+<hr>
+<div class="main-container">
+  {{#each bps}}
+  <div class="blueprint-container">
+    <div class="bp-header">
+      <div class="bp-tab">{{ tab }}</div>
+      <div class="bp-source">{{ source }}</div>
+    </div>
+    {{#each urls}}
+    <div><a target="_blank" href="http://localhost:4040{{ this }}">{{ this }}</a></div>
+    {{/each}}
+  </div>
+  {{ else }}
+  <div>No endpoints found. Have you <a href="http://localhost:4040/api/update">updated</a>?</div>
+  {{/each}}
+</div>
 
-{{#each bps}}
-<div>Source: {{ source }}</div>
-<div>Tab: {{ tab }}</div>
-<div>URLS: {{ urls }}</div>
-<br>
-{{/each}}
+<style>
+:root {
+  --grey: #8a8a8a;
+}
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blueprint-container {
+  display: flex;
+  flex: 1 0 31%;
+  flex-direction: column;
+  border: 1px solid var(--grey);
+  padding: 1em;
+  margin: 1em;
+}
+
+.bp-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.bp-tab {
+  font-size: 24pt;
+}
+
+.bp-source {
+  color: var(--grey);
+}
+</style>
