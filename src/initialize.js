@@ -1,7 +1,7 @@
 import StoreJson from './models/StoreJson'
 import fetchers from './lib/Fetcher'
 import Controller from './lib/Controller'
-import config from './sheets_config'
+import config from './config'
 import R from 'ramda'
 
 const isntNull = n => n !== null

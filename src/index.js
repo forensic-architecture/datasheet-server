@@ -3,7 +3,6 @@ import express from 'express'
 import initialize from './initialize'
 import middleware from './middleware'
 import api from './api'
-// import config from './sheets_config'
 import dotenv from 'dotenv'
 const hbs = require('express-handlebars')
 
@@ -40,6 +39,8 @@ initialize(controller => {
       controller
     })
   )
+
+  app.use(express.static(__dirname + '/public'))
 
   app.server.listen(process.env.PORT || 4040, () => {
     console.log('===========================================')

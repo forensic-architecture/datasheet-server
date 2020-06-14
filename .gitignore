@@ -7,12 +7,9 @@
 
 .env
 *service-account-key\.json
-src/config.js
 /yarn-error.log
 *.pem
 .travis.yml.old
 tags
 tags.lock
 tags.temp
-
-src/sheets_config.js

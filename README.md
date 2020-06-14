@@ -76,7 +76,7 @@ Other configuration options, such as the port at which the server will expose
 resources, are also modifiable from the .env file.
 
 #### [Sources](#sources)
-Sources are specified in [src/sheets_config.js](https://github.com/forensic-architecture/datasheet-server/blob/develop/src/sheets_config.js). Datasheet server currently only supports Google Sheets as a source.
+Sources are specified in [src/config.js](https://github.com/forensic-architecture/datasheet-server/blob/develop/src/config.js). Datasheet server currently only supports Google Sheets as a source.
 
 ###### [Google Sheets](#source-google-sheets)
 | sheets | A list of objects, one for each sheet that is being used as a source. Each sheet object has a `name` (String), an `id` (String), and a `tabs` (object) field, which are explained below. | object |
