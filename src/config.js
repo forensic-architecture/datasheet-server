@@ -1,4 +1,4 @@
-import { tabs, prefixedTabs } from './lib'
+import { timemap } from './lib'
 
 export default {
   gsheets: [],
@@ -6,7 +6,7 @@ export default {
     {
       name: 'timemap_data',
       path: 'data/timemap_data.xlsx',
-      tabs
+      tabs: timemap.default
     }
   ]
 }

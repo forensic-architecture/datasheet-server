@@ -1,6 +1,6 @@
 import BP from './lib/blueprinters'
 
-export function prefixedTabs (prefix, cfg) {
+function prefixedTabs (prefix, cfg) {
   if (!cfg) cfg = {}
   const prf = key => cfg[key] ? `${prefix}_` : ''
   return {
@@ -13,11 +13,7 @@ export function prefixedTabs (prefix, cfg) {
   }
 }
 
-export const tabs = {
-  export_events: BP.deeprows,
-  export_categories: [BP.groups, BP.rows],
-  export_filters: BP.tree,
-  export_narratives: BP.rows,
-  export_sources: BP.deepids,
-  export_sites: BP.rows
+export const timemap = {
+  default: prefixedTabs(),
+  prefixedTabs
 }
