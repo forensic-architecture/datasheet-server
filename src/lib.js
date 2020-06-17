@@ -1,13 +1,15 @@
 import BP from './lib/blueprinters'
 
-export function prefixedTabs (prefix) {
+export function prefixedTabs (prefix, cfg) {
+  if (!cfg) cfg = {}
+  const prf = key => cfg[key] ? `${prefix}_` : ''
   return {
-    [`${prefix}_export_events`]: BP.deeprows,
-    [`${prefix}_export_categories`]: [BP.groups, BP.rows],
-    [`${prefix}_export_filters`]: BP.tree,
-    [`${prefix}_export_narratives`]: BP.rows,
-    [`${prefix}_export_sources`]: BP.deepids,
-    [`${prefix}_export_sites`]: BP.rows
+    [`${prf('events')}export_events`]: BP.deeprows,
+    [`${prf('categories')}export_categories`]: [BP.groups, BP.rows],
+    [`${prf('filters')}export_filters`]: BP.tree,
+    [`${prf('narratives')}export_narratives`]: BP.rows,
+    [`${prf('sources')}export_sources`]: BP.deepids,
+    [`${prf('sites')}export_sites`]: BP.rows
   }
 }
 
