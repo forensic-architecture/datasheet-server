@@ -8,10 +8,10 @@ management of the sheets it represents.
 It exposes an API with four endpoints:
  * `/:sheet/:tab/:resource` - the primary means of accessing data in the
      server. The name of a sheet is specified in
-     [sheets_config.js](https://github.com/forensic-architecture/datasheet-server/blob/develop/src/sheets_config.js#L7).
+     [_config.js](https://github.com/forensic-architecture/datasheet-server/blob/develop/src/config.js#L7).
      Each tab on the sheet is in lower case, with spaces replaced by
      underscores. The resource name is the same as the name of the blueprinter
-     specified for the tab is sheets_config.js.
+     specified for the tab is config.js.
  * `/:sheet/:tab/:resource/:id` - when the resource is a list, items in the list
      can be accessed individually as well.
  * `/update` - when this route is queried with a GET request, each of the

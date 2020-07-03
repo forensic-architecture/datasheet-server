@@ -4,18 +4,13 @@
   "description": "Starter project for an ES6 RESTful Express API",
   "main": "dist",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon -w src --exec \"babel-node src\"",
-    "build": "NODE_ENV=production npx babel src -d dist",
+    "dev": "env NODE_ENV=development nodemon -w src --exec \"babel-node src\"",
+    "build": "env NODE_ENV=production npx babel src -d dist",
     "start": "node dist",
     "lint": "standard \"src/**/*.js\" \"test/**/*.js\"",
     "test-watch": "ava --watch",
     "test": "ava --verbose",
     "travis-encrypt": "./scripts/encrypt.sh"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "./scripts/check-branch.sh && yarn lint && yarn test"
-    }
   },
   "repository": {
     "type": "git",
@@ -30,6 +25,7 @@
     "dotenv": "^6.1.0",
     "express": "^4.13.3",
     "express-graphql": "^0.6.12",
+    "express-handlebars": "^4.0.4",
     "googleapis": "^32.0.0",
     "graphql": "^0.13.2",
     "morgan": "^1.8.0",
@@ -48,7 +44,6 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "ava": "1.0.0-beta.8",
-    "husky": "^1.2.0",
     "nodemon": "1.18.7",
     "standard": "^12.0.1"
   },
