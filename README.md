@@ -53,7 +53,7 @@ Each Google Sheet being used as a as source requires a corresponding object in `
 See src/config.js for an example configuration sheet. 
 
 
-## [Quickstart](#quickstart)
+## [Quickstart](#quickstart)
 Clone the repository to your local:
 ```
 git clone https://www.github.com/forensic-architecture/datasheet-server
