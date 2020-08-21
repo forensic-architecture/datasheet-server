@@ -1,4 +1,5 @@
 import { fmtObj } from '../lib/util'
+import { getColumnValidation } from '../lib/validation'
 
 /**
  * Each resource item is an object with values labelled according
@@ -35,7 +36,6 @@ export default (data) => {
       }
     }
   })
-
   // generate the value for deep labels using the structure created
   data.forEach((row, idx) => {
     if (idx === 0) return
@@ -61,6 +61,8 @@ export default (data) => {
 
     // move values for flat labels over from base
     structure.__flat.forEach(label => {
+      const validatedLabel = getColumnValidation(label, baseRow[label])
+      console.log(validatedLabel)
       deepRow[label] = baseRow[label]
     })
     if (!Object.keys(deepRow).every(k => deepRow[k] === '')) {

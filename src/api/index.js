@@ -58,6 +58,17 @@ export default ({ config, controller }) => {
       )
   })
 
+  // api.get('/:sheet/:tab/:resource/validate', (req, res) => {
+  //   const { sheet, tab, resource } = req.params
+  //   controller
+  //     .retrieve(sheet, tab, resource)
+  //     .then(data => res.json(data))
+  //     .catch(err =>
+  //       res.status(err.status || 404)
+  //         .send({ error: err.message })
+  //     )
+  // })
+
   // ERROR routes. Note that it is important that these come AFTER routes
   // like /update, so that the regex does not greedily match these routes.
 
