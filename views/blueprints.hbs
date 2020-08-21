@@ -9,6 +9,7 @@
     </div>
     {{#each urls}}
     <div><a target="_blank" href="http://localhost:4040{{ this }}">{{ this }}</a></div>
+    <div class="bp-validate-button" target="_blank" href="http://localhost:4040{{ this }}">Validate</div>
     {{/each}}
   </div>
   {{ else }}
@@ -25,6 +26,7 @@
 :root {
   --grey: #8a8a8a;
   --btn-width: 200px;
+  --validate-btn-width: 150px;
 }
 .main-container {
   display: flex;
@@ -77,6 +79,21 @@
   text-decoration: none;
   text-underline: none;
   color: black;
+}
+
+.bp-validate-button {
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 12pt;
+  font-weight: bold;
+  width: var(--validate-btn-width);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid red;
+  padding: .5em;
+  text-decoration: none;
+  color: red;
 }
 
 .bp-update-container:hover {
