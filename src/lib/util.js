@@ -1,4 +1,4 @@
-import R from 'ramda';
+import R from 'ramda'
 
 /* eslint-disable */
 String.prototype.replaceAll = function (search, replacement) {
