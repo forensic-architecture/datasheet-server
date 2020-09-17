@@ -5,4 +5,4 @@ steps:
 - name: node
   entrypoint: npm
   args: ['test']
-
+tags: ['forensic-architecture', 'datasheet-server', 'project-name']
