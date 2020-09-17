@@ -13,5 +13,4 @@
 tags
 tags.lock
 tags.temp
-
-src/sheets_config.js
+src/config.js

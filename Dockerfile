@@ -10,7 +10,7 @@ RUN cd /www; yarn
 COPY . /www
 WORKDIR /www
 RUN yarn build
-RUN mkdir -p temp
+RUN mkdir -p data
 
 # set your port
 ENV PORT 8080

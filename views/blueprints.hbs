@@ -1,0 +1,91 @@
+<h1>Available Endpoints</h1>
+<hr>
+<div class="main-container">
+  {{#each bps}}
+  <div class="blueprint-container">
+    <div class="bp-header">
+      <div class="bp-tab">{{ tab }}</div>
+      <div class="bp-source">{{ source }}</div>
+    </div>
+    {{#each urls}}
+    <div><a target="_blank" href="http://localhost:4040{{ this }}">{{ this }}</a></div>
+    {{/each}}
+  </div>
+  {{ else }}
+  <div>No endpoints found. Have you updated?</div>
+  {{/each}}
+</div>
+
+<a class="bp-update-container" target="_blank" href="http://localhost:4040/api/update">
+  <div class="bp-button">Update</div>
+</div>
+
+
+<style>
+:root {
+  --grey: #8a8a8a;
+  --btn-width: 200px;
+}
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.blueprint-container {
+  display: flex;
+  flex: 1 0 31%;
+  flex-direction: column;
+  border: 1px solid var(--grey);
+  padding: 1em;
+  margin: 1em;
+}
+
+.bp-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.bp-tab {
+  font-size: 24pt;
+}
+
+.bp-source {
+  color: var(--grey);
+}
+
+.bp-update-container {
+  position: fixed;
+  top: 2px;
+  right: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bp-button {
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 24pt;
+  font-weight: bold;
+  width: var(--btn-width);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid black;
+  padding: .5em;
+  text-decoration: none;
+  text-underline: none;
+  color: black;
+}
+
+.bp-update-container:hover {
+  background-color: black;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.bp-update-container:hover div {
+  color: white;
+}
+</style>
