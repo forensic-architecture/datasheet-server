@@ -4,6 +4,7 @@
 /node_modules
 .DS_Store
 *.swp
+.vscode
 
 .env
 *service-account-key\.json

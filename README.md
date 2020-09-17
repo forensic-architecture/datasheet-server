@@ -102,3 +102,7 @@ If you have any questions or just want to chat, please join our team [fa_open_so
 ## License
 
 Datasheet Server is distributed under the [MIT License](https://github.com/forensic-architecture/datasheet-server/blob/develop/LICENSE).
+
+
+# Pipeline
+gcloud builds submit  
