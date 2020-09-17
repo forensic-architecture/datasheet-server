@@ -5,4 +5,8 @@ steps:
 - name: node
   entrypoint: npm
   args: ['test']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy']
+  timeout: '1600s'
+
 tags: ['forensic-architecture', 'datasheet-server', 'project-name']
