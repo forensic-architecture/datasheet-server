@@ -81,7 +81,6 @@ const failUrls = [
 //       })
 //   })
 // })
-
 failUrls.forEach(function (url) {
   test(`should respond with 404 for ${url}`, t => {
     return fetch(`${SERVER_ROOT}${url}`)
