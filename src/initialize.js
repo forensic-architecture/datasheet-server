@@ -1,13 +1,19 @@
 import StoreJson from './models/StoreJson'
 import fetchers from './lib/Fetcher'
 import Controller from './lib/Controller'
-import config from './config'
 import R from 'ramda'
 
 const isntNull = n => n !== null
 const filterNull = ls => R.filter(isntNull, ls)
 const flattenfilterNull = ls => filterNull(R.flatten(ls))
 let themFetchers
+
+let config
+try {
+  config = require('./local.config.js').default
+} catch (_) {
+  config = require('./config.js').default
+}
 
 export default callback => {
   return Promise.resolve().then(() => {
