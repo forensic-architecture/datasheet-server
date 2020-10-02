@@ -5,9 +5,13 @@ instance_class: F1
 automatic_scaling:
   max_instances: 1
 handlers:
+ - url: /
+   static_files: dist/index.js
+   upload: dist/index.js
+   http_headers:
+     Access-Control-Allow-Origin: "*"
  - url: /(.*)
-   static_files: build/\1
-   upload: build/(.*)
+   static_files: dist/\1
+   upload: dist/(.*)
    http_headers:
     Access-Control-Allow-Origin: "*" 
-    
