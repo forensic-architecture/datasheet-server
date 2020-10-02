@@ -5,6 +5,9 @@ instance_class: F1
 automatic_scaling:
   max_instances: 1
 handlers:
-  - url: /(.*)
-    http_headers:
-     Access-Control-Allow-Origin: "*"
+ - url: /(.*)
+   static_files: build/\1
+   upload: build/(.*)
+   http_headers:
+    Access-Control-Allow-Origin: "*" 
+    
