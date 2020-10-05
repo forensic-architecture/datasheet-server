@@ -5,8 +5,8 @@ instance_class: F1
 automatic_scaling:
   max_instances: 1
 handlers:
-- url: /.*
-  script: main.app
+- url: /api/timemap_data/.*
+  static_dir: /
   http_headers: 
     Access-Control-Allow-Origin: "*"
 
