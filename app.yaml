@@ -4,11 +4,11 @@ runtime: nodejs12
 instance_class: F1
 automatic_scaling:
   max_instances: 1
-handlers:
-- url: /
-  static_dir: /
-  http_headers:
-    Access-Control-Allow-Origin: '*'  
+# handlers:
+# - url: /
+#   static_dir: /
+#   http_headers:
+#     Access-Control-Allow-Origin: '*'  
 # handlers:
 #  - url: /(.*)
 #    static_files: dist/\1
