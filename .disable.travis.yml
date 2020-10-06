@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+- stable
+cache:
+  directories:
+  - node_modules
+before_script:
+- npm install -g yarn
+install:
+- npm:
+    executable: undefined # not required. The executable location for npm.,This is useful if you are using a version manager, such as nvm
+    name: undefined # not required. The name of a node.js library to install
+    global: false # not required. Install the node.js library globally
+    ignore_scripts: false # not required. Use the C(--ignore-scripts) flag when installing.
+    state: present # not required. choices: present;absent;latest. The state of the node.js library
+    production: false # not required. Install dependencies in production mode, excluding devDependencies
+    registry: undefined # not required. The registry to install modules from.
+    version: undefined # not required. The version to be installed
+    path: undefined # not required. The base path where to install the node.js libraries
+script:
+- npm build
+- mpm lint
+- npm test
