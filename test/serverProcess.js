@@ -17,7 +17,7 @@ function checkStatus (res) {
 /* SETUP: launch a development server with a wait time */
 test.before.cb(t => {
   console.log('SETUP: launching server and updating...')
-  serverProc = childProcess.spawn('npm', ['dev'], {
+  serverProc = childProcess.spawn('yarn', ['dev'], {
     cwd: '.',
     stdio: 'ignore'
   })
