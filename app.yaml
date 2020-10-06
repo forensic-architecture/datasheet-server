@@ -4,17 +4,11 @@ runtime: nodejs12
 instance_class: F1
 automatic_scaling:
   max_instances: 1
-handlers:
-- url: /api/timemap_data/.*
-  static_dir: /
-  http_headers: 
-    Access-Control-Allow-Origin: "*"
-- url: /api/timemap_data/.*/.*
-  static_dir: /
-  http_headers: 
-    Access-Control-Allow-Origin: "*"
 
-    # export_events/deeprows
+env_variables:
+  NODE_ENV: "development"
+
+# export_events/deeprows
 # handlers:
 # - url: /
 #   static_dir: /
