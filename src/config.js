@@ -1,13 +1,11 @@
 import { timemap } from './lib'
 
 export default {
-  gsheets: [],
-  xlsx: [
+  gsheets: [
     {
-      name: 'timemap_data',
-      path: 'data/timemap_data.xlsx',
+      name: 'curfew-2',
+      id: '15dQTFRkcePCHF4Nfr_JhQWz1LfYtL8_pXhom2F4opWM',
       tabs: timemap.default
     }
-  ]
+  ],
 }
-// 15dQTFRkcePCHF4Nfr_JhQWz1LfYtL8_pXhom2F4opWM
