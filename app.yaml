@@ -10,7 +10,7 @@ handlers:
   http_headers: 
     Access-Control-Allow-Origin: "*"
 - url: /api/timemap_data/export_events/deeprows
-  static_dir: /
+  static_dir: /dist
   http_headers: 
     Access-Control-Allow-Origin: "*"
 
