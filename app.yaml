@@ -7,16 +7,3 @@ automatic_scaling:
 
 env_variables:
   NODE_ENV: "development"
-
-# export_events/deeprows
-# handlers:
-# - url: /
-#   static_dir: /
-#   http_headers:
-#     Access-Control-Allow-Origin: '*'  
-# handlers:
-#  - url: /(.*)
-#    static_files: dist/\1
-#    upload: dist/(.*)
-#    http_headers:
-#     Access-Control-Allow-Origin: "*" 
