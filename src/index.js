@@ -1,4 +1,5 @@
 import http from 'http'
+import path from 'path'
 import express from 'express'
 import initialize from './initialize'
 import middleware from './middleware'
@@ -40,7 +41,7 @@ initialize(controller => {
     })
   )
 
-  app.use(express.static(__dirname + '/public'))
+  app.use(express.static(path.join(__dirname, 'public')))
 
   app.server.listen(process.env.PORT || 4040, () => {
     console.log('===========================================')
