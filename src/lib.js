@@ -5,7 +5,6 @@ function prefixedTabs (prefix, cfg) {
   const prf = key => cfg[key] ? `${prefix}_` : ''
   return {
     [`${prf('events')}export_events`]: BP.deeprows,
-    [`${prf('categories')}export_categories`]: [BP.groups, BP.rows],
     [`${prf('associations')}export_associations`]: BP.deeprows,
     [`${prf('sources')}export_sources`]: BP.deepids,
     [`${prf('sites')}export_sites`]: BP.rows
