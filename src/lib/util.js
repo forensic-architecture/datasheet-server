@@ -14,6 +14,11 @@ function camelize (str) {
   })
 }
 
+export function getFileExt (str) {
+  const re = /(?:\.([^.]+))?$/
+  return re.exec(str)[1]
+}
+
 export const fmtObj = R.curry(
   (
     columnNames,
