@@ -2,7 +2,6 @@ import R from 'ramda'
 import { createHash } from 'crypto'
 import { buildDesaturated } from './blueprinters'
 import {
-  getFileExt,
   fmtName,
   fmtBlueprinterTitles,
   isFunction
