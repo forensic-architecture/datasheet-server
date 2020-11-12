@@ -234,8 +234,8 @@ class LocalFetcher extends Fetcher {
     const wb = X.readFile(this.path)
     wb.SheetNames.forEach(name => {
       const sh = wb.Sheets[name]
-      const csv = X.utils.sheet_to_csv(sh)
-      const ll = csv.split('\n').map(line => line.split(','))
+      const csv = X.utils.sheet_to_csv(sh, { FS: '\t' })
+      const ll = csv.split('\n').map(line => line.split('\t'))
       this.save(name, ll)
     })
     return Promise.resolve(true)
