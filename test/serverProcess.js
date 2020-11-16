@@ -54,14 +54,7 @@ test('should launch', t => {
 })
 
 const passUrls = [
-  // /
   '/api/',
-  // /blueprints
-  '/api/blueprints',
-  // /:sheet/:tab/:resource
-  '/api/example/export_events/rows',
-  // /:sheet/:tab/:resource/:frag
-  '/api/example/export_events/rows/1'
 ]
 
 const failUrls = [
@@ -77,6 +70,7 @@ passUrls.forEach(function (url) {
       .then(checkStatus)
       .then(res => res.json())
       .then(json => {
+        console.info('JSON: ', json)
         t.pass()
       })
   })
