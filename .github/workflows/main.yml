@@ -1,0 +1,34 @@
+name: CD
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: webfactory/ssh-agent@v0.4.1
+        with:
+            ssh-private-key: ${{ secrets.CI_SSH }}
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7 #install the python needed
+      - name: Checkout configs repo
+        uses: actions/checkout@v2
+        with:
+          repository: forensic-architecture/configs
+          token: ${{ secrets.GitHub_PAT }} # `GitHub_PAT` is a secret that contains your PAT
+          path: configs
+      - name: Generate vault file
+        run: python3 ./generate_timemap_vault.py
+      - name: Checkout devops repo
+        uses: actions/checkout@v2
+        with:
+          repository: forensic-architecture/devops
+          path: devops
+      - name: Symlink to new config vault file
+        run: ln -s ../configs/vault.yml ./vars/vault.yml
