@@ -63,10 +63,7 @@ export default (data) => {
     structure.__flat.forEach(label => {
       deepRow[label] = baseRow[label]
     })
-    if (!Object.keys(deepRow).every(k => (
-      (deepRow[k] === '') ||
-      (Array.isArray(deepRow[k]) && deepRow[k].length === 0)
-    ))) {
+    if (!Object.keys(deepRow).every(k => deepRow[k] === '')) {
       output.push(deepRow)
     }
   })
