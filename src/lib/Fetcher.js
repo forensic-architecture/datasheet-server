@@ -1,15 +1,16 @@
-// FetcherTwo class interfaces with Google Sheet, and saves to a specified db
-import { google } from 'googleapis'
+import R from 'ramda'
+import { createHash } from 'crypto'
 import { buildDesaturated } from './blueprinters'
 import {
   fmtName,
   fmtBlueprinterTitles,
   isFunction
 } from './util'
-import { createHash } from 'crypto'
-import R from 'ramda'
-import xlsx from 'node-xlsx'
-import fs from 'fs'
+
+/* GsheetFetcher deps */
+import { google } from 'googleapis'
+/* LocalFetcher deps */
+import X from 'xlsx'
 
 class Fetcher {
   constructor (db, name, bps) {
@@ -138,7 +139,6 @@ class Fetcher {
 
   /** Run on startup. Should be overridden if explicit auth is required **/
   authenticate (env) {
-    console.log(`Connected to ${this.sheetName}. No explicit authentication required for ${this.type}s.`)
     return Promise.resolve(this)
   }
 }
@@ -221,27 +221,22 @@ class GsheetFetcher extends Fetcher {
   }
 }
 
-class XlsxFetcher extends Fetcher {
+class LocalFetcher extends Fetcher {
   constructor (db, name, bps, path) {
     super(db, name, bps)
-    this.type = 'XLSX File'
     this.path = path
-    this.isRemote = false
-
-    if (this.path.startsWith('https')) {
-      this.isRemote = true
-    }
+    this.update().then(res =>
+      console.log(`${res ? 'Successful' : 'Couldn\'t'} update ${name}`)
+    )
   }
 
   update () {
-    const data = xlsx.parse(fs.readFileSync(this.path))
-    data.forEach(tab => {
-      const stringyData = tab.data.map(row =>
-        row.map(d =>
-          typeof (d) === 'number' ? d.toString() : d
-        )
-      )
-      this.save(tab.name, stringyData)
+    const wb = X.readFile(this.path)
+    wb.SheetNames.forEach(name => {
+      const sh = wb.Sheets[name]
+      const csv = X.utils.sheet_to_csv(sh, { FS: '\t' })
+      const ll = csv.split('\n').map(line => line.split('\t'))
+      this.save(name, ll)
     })
     return Promise.resolve(true)
   }
@@ -249,5 +244,7 @@ class XlsxFetcher extends Fetcher {
 
 export default {
   'gsheets': GsheetFetcher,
-  'xlsx': XlsxFetcher
+  'xlsx': LocalFetcher,
+  'ods': LocalFetcher,
+  'local': LocalFetcher
 }
