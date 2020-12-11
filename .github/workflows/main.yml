@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.CD_Workflow_PAT }} # `GitHub_PAT` is a secret that contains your PAT
           path: configs
       - name: Generate .env file
-        run: 'echo "[datasheet] PORT=4444 SERVICE_ACCOUNT_EMAIL=$SERVICE_ACCOUNT_EMAIL SERVICE_ACCOUNT_PRIVATE_KEY=$SERVICE_ACCOUNT_PRIVATE_KEY" > configs/timemap/.env'
+        run: 'echo "[datasheet] \n PORT=4444 \n SERVICE_ACCOUNT_EMAIL=$SERVICE_ACCOUNT_EMAIL \n SERVICE_ACCOUNT_PRIVATE_KEY=$SERVICE_ACCOUNT_PRIVATE_KEY" > configs/timemap/.env'
         shell: bash
         env:
           SERVICE_ACCOUNT_EMAIL: ${{secrets.SERVICE_ACCOUNT_EMAIL}} 
