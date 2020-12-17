@@ -30,6 +30,9 @@ jobs:
           PORT: 4444
           SERVICE_ACCOUNT_EMAIL: ${{secrets.SERVICE_ACCOUNT_EMAIL}} 
           SERVICE_ACCOUNT_PRIVATE_KEY: ${{secrets.SERVICE_ACCOUNT_PRIVATE_KEY}}
+      - name: Set push config credentials
+        run: git config --global user.email "fadev@forensic-archiecture.org" &&
+             git config --global user.name "FA Dev"
       - name: Push new vault file to remote repo
         run: git status &&
              git add vault.yml &&
