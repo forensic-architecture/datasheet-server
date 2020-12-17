@@ -41,7 +41,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.CD_Workflow_PAT }}
-          repository: forensic-architecture/configs
+          repository: 'forensic-architecture/configs'
           branch: devops/ci-workflow
       - name: Checkout devops repo
         uses: actions/checkout@v2
