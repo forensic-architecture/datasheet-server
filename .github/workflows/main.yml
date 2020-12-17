@@ -36,7 +36,7 @@ jobs:
           repository: forensic-architecture/devops
           path: devops
       - name: Copy new config file
-        run: cp vault.yml devops/vars/vault.yml
+        run: sudo chmod -R 755 devops/vars/vault.yml && cp vault.yml devops/vars/vault.yml
       - name: install ansible
         run: sudo apt update &&
              sudo apt install software-properties-common &&
