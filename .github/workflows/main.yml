@@ -44,7 +44,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ devops/ci-workflow }}
+          branch: devops/ci-workflow
       - name: Checkout devops repo
         uses: actions/checkout@v2
         with:
