@@ -46,6 +46,6 @@ jobs:
         run: python3 -m pip install jmespath && 
              ansible-galaxy install angstwad.docker_ubuntu &&
              sudo apt install gawk
-     - name: debugging
-       run: cat vault.yml &&
-            cd /.ssh
+      - name: debugging
+        run: cat vault.yml &&
+             cd /.ssh && ls -a
