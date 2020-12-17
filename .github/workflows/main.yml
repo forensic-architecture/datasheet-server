@@ -37,7 +37,9 @@ jobs:
         run: git remote set-url origin https://github.com/forensic-architecture/configs.git &&
              git remote -v
       - name: Commit new vault file to remote repo
-        run: git status &&
+        run: git checkout -b devops/ci-workflow &&
+             git pull origin devops/ci-workflow &&
+             git status &&
              git add vault.yml &&
              git commit -m "AUTO Adding vault.yml to repo" &&
              git push origin devops/ci-workflow
