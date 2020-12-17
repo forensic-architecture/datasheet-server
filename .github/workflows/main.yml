@@ -37,16 +37,12 @@ jobs:
           path: devops
       - name: Copy new config file
         run: cp vault.yml devops/deploy_timemap/vars/vault.yml
-      - name: install ansible
+      - name: Install ansible
         run: sudo apt update &&
              sudo apt install software-properties-common &&
              sudo apt-add-repository --yes --update ppa:ansible/ansible &&
              sudo apt install ansible
-      - name: install pip3
-        run: sudo apt-get update &&
-             sudo apt-get -y install python3-pip
-      - name: install jmespath
-        run: pip3 install jmespath
-      - name: install dependencies
-        run: ansible-galaxy install angstwad.docker_ubuntu &&
-             sudo apt install gawk
+      - name: Install devops dependencies
+        run: python3 -m pip install jmespath && 
+             ansible-galaxy install angstwad.docker_ubuntu &&
+             sudo apt install gawk 
