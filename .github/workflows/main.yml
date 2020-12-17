@@ -30,26 +30,13 @@ jobs:
           PORT: 4444
           SERVICE_ACCOUNT_EMAIL: ${{secrets.SERVICE_ACCOUNT_EMAIL}} 
           SERVICE_ACCOUNT_PRIVATE_KEY: ${{secrets.SERVICE_ACCOUNT_PRIVATE_KEY}}
-      - name: Set push config credentials
-        run: git config --global user.email "fadev@forensic-archiecture.org" &&
-             git config --global user.name "FA Dev"
-      - name: Commit new vault file to remote repo
-        run: git status &&
-             git add vault.yml &&
-             git commit -m "AUTO Adding vault.yml to repo"
-      - name: Push changes to remote repo
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.CD_Workflow_PAT }}
-          repository: 'forensic-architecture/configs'
-          branch: devops/ci-workflow
       - name: Checkout devops repo
         uses: actions/checkout@v2
         with:
           repository: forensic-architecture/devops
           path: devops
       - name: Copy new config file
-        run: cp configs/vault.yml devops/vars/vault.yml
+        run: cp vault.yml devops/vars/vault.yml
       - name: install ansible
         run: sudo apt update &&
              sudo apt install software-properties-common &&
