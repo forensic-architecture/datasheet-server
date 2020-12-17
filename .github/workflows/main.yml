@@ -33,13 +33,14 @@ jobs:
       - name: Set push config credentials
         run: git config --global user.email "fadev@forensic-archiecture.org" &&
              git config --global user.name "FA Dev"
-      - name: Commit new vault file to remote repo
-        run: git status &&
-             git add vault.yml &&
-             git commit -m "AUTO Adding vault.yml to repo"
       - name: Set remote url
         run: git remote set-url origin https://github.com/forensic-architecture/configs.git &&
              git remote -v
+      - name: Commit new vault file to remote repo
+        run: git status &&
+             git add vault.yml &&
+             git commit -m "AUTO Adding vault.yml to repo" &&
+             git push origin devops/ci-workflow
       - name: Checkout devops repo
         uses: actions/checkout@v2
         with:
