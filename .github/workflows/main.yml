@@ -30,6 +30,11 @@ jobs:
           PORT: 4444
           SERVICE_ACCOUNT_EMAIL: ${{secrets.SERVICE_ACCOUNT_EMAIL}} 
           SERVICE_ACCOUNT_PRIVATE_KEY: ${{secrets.SERVICE_ACCOUNT_PRIVATE_KEY}}
+      - name: Push new vault file to remote repo
+        run: git status &&
+             git add .
+             git commit -m "AUTO Adding vault.yml to repo"
+             git push origin devops/ci-workflow
       - name: Checkout devops repo
         uses: actions/checkout@v2
         with:
