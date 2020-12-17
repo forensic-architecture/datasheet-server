@@ -39,7 +39,7 @@ jobs:
       - name: Commit new vault file to remote repo
         run: git status &&
              git add vault.yml &&
-             git commit -m "AUTO Adding vault.yml to repo" &&
+             git commit -m "AUTO Adding vault.yml to repo"
       - name: Push changes to remote repo
         uses: ad-m/github-push-action@master
         with:
