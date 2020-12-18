@@ -30,8 +30,6 @@ jobs:
           PORT: 4444
           SERVICE_ACCOUNT_EMAIL: ${{secrets.SERVICE_ACCOUNT_EMAIL}} 
           SERVICE_ACCOUNT_PRIVATE_KEY: ${{secrets.SERVICE_ACCOUNT_PRIVATE_KEY}}
-      - name: debugging
-        run: cat vault.yml
       - name: Checkout devops repo
         uses: actions/checkout@v2
         with:
