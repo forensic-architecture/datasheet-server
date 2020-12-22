@@ -37,23 +37,22 @@ jobs:
           path: devops
       - name: Copy new config file
         run: cp vault.yml devops/deploy_timemap/vars/vault.yml
-#       - name: Install ansible
-#         run: sudo apt update &&
-#              sudo apt install software-properties-common &&
-#              sudo apt-add-repository --yes --update ppa:ansible/ansible &&
-#              sudo apt install ansible
-#       - name: Install devops dependencies
-#         run: python3 -m pip install jmespath && 
-#              ansible-galaxy install angstwad.docker_ubuntu &&
-#              sudo apt install gawk
+      - name: Install ansible
+        run: sudo apt update &&
+             sudo apt install software-properties-common &&
+             sudo apt-add-repository --yes --update ppa:ansible/ansible &&
+             sudo apt install ansible
+      - name: Install devops dependencies
+        run: python3 -m pip install jmespath && 
+             ansible-galaxy install angstwad.docker_ubuntu &&
+             sudo apt install gawk
       - name: Create hosts file
         run: cd devops && mkdir inventories && cd inventories &&
              echo "[$HOST]
              $IP_ADDRESS" > hosts
         env:
           HOST: fa_internal
-#           IP_ADDRESS: ${{secrets.IP_ADDRESS}}
-          IP_ADDRESS: 127.0.0.1
+          IP_ADDRESS: ${{secrets.INTERNAL_IP_ADDRESS}}
       - name: Write key to file
         run: cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev
         env:
@@ -66,4 +65,6 @@ jobs:
              env
         env:
           HOST: fa_internal
+      - name: Check templates from vault file
+        run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
             
