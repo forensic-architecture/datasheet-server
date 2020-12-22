@@ -64,7 +64,7 @@ jobs:
              export ANSIBLE_CONFIG=devops/deploy_timemap/ansible.cfg &&
              export ANSIBLE_SSH_KEY_PATH=$HOME/.ssh/fadev &&
              export ANSIBLE_REMOTE_USER='fadev' &&
-             export ANSIBLE_BECOME='yes'
+             export ANSIBLE_BECOME='yes' && env
         env:
           HOST: fa_internal
       - name: Check templates from vault file
