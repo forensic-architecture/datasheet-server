@@ -54,8 +54,8 @@ jobs:
           HOST: fa_internal
 #           IP_ADDRESS: ${{secrets.IP_ADDRESS}}
           IP_ADDRESS: 127.0.0.1
-      - name: Check for secrets folder
-        run: echo $HOME && cd $HOME/secrets && ls
+      - name: test
+        run: mkdir $HOME/test && echo "$SERVICE_ACCOUNT_EMAIL" > test.txt && cat $HOME/test/text.txt
 #       - name: Export env vars
 #         run: export ANSIBLE_HOST_GROUP="$HOST" &&
 #              export ANSIBLE_SSH_KEY_PATH=
