@@ -61,14 +61,12 @@ jobs:
           FADEV_SSH_PRIVATE_KEY: ${{ secrets.FADEV_SSH_PRIVATE_KEY }}  
       - name: Export env vars
         run: export ANSIBLE_HOST_GROUP="$HOST" &&
-             export ANSIBLE_CONFIG=$HOME/devops/deploy_timemap/ansible.cfg &&
+             export ANSIBLE_CONFIG=$HOME/work/datasheet-server/datasheet-server/devops &&
              export ANSIBLE_SSH_KEY_PATH=$HOME/.ssh/fadev &&
              export ANSIBLE_REMOTE_USER='fadev' &&
              export ANSIBLE_BECOME='yes'
         env:
           HOST: fa_internal
-      - name: test
-        run: cd devops && pwd
       - name: Check templates from vault file
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
       - name: Run ansible deploy
