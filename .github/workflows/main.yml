@@ -53,6 +53,8 @@ jobs:
         env:
           HOST: fa_internal
           IP_ADDRESS: ${{secrets.INTERNAL_IP_ADDRESS}}
+      - name: Read hosts file
+        run: cat devops/deploy_timemap/inventories/hosts
       - name: Write key to file
         run: cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev
         env:
@@ -66,8 +68,8 @@ jobs:
           HOST: fa_internal
       - name: Check templates from vault file
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
-      - name: Run ansible deploy
-        run: ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml --extra-vars "ansible_become_pass=$FADEV_PWORD"
-        env:
-          FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
+#       - name: Run ansible deploy
+#         run: ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -v --extra-vars "ansible_become_pass=$FADEV_PWORD"
+#         env:
+#           FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
             
