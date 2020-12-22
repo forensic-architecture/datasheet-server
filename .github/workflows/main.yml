@@ -67,7 +67,9 @@ jobs:
       - name: Check templates from vault file
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
       - name: Run ansible deploy
-        run: export ANSIBLE_CONFIG=$GITHUB_WORKSPACE/devops/deploy_timemap/ansible.cfg && ansible-config --version && ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -v --extra-vars "ansible_become_pass=$FADEV_PWORD"
+        run: env && export ANSIBLE_CONFIG=$GITHUB_WORKSPACE/devops/deploy_timemap/ansible.cfg &&
+             ansible-config --version &&
+             ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -v --extra-vars "ansible_become_pass=$FADEV_PWORD"
         env:
           FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
             
