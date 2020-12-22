@@ -46,3 +46,17 @@ jobs:
         run: python3 -m pip install jmespath && 
              ansible-galaxy install angstwad.docker_ubuntu &&
              sudo apt install gawk
+      - name: Create hosts file
+        run: cd devops/inventories &&
+             echo "[$HOST]
+             $IP_ADDRESS" > hosts
+        env:
+          HOST: fa_internal
+#           IP_ADDRESS: ${{secrets.IP_ADDRESS}}
+          IP_ADDRESS: 127.0.0.1
+      - name: Check for secrets folder
+        run: echo $HOME && cd $HOME/secrets && ls
+#       - name: Export env vars
+#         run: export ANSIBLE_HOST_GROUP="$HOST" &&
+#              export ANSIBLE_SSH_KEY_PATH=
+            
