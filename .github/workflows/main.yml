@@ -54,7 +54,7 @@ jobs:
           HOST: fa_internal
           IP_ADDRESS: ${{secrets.INTERNAL_IP_ADDRESS}}
       - name: Write key to file
-        run: cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev && sudo chmod 755 $HOME/.ssh
+        run: cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev && chmod 400 $HOME/.ssh/fadev
         env:
           FADEV_SSH_PRIVATE_KEY: ${{ secrets.FADEV_SSH_PRIVATE_KEY }}
       - name: Check templates from vault file
