@@ -55,7 +55,7 @@ jobs:
 #           IP_ADDRESS: ${{secrets.IP_ADDRESS}}
           IP_ADDRESS: 127.0.0.1
       - name: test
-        run: mkdir $HOME/test && cd $HOME/test && echo "$SERVICE_ACCOUNT_EMAIL" > test.txt && cat $HOME/test/text.txt
+        run: mkdir $HOME/test && cd $HOME/test && echo "$SERVICE_ACCOUNT_EMAIL" > test.txt && cat $HOME/test/test.txt
 #       - name: Export env vars
 #         run: export ANSIBLE_HOST_GROUP="$HOST" &&
 #              export ANSIBLE_SSH_KEY_PATH=
