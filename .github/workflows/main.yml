@@ -55,7 +55,7 @@ jobs:
 #           IP_ADDRESS: ${{secrets.IP_ADDRESS}}
           IP_ADDRESS: 127.0.0.1
       - name: Write key to file
-        run: mkdir $HOME/.ssh && cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev
+        run: cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev
         env:
           FADEV_SSH_PRIVATE_KEY: ${{ secrets.FADEV_SSH_PRIVATE_KEY }}  
       - name: Export env vars
