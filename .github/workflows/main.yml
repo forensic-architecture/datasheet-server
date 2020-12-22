@@ -47,7 +47,7 @@ jobs:
              ansible-galaxy install angstwad.docker_ubuntu &&
              sudo apt install gawk
       - name: Create hosts file
-        run: cd devops/inventories &&
+        run: cd devops && mkdir inventories && cd inventories &&
              echo "[$HOST]
              $IP_ADDRESS" > hosts
         env:
