@@ -57,11 +57,8 @@ jobs:
         run: cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev
         env:
           FADEV_SSH_PRIVATE_KEY: ${{ secrets.FADEV_SSH_PRIVATE_KEY }}
-      - name: Log path
-        run: cd devops && pwd
       - name: Export env vars
         run: export ANSIBLE_HOST_GROUP="$HOST" &&
-             export ANSIBLE_CONFIG=$GITHUB_WORKSPACE/devops/deploy_timemap/ansible.cfg &&
              export ANSIBLE_SSH_KEY_PATH=$HOME/.ssh/fadev &&
              export ANSIBLE_REMOTE_USER='fadev' &&
              export ANSIBLE_BECOME='yes'
@@ -70,7 +67,7 @@ jobs:
       - name: Check templates from vault file
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
       - name: Run ansible deploy
-        run: ansible-config --version && ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -v --extra-vars "ansible_become_pass=$FADEV_PWORD"
+        run: export ANSIBLE_CONFIG=$GITHUB_WORKSPACE/devops/deploy_timemap/ansible.cfg && ansible-config --version && ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -v --extra-vars "ansible_become_pass=$FADEV_PWORD"
         env:
           FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
             
