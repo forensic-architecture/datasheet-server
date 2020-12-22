@@ -48,8 +48,10 @@ jobs:
              sudo apt install gawk
       - name: Create hosts file
         run: cd devops/deploy_timemap && mkdir inventories && cd inventories &&
-             echo "[$HOST]\n
-             $IP_ADDRESS" > hosts
+             cat << 'EOF' >> hosts
+             [$HOST]
+             $IP_ADDRESS
+             EOF
         env:
           HOST: fa_internal
           IP_ADDRESS: ${{secrets.INTERNAL_IP_ADDRESS}}
