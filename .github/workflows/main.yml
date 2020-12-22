@@ -28,8 +28,8 @@ jobs:
         run: python3 configs/generate_timemap_vault.py -f "configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY"
         env:
           PORT: 4444
-          SERVICE_ACCOUNT_EMAIL: ${{secrets.SERVICE_ACCOUNT_EMAIL}} 
-          SERVICE_ACCOUNT_PRIVATE_KEY: ${{secrets.SERVICE_ACCOUNT_PRIVATE_KEY}}
+          SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }} 
+          SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.SERVICE_ACCOUNT_PRIVATE_KEY }}
       - name: Checkout devops repo
         uses: actions/checkout@v2
         with:
@@ -56,6 +56,8 @@ jobs:
           IP_ADDRESS: 127.0.0.1
       - name: test
         run: mkdir $HOME/test && cd $HOME/test && echo "$SERVICE_ACCOUNT_EMAIL" > test.txt && cat $HOME/test/test.txt
+        env:
+          SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}  
 #       - name: Export env vars
 #         run: export ANSIBLE_HOST_GROUP="$HOST" &&
 #              export ANSIBLE_SSH_KEY_PATH=
