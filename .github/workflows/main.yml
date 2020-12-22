@@ -47,7 +47,7 @@ jobs:
              ansible-galaxy install angstwad.docker_ubuntu &&
              sudo apt install gawk
       - name: Create hosts file
-        run: cd devops && mkdir inventories && cd inventories &&
+        run: cd devops/deploy_timemap && mkdir inventories && cd inventories &&
              echo "[$HOST]
              $IP_ADDRESS" > hosts
         env:
@@ -61,10 +61,13 @@ jobs:
         run: export ANSIBLE_HOST_GROUP="$HOST" &&
              export ANSIBLE_SSH_KEY_PATH=$HOME/.ssh/fadev &&
              export ANSIBLE_REMOTE_USER='fadev' &&
-             export ANSIBLE_BECOME='yes' &&
-             env
+             export ANSIBLE_BECOME='yes'
         env:
           HOST: fa_internal
       - name: Check templates from vault file
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
+      - name: Run ansible deploy
+        run: ansible-playbook playbooks/deploy_timemap.yml --extra-vars "ansible_become_pass=$FADEV_PWORD"
+        env:
+          FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
             
