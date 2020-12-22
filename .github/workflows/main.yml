@@ -37,15 +37,15 @@ jobs:
           path: devops
       - name: Copy new config file
         run: cp vault.yml devops/deploy_timemap/vars/vault.yml
-      - name: Install ansible
-        run: sudo apt update &&
-             sudo apt install software-properties-common &&
-             sudo apt-add-repository --yes --update ppa:ansible/ansible &&
-             sudo apt install ansible
-      - name: Install devops dependencies
-        run: python3 -m pip install jmespath && 
-             ansible-galaxy install angstwad.docker_ubuntu &&
-             sudo apt install gawk
+#       - name: Install ansible
+#         run: sudo apt update &&
+#              sudo apt install software-properties-common &&
+#              sudo apt-add-repository --yes --update ppa:ansible/ansible &&
+#              sudo apt install ansible
+#       - name: Install devops dependencies
+#         run: python3 -m pip install jmespath && 
+#              ansible-galaxy install angstwad.docker_ubuntu &&
+#              sudo apt install gawk
       - name: Create hosts file
         run: cd devops && mkdir inventories && cd inventories &&
              echo "[$HOST]
@@ -55,7 +55,7 @@ jobs:
 #           IP_ADDRESS: ${{secrets.IP_ADDRESS}}
           IP_ADDRESS: 127.0.0.1
       - name: test
-        run: mkdir $HOME/test && echo "$SERVICE_ACCOUNT_EMAIL" > test.txt && cat $HOME/test/text.txt
+        run: mkdir $HOME/test && cd $HOME/test && echo "$SERVICE_ACCOUNT_EMAIL" > test.txt && cat $HOME/test/text.txt
 #       - name: Export env vars
 #         run: export ANSIBLE_HOST_GROUP="$HOST" &&
 #              export ANSIBLE_SSH_KEY_PATH=
