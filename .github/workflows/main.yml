@@ -66,7 +66,7 @@ jobs:
              export ANSIBLE_CONFIG=$GITHUB_WORKSPACE/devops/deploy_timemap/ansible.cfg &&
              export ANSIBLE_HOST_KEY_CHECKING=False && env &&
              ansible-config --version &&
-             ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -vvv --private-key $HOME/.ssh/fadev --extra-vars "ansible_become_pass=$FADEV_PWORD"
+             ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml --private-key $HOME/.ssh/fadev --extra-vars "ansible_become_pass=$FADEV_PWORD"
         env:
           FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
           HOST: fa_internal
