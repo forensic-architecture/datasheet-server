@@ -37,8 +37,8 @@ jobs:
           path: devops
       - name: Copy new config file
         run: test -f "vault.yml" && cp vault.yml devops/deploy_timemap/vars/vault.yml
-      - name: Install ansible
-        run: python3 -m pip install ansible jmespath
+      - name: Install ansible and docker
+        run: python3 -m pip install ansible docker jmespath
       - name: Install devops dependencies
         run: ansible-galaxy install angstwad.docker_ubuntu &&
              sudo apt install gawk
@@ -57,6 +57,9 @@ jobs:
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
       - name: Check python version
         run: python --version
+      - name: Take down container if it exists
+        run: docker container ls &&
+             docker rm -f teargasamnesty_halle_hongkong_us2020_nmexico_example
       - name: Run ansible deploy
         run: export ANSIBLE_HOST_GROUP="$HOST" &&
              export ANSIBLE_REMOTE_USER='fadev' &&
