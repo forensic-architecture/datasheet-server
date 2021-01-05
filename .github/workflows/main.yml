@@ -38,15 +38,11 @@ jobs:
       - name: Copy new config file
         run: cp vault.yml devops/deploy_timemap/vars/vault.yml
       - name: Install ansible
-        run: sudo apt update &&
-             sudo apt install software-properties-common &&
-             sudo apt-add-repository --yes --update ppa:ansible/ansible &&
-             sudo apt install ansible
+        run: python3 -m pip install ansible
       - name: Install devops dependencies
         run: python3 -m pip install jmespath && 
              ansible-galaxy install angstwad.docker_ubuntu &&
-             sudo apt install gawk &&
-             pip install docker-py
+             sudo apt install gawk
       - name: Create hosts file
         run: cd devops/deploy_timemap && mkdir inventories && cd inventories &&
              echo -e "[$HOST]\n
