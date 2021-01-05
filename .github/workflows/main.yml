@@ -27,7 +27,7 @@ jobs:
       - name: Generate vault file
         run: python3 configs/generate_timemap_vault.py -f "$GITHUB_WORKSPACE/configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY"
         env:
-          PORT: 4444
+          PORT: 4000
           SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }} 
           SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.SERVICE_ACCOUNT_PRIVATE_KEY }}
       - name: Checkout devops repo
@@ -57,8 +57,6 @@ jobs:
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
       - name: Check python version
         run: python --version
-      - name: Restart docker
-        run: docker-compose down && docker-compose up
       - name: Run ansible deploy
         run: export ANSIBLE_HOST_GROUP="$HOST" &&
              export ANSIBLE_REMOTE_USER='fadev' &&
