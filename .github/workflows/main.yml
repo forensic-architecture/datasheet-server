@@ -64,9 +64,9 @@ jobs:
              export ANSIBLE_REMOTE_USER='fadev' &&
              export ANSIBLE_BECOME='yes'&&
              export ANSIBLE_CONFIG=$GITHUB_WORKSPACE/devops/deploy_timemap/ansible.cfg &&
-             export ANSIBLE_HOST_KEY_CHECKING=False && env &&
+             export ANSIBLE_HOST_KEY_CHECKING=False &&
              ansible-config --version &&
-             ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml --private-key $HOME/.ssh/fadev --extra-vars "ansible_become_pass=$FADEV_PWORD"
+             ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml --private-key $HOME/.ssh/fadev --extra-vars "ansible_become_pass=$FADEV_PWORD" --tags timemap,datasheet
         env:
           FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
           HOST: fa_internal
