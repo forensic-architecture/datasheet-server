@@ -38,7 +38,7 @@ jobs:
       - name: Copy new config file
         run: test -f "vault.yml" && cp vault.yml devops/deploy_timemap/vars/vault.yml
       - name: Install ansible
-        run: python3 -m pip install ansible docker jmespath
+        run: python3 -m pip install ansible jmespath
       - name: Install devops dependencies
         run: ansible-galaxy install angstwad.docker_ubuntu &&
              sudo apt install gawk
@@ -64,7 +64,7 @@ jobs:
              export ANSIBLE_CONFIG=$GITHUB_WORKSPACE/devops/deploy_timemap/ansible.cfg &&
              export ANSIBLE_HOST_KEY_CHECKING=False &&
              ansible-config --version &&
-             ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -vvv --private-key $HOME/.ssh/fadev --extra-vars "ansible_become_pass=$FADEV_PWORD"
+             ansible-playbook devops/deploy_timemap/playbooks/deploy_timemap.yml -vvv --private-key $HOME/.ssh/fadev --extra-vars "ansible_become_pass=$FADEV_PWORD" --tags timemap,datasheet
         env:
           FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
           HOST: fa_internal
