@@ -59,6 +59,8 @@ jobs:
           FADEV_SSH_PRIVATE_KEY: ${{ secrets.FADEV_SSH_PRIVATE_KEY }}
       - name: Check templates from vault file
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
+      - name: Check python version
+        run: python --version
       - name: Run ansible deploy
         run: export ANSIBLE_HOST_GROUP="$HOST" &&
              export ANSIBLE_REMOTE_USER='fadev' &&
