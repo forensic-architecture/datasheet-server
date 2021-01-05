@@ -57,9 +57,8 @@ jobs:
         run: ansible-playbook -K devops/deploy_timemap/playbooks/check_templates.yml
       - name: Check python version
         run: python --version
-      - name: Take down container if it exists
-        run: docker container ls &&
-             docker rm -f teargasamnesty_halle_hongkong_us2020_nmexico_example
+      - name: Restart docker
+        run: docker-compose down && docker-compose up
       - name: Run ansible deploy
         run: export ANSIBLE_HOST_GROUP="$HOST" &&
              export ANSIBLE_REMOTE_USER='fadev' &&
