@@ -45,7 +45,8 @@ jobs:
       - name: Install devops dependencies
         run: python3 -m pip install jmespath && 
              ansible-galaxy install angstwad.docker_ubuntu &&
-             sudo apt install gawk
+             sudo apt install gawk &&
+             pip install docker-py
       - name: Create hosts file
         run: cd devops/deploy_timemap && mkdir inventories && cd inventories &&
              echo -e "[$HOST]\n
