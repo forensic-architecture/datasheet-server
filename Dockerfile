@@ -13,8 +13,8 @@ RUN yarn build
 RUN mkdir -p data
 
 # set your port
-ENV PORT 8080
-EXPOSE  8080
+ENV PORT 4040
+EXPOSE  4040
 
 # start command as per package.json
 CMD ["yarn", "start"]
