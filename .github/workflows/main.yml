@@ -13,7 +13,7 @@ jobs:
       - uses: webfactory/ssh-agent@v0.4.1
         with:
             ssh-private-key: ${{ secrets.CI_SSH }}
-      - name: setup python
+      - name: Setup python
         uses: actions/setup-python@v2
         with:
           python-version: 3.7 #install the python needed
@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.CD_Workflow_PAT }} # `GitHub_PAT` is a secret that contains your PAT
           path: configs
       - name: Generate vault file
-        run: python3 configs/generate_timemap_vault.py -f "$GITHUB_WORKSPACE/configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY"
+        run: python3 configs/generate_timemap_vault.py -f "$GITHUB_WORKSPACE/configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY" -ex "yemen,hongkong"
         env:
           PORT: 4000
           SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }} 
