@@ -25,9 +25,9 @@ jobs:
           token: ${{ secrets.CD_Workflow_PAT }} # `GitHub_PAT` is a secret that contains your PAT
           path: configs
       - name: Generate vault file
-        run: python3 configs/generate_timemap_vault.py -f "$GITHUB_WORKSPACE/configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY" -ex "yemen,hongkong"
+        run: python3 configs/generate_timemap_vault.py -f "$GITHUB_WORKSPACE/configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY" -ex "yemen"
         env:
-          PORT: 4000
+          PORT: 4004
           SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }} 
           SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.SERVICE_ACCOUNT_PRIVATE_KEY }}
       - name: Checkout devops repo
@@ -37,7 +37,7 @@ jobs:
           ref: devops/cd-workflow
           path: devops
       - name: Copy new config file
-        run: test -f "vault.yml" && cp vault.yml devops/deploy_timemap/vars/vault.yml
+        run: cat vault.yml && test -f "vault.yml" && cp vault.yml devops/deploy_timemap/vars/vault.yml
       - name: Install ansible and docker
         run: python3 -m pip install ansible docker jmespath
       - name: Install devops dependencies
