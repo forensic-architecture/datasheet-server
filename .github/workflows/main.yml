@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.CD_Workflow_PAT }} # `GitHub_PAT` is a secret that contains your PAT
           path: configs
       - name: Generate vault file
-        run: python3 configs/generate_timemap_vault.py -f "$GITHUB_WORKSPACE/configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY" -ex "yemen"
+        run: python3 configs/generate_timemap_vault.py -f "$GITHUB_WORKSPACE/configs/timemap" -p $PORT -SA "$SERVICE_ACCOUNT_EMAIL" -SPK "$SERVICE_ACCOUNT_PRIVATE_KEY"
         env:
           PORT: 4004
           SERVICE_ACCOUNT_EMAIL: ${{ secrets.SERVICE_ACCOUNT_EMAIL }} 
