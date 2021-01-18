@@ -70,4 +70,8 @@ jobs:
         env:
           FADEV_PWORD: ${{ secrets.FADEV_PWORD }}
           HOST: fa_internal
+      - name: Curl UPDATE endpoint
+        run: curl https://$INTERNAL_IP_ADDRESS/example-server/api/update
+        env:
+          INTERNAL_IP_ADDRESS: ${{secrets.INTERNAL_IP_ADDRESS}}
             
