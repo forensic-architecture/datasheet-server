@@ -15,9 +15,9 @@ jobs:
         env:
           name: ${{ github.repository.name }}
       - name: Setup env variables
-        run: echo "ANSIBLE_RUNTIME_TAGS=$([[ $name == 'datasheet-server' ]] && echo 'datasheet' || [[ $name == 'timemap' ]] && echo 'timemap' || echo 'timemap,datasheet,nginx')" >> $GITHUB_ENV
+        run: echo "ANSIBLE_RUNTIME_TAGS=$([[ $name == *'datasheet-server' ]] && echo 'datasheet' || [[ $name == *'timemap' ]] && echo 'timemap' || echo 'timemap,datasheet,nginx')" >> $GITHUB_ENV
         env:
-          name: ${{ github.repository.name }}
+          name: ${{ github.repository }}
       - uses: actions/checkout@v2
       # - uses: webfactory/ssh-agent@v0.4.1
       #   with:
