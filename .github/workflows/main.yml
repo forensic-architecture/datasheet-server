@@ -11,8 +11,9 @@ jobs:
     steps:
       #---- SETUP ----#
       - name: Setup env variables
-        run: echo "ANSIBLE_RUNTIME_TAGS=$(echo 'timemap,datasheet,nginx')" >> $GITHUB_ENV
-        # TODO: should differ depending on ${{ github.repository }}
+        run: echo "ANSIBLE_RUNTIME_TAGS=$([[ $name = 'datasheet-server' && echo 'datasheet' || [[ $name = 'timemap' && echo 'timemap' || echo 'timemap,datasheet,nginx' ]])" >> $GITHUB_ENV
+        env:
+          name: ${{ github.repository.name }}
       - uses: actions/checkout@v2
       # - uses: webfactory/ssh-agent@v0.4.1
       #   with:
@@ -57,7 +58,7 @@ jobs:
           HOST: fa_internal
           IP_ADDRESS: ${{secrets.INTERNAL_IP_ADDRESS}}
       - name: Write key to file
-        run: cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev && chmod 600 $HOME/.ssh/fadev
+        run: mkdir -p $HOME/.ssh && cd $HOME/.ssh && echo "$FADEV_SSH_PRIVATE_KEY" > fadev && chmod 600 $HOME/.ssh/fadev
         env:
           FADEV_SSH_PRIVATE_KEY: ${{ secrets.FADEV_SSH_PRIVATE_KEY }}
 
