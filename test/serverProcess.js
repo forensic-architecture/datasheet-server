@@ -54,7 +54,7 @@ test('should launch', t => {
 })
 
 const passUrls = [
-  '/api/',
+  '/api/'
 ]
 
 const failUrls = [
