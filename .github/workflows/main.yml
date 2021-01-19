@@ -11,7 +11,7 @@ jobs:
     steps:
       #---- SETUP ----#
       - name: Setup env variables
-        run: echo "ANSIBLE_RUNTIME_TAGS=$(echo 'timemap,datasheet,nginx')" >> $ANSIBLE_RUNTIME_TAGS
+        run: echo "ANSIBLE_RUNTIME_TAGS=$(echo 'timemap,datasheet,nginx')" >> $GITHUB_ENV
         # TODO: should differ depending on ${{ github.repository }}
       - uses: actions/checkout@v2
       # - uses: webfactory/ssh-agent@v0.4.1
