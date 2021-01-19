@@ -15,5 +15,5 @@ jobs:
           token: ${{ secrets.CI_DISPATCH_TOKEN }}
           repository: forensic-architecture/configs
           event-type: remote-build
-          client-payload: '{"repo": "datasheet", "branch": "${GITHUB_REF##*/}"}'
+          client-payload: '{"runtime_args": "datasheet", "branch": "${GITHUB_REF##*/}"}'
 
