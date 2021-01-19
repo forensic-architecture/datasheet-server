@@ -1,0 +1,17 @@
+name: CD
+on:
+  # push:
+  #   branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  dispatch:
+    - name: Trigger CD build
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.CI_DISPATCH_TOKEN }}
+        repository: forensic-architecture/configs
+        event-type: remote-build
+        client-payload: '{"repo": "datasheet", "branch": "${GITHUB_REF##*/}"}'
+
