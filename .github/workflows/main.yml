@@ -10,8 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #---- SETUP ----#
+      - name: print name
+        run: echo $name
+        env:
+          name: ${{ github.repository.name }}
       - name: Setup env variables
-        run: echo "ANSIBLE_RUNTIME_TAGS=$([[ $name = 'datasheet-server' ]] && echo 'datasheet' || [[ $name = 'timemap' ]] && echo 'timemap' || echo 'timemap,datasheet,nginx')" >> $GITHUB_ENV
+        run: echo "ANSIBLE_RUNTIME_TAGS=$([[ $name == 'datasheet-server' ]] && echo 'datasheet' || [[ $name == 'timemap' ]] && echo 'timemap' || echo 'timemap,datasheet,nginx')" >> $GITHUB_ENV
         env:
           name: ${{ github.repository.name }}
       - uses: actions/checkout@v2
@@ -22,9 +26,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-      - name: Install ansible and docker
+      - name: Install python dependencies
         run: python3 -m pip install ansible docker jmespath
-      - name: Install devops dependencies
+      - name: Install other dependencies
         run: ansible-galaxy install angstwad.docker_ubuntu &&
              sudo apt install gawk
       - name: Checkout configs repo
@@ -32,13 +36,13 @@ jobs:
         with:
           repository: forensic-architecture/configs
           ref: devops/ci-workflow # TODO: remove this once merged
-          token: ${{ secrets.CD_Workflow_PAT }} # `GitHub_PAT` is a secret that contains your PAT
+          token: ${{ secrets.CD_Workflow_PAT }}
           path: configs
       - name: Checkout devops repo
         uses: actions/checkout@v2
         with:
           repository: forensic-architecture/devops
-          ref: devops/cd-workflow
+          ref: devops/cd-workflow # TODO: remove this once merged
           path: devops
 
       #---- ANSIBLE PREPARATION ----#
