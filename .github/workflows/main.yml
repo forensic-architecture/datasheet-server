@@ -11,7 +11,7 @@ jobs:
     steps:
       #---- SETUP ----#
       - name: Setup env variables
-        run: echo "ANSIBLE_RUNTIME_TAGS=$([[ $name = 'datasheet-server' && echo 'datasheet' || [[ $name = 'timemap' && echo 'timemap' || echo 'timemap,datasheet,nginx' ]])" >> $GITHUB_ENV
+        run: echo "ANSIBLE_RUNTIME_TAGS=$([[ $name = 'datasheet-server' ]] && echo 'datasheet' || [[ $name = 'timemap' ]] && echo 'timemap' || echo 'timemap,datasheet,nginx')" >> $GITHUB_ENV
         env:
           name: ${{ github.repository.name }}
       - uses: actions/checkout@v2
