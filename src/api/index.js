@@ -1,5 +1,6 @@
 import { version } from '../../package.json'
 import { Router } from 'express'
+import { exportToFile } from '../utilities'
 import copy from '../copy/en'
 
 export default ({ config, controller }) => {
@@ -20,6 +21,27 @@ export default ({ config, controller }) => {
         urls: bp.urls
       }))
     })
+  })
+
+  api.get('/export', (req, res) => {
+    const bps = controller.blueprints()
+    const bpsParsed = bps.map(bp => ({
+      sheet: bp.sheet.name,
+      tab: bp.name,
+      resources: bp.resources,
+      url: bp.urls[0]
+    }))
+    controller
+      .retrieveAll(bpsParsed)
+      .then(msg =>
+        res.json({
+          success: msg
+        })
+      )
+      .catch(err =>
+        res.status(404)
+          .send({ error: err.message, err })
+      )
   })
 
   api.get('/update', (req, res) => {

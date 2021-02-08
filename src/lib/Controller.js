@@ -39,6 +39,10 @@ class Controller {
     })
   }
 
+  retrieveAll (blueprints) {
+    // index through bps, grab data and add to existing data object with value for url name and data points for data object, write to file and return success msg; catch errors appropriately
+  }
+
   retrieve (sheet, tab, resource) {
     if (this._sheetExists(sheet)) {
       const fetcher = this.fetchers[sheet]
