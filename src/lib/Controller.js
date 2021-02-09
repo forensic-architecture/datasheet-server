@@ -1,4 +1,5 @@
 import copy from '../copy/en'
+import { exportToFile } from '../lib/util'
 
 /**
  * Controller
@@ -40,7 +41,7 @@ class Controller {
   }
 
   retrieveAll (fileDest) {
-    if (fileDest === '')  throw new Error(copy.errors.export)
+    if (fileDest === '')  return Promise.reject(new Error(copy.errors.export.fileMissing))
 
     const indexedData = {}
     const urls = []
@@ -52,14 +53,19 @@ class Controller {
         urls.push(bp.urls[0])
         return this.retrieve(bp.sheet.name, bp.name, resource)
       })
-    ).then(results => {
+    ).then(async results => {
       if (results.every(res => res)) {
         urls.forEach((item, idx) => {
           indexedData[item] = results[idx]
         })
-        return copy.success.export(fileDest)
+        try {
+          await exportToFile(fileDest, indexedData)
+          return copy.success.export(fileDest)
+        } catch (e) {
+          return Promise.reject(e)
+        }
       } else {
-        throw new Error(copy.errors.export)
+        return Promise.reject(new Error(copy.errors.export.writeFailed))
       }
     })
   }

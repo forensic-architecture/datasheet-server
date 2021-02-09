@@ -1,4 +1,6 @@
 import R from 'ramda'
+import fs from 'file-system'
+import copy from '../copy/en'
 
 /* eslint-disable */
 String.prototype.replaceAll = function (search, replacement) {
@@ -11,6 +13,15 @@ function camelize (str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match) {
     if (+match === 0) return '' // or if (/\s+/.test(match)) for white spaces
     return match.toUpperCase()
+  })
+}
+
+export function exportToFile(fileDest, data) {
+  const stringifiedData = JSON.stringify(data, null, 2)
+  const filePath = `${fileDest}/export.json`
+
+  fs.writeFile(filePath, stringifiedData, (err) => {
+    if (err) throw new Error(copy.errors.export.writeFailed)
   })
 }
 

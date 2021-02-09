@@ -1,6 +1,5 @@
 import { version } from '../../package.json'
 import { Router } from 'express'
-import { exportToFile } from '../utilities'
 import copy from '../copy/en'
 
 export default ({ config, controller }) => {
