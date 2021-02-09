@@ -57,7 +57,7 @@ class Controller {
         urls.forEach((item, idx) => {
           indexedData[item] = results[idx]
         })
-        return 'Success'
+        return copy.success.export(fileDest)
       } else {
         throw new Error(copy.errors.export)
       }
