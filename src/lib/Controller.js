@@ -39,8 +39,29 @@ class Controller {
     })
   }
 
-  retrieveAll (blueprints) {
-    // index through bps, grab data and add to existing data object with value for url name and data points for data object, write to file and return success msg; catch errors appropriately
+  retrieveAll (fileDest) {
+    if (fileDest === '')  throw new Error(copy.errors.export)
+
+    const indexedData = {}
+    const urls = []
+
+    const bps = this.blueprints()
+    return Promise.all(
+      bps.map(bp => {
+        const resource = Object.keys(bp.resources)[0]
+        urls.push(bp.urls[0])
+        return this.retrieve(bp.sheet.name, bp.name, resource)
+      })
+    ).then(results => {
+      if (results.every(res => res)) {
+        urls.forEach((item, idx) => {
+          indexedData[item] = results[idx]
+        })
+        return 'Success'
+      } else {
+        throw new Error(copy.errors.export)
+      }
+    })
   }
 
   retrieve (sheet, tab, resource) {

@@ -5,6 +5,7 @@ import copy from '../copy/en'
 
 export default ({ config, controller }) => {
   let api = Router()
+  const fileDest = config.EXPORT_FILE_DEST || ""
 
   api.get('/', (req, res) => {
     res.json({
@@ -24,15 +25,8 @@ export default ({ config, controller }) => {
   })
 
   api.get('/export', (req, res) => {
-    const bps = controller.blueprints()
-    const bpsParsed = bps.map(bp => ({
-      sheet: bp.sheet.name,
-      tab: bp.name,
-      resources: bp.resources,
-      url: bp.urls[0]
-    }))
     controller
-      .retrieveAll(bpsParsed)
+      .retrieveAll(fileDest)
       .then(msg =>
         res.json({
           success: msg
