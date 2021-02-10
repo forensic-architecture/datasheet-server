@@ -59,13 +59,13 @@ class Controller {
           indexedData[item] = results[idx]
         })
         try {
-          await exportToFile(fileDest, indexedData)
-          return copy.success.export(fileDest)
+          const message = await exportToFile(fileDest, indexedData)
+          return message
         } catch (e) {
           return Promise.reject(e)
         }
       } else {
-        return Promise.reject(new Error(copy.errors.export.writeFailed))
+        throw new Error(copy.errors.export.writeFailed)
       }
     })
   }

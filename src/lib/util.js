@@ -1,5 +1,5 @@
 import R from 'ramda'
-import fs from 'file-system'
+import { promises as fs } from 'file-system'
 import copy from '../copy/en'
 
 /* eslint-disable */
@@ -16,13 +16,16 @@ function camelize (str) {
   })
 }
 
-export function exportToFile(fileDest, data) {
+export async function exportToFile(fileDest, data) {
   const stringifiedData = JSON.stringify(data, null, 2)
   const filePath = `${fileDest}/export.json`
 
-  fs.writeFile(filePath, stringifiedData, (err) => {
-    if (err) throw new Error(copy.errors.export.writeFailed)
-  })
+  try {
+    await fs.writeFile(filePath, stringifiedData)
+    return copy.success.export(filePath)
+  } catch (err) {
+    throw new Error(copy.errors.export.writeFailed)
+  }
 }
 
 export const fmtObj = R.curry(
