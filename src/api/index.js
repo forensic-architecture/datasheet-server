@@ -4,7 +4,7 @@ import copy from '../copy/en'
 
 export default ({ config, controller }) => {
   let api = Router()
-  const fileDest = config.EXPORT_FILE_DEST || ""
+  const fileDest = config.EXPORT_FILE_DEST || null
 
   api.get('/', (req, res) => {
     res.json({

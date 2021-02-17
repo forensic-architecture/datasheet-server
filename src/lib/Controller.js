@@ -41,7 +41,7 @@ class Controller {
   }
 
   retrieveAll (fileDest) {
-    if (fileDest === '')  return Promise.reject(new Error(copy.errors.export.fileMissing))
+    if (!fileDest)  return Promise.reject(new Error(copy.errors.export.fileMissing))
 
     const indexedData = {}
     const urls = []
