@@ -16,7 +16,7 @@ function camelize (str) {
   })
 }
 
-export async function exportToFile(fileDest, data) {
+export async function exportToFile (fileDest, data) {
   const stringifiedData = JSON.stringify(data, null, 2)
   const filePath = `${fileDest}/export.json`
 

@@ -14,6 +14,6 @@ export default {
   },
   success: {
     update: 'All sheets updated',
-    export: dest => `All resources exported to the file: ${dest}`,
+    export: dest => `All resources exported to the file: ${dest}`
   }
 }
