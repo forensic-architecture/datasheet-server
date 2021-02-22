@@ -40,6 +40,7 @@ class Controller {
     })
   }
 
+  // Controller function to retrieve all blueprints and export to user defined file location
   retrieveAll (fileDest) {
     if (!fileDest) return Promise.reject(new Error(copy.errors.export.fileMissing))
 
