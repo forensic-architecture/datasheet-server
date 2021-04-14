@@ -13,6 +13,7 @@ const egInput1 = [
 ]
 
 // Test default blueprint exports
+// Smoke tests
 test('defaultBlueprint exports', t => {
   const expected = {
     sheet: {
