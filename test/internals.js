@@ -12,6 +12,7 @@ const egInput1 = [
   [4, 5, 6]
 ]
 
+// Test default blueprint exports
 test('defaultBlueprint exports', t => {
   const expected = {
     sheet: {
