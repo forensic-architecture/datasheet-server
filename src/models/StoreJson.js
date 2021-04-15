@@ -19,7 +19,6 @@ class StoreJson {
 
   save (url, data) {
     const parts = url.split('/')
-
     return fs.writeFile(
       `${STORAGE_DIRNAME}/${parts[0]}__${parts[1]}__${parts[2]}.json`,
       JSON.stringify(data)

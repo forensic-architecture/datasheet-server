@@ -30,9 +30,10 @@ export default ({ config, controller }) => {
           success: msg
         })
       )
-      .catch(err =>
+      .catch(err => {
         res.status(404)
           .send({ error: err.message, err })
+        }
       )
   })
 
