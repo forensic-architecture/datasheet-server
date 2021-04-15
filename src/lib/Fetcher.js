@@ -218,7 +218,7 @@ class GsheetFetcher extends Fetcher {
       .then(this._buildBlueprintsAsync())
       .then(() => true)
       .catch((err) => {
-        console.log(`Error fetching gsheets: ${err.message}`)
+        console.log(`Error fetching gsheets: ${err.message} `)
         return false
       })
   }
