@@ -1,7 +1,7 @@
 import copy from '../copy/en'
 
 /**
- * Controller class 
+ * Controller class
  *
  */
 class Controller {

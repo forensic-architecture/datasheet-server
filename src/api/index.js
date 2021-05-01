@@ -33,8 +33,7 @@ export default ({ config, controller }) => {
       .catch(err => {
         res.status(404)
           .send({ error: err.message, err })
-        }
-      )
+      })
   })
 
   api.get('/:sheet/:tab/:resource/:frag', (req, res) => {
