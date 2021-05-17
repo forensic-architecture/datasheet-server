@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import R from 'ramda'
 
-export const defaultBlueprint = {
+const defaultBlueprint = {
   name: null,
   sheet: {
     name: null,
@@ -11,11 +11,11 @@ export const defaultBlueprint = {
   resources: {}
 }
 
-export const defaultResource = {
+const defaultResource = {
   data: []
 }
 
-export function buildDesaturated (sheetId, sheetName, tab, resources) {
+function buildDesaturated (sheetId, sheetName, tab, resources) {
   const bp = R.clone(defaultBlueprint)
   bp.sheet.name = sheetName
   bp.sheet.id = sheetId
@@ -50,10 +50,22 @@ fs.readdirSync(normalizedPath).forEach(file => {
   allBps[bpName] = buildBlueprinter(bpName, datafier)
 })
 
+function transformerFromSchema (datafierName, schema) {
+  // TODO: enact schema
+  const datafier = data => data
+
+  return buildBlueprinter(datafierName, datafier)
+}
+
+function blueprinterWithSchema (name, blueprinter, schema) {
+  return transformerFromSchema(name, schema)
+}
+
 // NB: revert to ES5 'module.exports' required to make blueprinters from
 // each file in blueprinters folder available for granular import from here.
 module.exports = Object.assign({
   defaultBlueprint,
   defaultResource,
-  buildDesaturated
+  buildDesaturated,
+  blueprinterWithSchema
 }, allBps)
