@@ -50,15 +50,18 @@ fs.readdirSync(normalizedPath).forEach(file => {
   allBps[bpName] = buildBlueprinter(bpName, datafier)
 })
 
-function transformerFromSchema (datafierName, schema) {
-  // TODO: enact schema
-  const datafier = data => data
+function deeprowsWithSchema (datafierName, schema) {
+  const datafier = data => {
+    const transformedData = allBps.deeprows('', '', '', data).resources.deeprows.data
+    return transformedData.map(row => {
+      Object.keys(schema).forEach(key => {
+        row[key] = schema[key](row[key])
+      })
+      return row
+    })
+  }
 
-  return buildBlueprinter(datafierName, datafier)
-}
-
-function blueprinterWithSchema (name, blueprinter, schema) {
-  return transformerFromSchema(name, schema)
+  return buildBlueprinter(`deeprows_${datafierName}`, datafier)
 }
 
 // NB: revert to ES5 'module.exports' required to make blueprinters from
@@ -67,5 +70,5 @@ module.exports = Object.assign({
   defaultBlueprint,
   defaultResource,
   buildDesaturated,
-  blueprinterWithSchema
+  deeprowsWithSchema
 }, allBps)
