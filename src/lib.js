@@ -7,6 +7,7 @@ function prefixedTabs (prefix, cfg) {
     [`${prf('events')}export_events`]: BP.deeprows,
     [`${prf('associations')}export_associations`]: BP.deeprows,
     [`${prf('sources')}export_sources`]: BP.deepids,
+    [`${prf('shapes')}export_shapes`]: BP.deeprows,
     [`${prf('sites')}export_sites`]: BP.rows
   }
 }
