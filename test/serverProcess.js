@@ -19,7 +19,8 @@ test.before.cb(t => {
   console.log('SETUP: launching server and updating...')
   serverProc = childProcess.spawn('yarn', ['dev'], {
     cwd: '.',
-    stdio: 'ignore'
+    stdio: 'ignore',
+    shell: true
   })
 
   serverProc.on('exit', function (code, signal) {
