@@ -4,8 +4,7 @@
   "description": "Starter project for an ES6 RESTful Express API",
   "main": "dist",
   "scripts": {
-    "babel-node": "babel-node src",
-    "dev": "cross-env NODE_ENV=development nodemon -w src npm run babel-node",
+    "dev": "cross-env NODE_ENV=development nodemon -w src --exec \"./node_modules/.bin/babel-node src\"",
     "build": "cross-env NODE_ENV=production npx babel src -d dist",
     "start": "node dist",
     "lint": "standard \"src/**/*.js\" \"test/**/*.js\"",
