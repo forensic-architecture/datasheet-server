@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: [ develop ]
+    branches: [ feature/add-shapes-filter-panel ]
   pull_request:
     branches: [ develop ]
 
