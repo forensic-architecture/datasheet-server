@@ -1,6 +1,7 @@
 import { version } from '../../package.json'
 import fetch from 'node-fetch'
 import { Router } from 'express'
+import { getParameterByName } from '../lib/util'
 import copy from '../copy/en'
 
 export default ({ config, controller }) => {
@@ -23,8 +24,9 @@ export default ({ config, controller }) => {
     })
   })
 
-  api.get('/media', (req, res) => {
-    fetch(`${process.env.MEDIA_API_ENDPOINT}/cv_a12`, {
+  api.get('/media/:code', (req, res) => {
+    const { code } = req.params
+    fetch(`${process.env.MEDIA_API_ENDPOINT}/${code}`, {
       method: 'get',
       headers: {
         'Authorization': 'Basic ' + new Buffer(process.env.MEDIA_AUTH_USER + ":" + process.env.MEDIA_AUTH_PWORD).toString("base64")
@@ -32,7 +34,10 @@ export default ({ config, controller }) => {
     })
     .then(response => response.json())
     .then(data => res.send(data.data))
-    .catch(err => res.status(err.status || 404).send({ error: err.message }));
+    .catch(err => {
+      console.info(err)
+      res.status(err.status || 404).send({ error: err.message })
+    });
   })
 
   api.get('/update', (req, res) => {
