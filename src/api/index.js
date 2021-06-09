@@ -1,4 +1,5 @@
 import { version } from '../../package.json'
+import fetch from 'node-fetch'
 import { Router } from 'express'
 import copy from '../copy/en'
 
@@ -20,6 +21,18 @@ export default ({ config, controller }) => {
         urls: bp.urls
       }))
     })
+  })
+
+  api.get('/media', (req, res) => {
+    fetch(`${process.env.MEDIA_API_ENDPOINT}/cv_a12`, {
+      method: 'get',
+      headers: {
+        'Authorization': 'Basic ' + new Buffer(process.env.MEDIA_AUTH_USER + ":" + process.env.MEDIA_AUTH_PWORD).toString("base64")
+      }
+    })
+    .then(response => response.json())
+    .then(data => res.send(data.data))
+    .catch(err => res.status(err.status || 404).send({ error: err.message }));
   })
 
   api.get('/update', (req, res) => {
