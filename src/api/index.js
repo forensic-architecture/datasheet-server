@@ -35,7 +35,6 @@ export default ({ config, controller }) => {
     .then(response => response.json())
     .then(data => res.send(data.data))
     .catch(err => {
-      console.info(err)
       res.status(err.status || 404).send({ error: err.message })
     });
   })
