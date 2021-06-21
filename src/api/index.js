@@ -33,7 +33,7 @@ export default ({ config, controller }) => {
       }
     })
     .then(response => response.json())
-    .then(data => res.send(data.data))
+    .then(data => res.send(data))
     .catch(err => {
       res.status(err.status || 404).send({ error: err.message })
     });
