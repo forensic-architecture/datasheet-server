@@ -4,6 +4,7 @@ import copy from '../copy/en'
 
 export default ({ config, controller }) => {
   let api = Router()
+  const fileDest = config.EXPORT_FILE_DEST || null
 
   api.get('/', (req, res) => {
     res.json({
@@ -20,6 +21,20 @@ export default ({ config, controller }) => {
         urls: bp.urls
       }))
     })
+  })
+
+  api.get('/export', (req, res) => {
+    controller
+      .retrieveAll(fileDest)
+      .then(msg =>
+        res.json({
+          success: msg
+        })
+      )
+      .catch(err =>
+        res.status(404)
+          .send({ error: err.message, err })
+      )
   })
 
   api.get('/update', (req, res) => {

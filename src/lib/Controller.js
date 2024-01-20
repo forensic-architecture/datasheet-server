@@ -1,4 +1,5 @@
 import copy from '../copy/en'
+import { exportToFile } from '../lib/util'
 
 /**
  * Controller class
@@ -35,6 +36,37 @@ class Controller {
         return copy.success.update
       } else {
         throw new Error(copy.errors.update)
+      }
+    })
+  }
+
+  // Controller function to retrieve all blueprints and export to user defined file location
+  retrieveAll (fileDest) {
+    if (!fileDest) return Promise.reject(new Error(copy.errors.export.fileMissing))
+
+    const indexedData = {}
+    const urls = []
+
+    const bps = this.blueprints()
+    return Promise.all(
+      bps.map(bp => {
+        const resource = Object.keys(bp.resources)[0]
+        urls.push(bp.urls[0])
+        return this.retrieve(bp.sheet.name, bp.name, resource)
+      })
+    ).then(async results => {
+      if (results.every(res => res)) {
+        urls.forEach((item, idx) => {
+          indexedData[item] = results[idx]
+        })
+        try {
+          const message = await exportToFile(fileDest, indexedData)
+          return message
+        } catch (e) {
+          return Promise.reject(e)
+        }
+      } else {
+        throw new Error(copy.errors.export.writeFailed)
       }
     })
   }
