@@ -14,6 +14,8 @@
   </a>
 </p>
 
+<h3>PLEASE NOTE THAT THIS REPOSITORY IS NO LONGER ACTIVELY MAINTAINED. For a more active fork, see <a href="https://github.com/bellingcat/ukraine-timemap">this project</a>.</h2>
+
 <h3 align="center">
   <a href="#overview">Overview</a>
   <span> · </span>
